@@ -1,24 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import TopNav from './components/nav';
+import { HeaderSection } from './compounds/Header';
+import { NavigationPanel } from './components/nav-panel';
+import { OfferSection, OfferSection2 } from './compounds/OfferSection';
+import { DisplayProducts, DisplayProductHeading, DisplayFeaturedProducts } from './compounds/DisplayProducts';
+import { Jumbotron } from './components/jumbotron';
+import { Footer, FooterMinor } from './components/footer';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <TopNav />
+        <HeaderSection />
+        <NavigationPanel />
+        <Jumbotron />
+        <OfferSection />
+        <DisplayProductHeading />
+        <DisplayProducts />
+        <OfferSection2 />
+        <DisplayFeaturedProducts />
+        <Footer />
+        <FooterMinor />
     </div>
   );
 }

@@ -10,4 +10,46 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+    color: #3d464d;;
+}
+
+.slick-prev, .slick-next {
+  top: 0;
+  transform: translate(-25px, -42px);
+  width: 40px;
+  height: 29px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  fill: rgb(153, 153, 153);
+  padding: 0px;
+  margin: 0px;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+  border-radius: 1.5px;
+  background: rgb(242, 242, 242);
+  transition: all 0.15s ease 0s;
+}
+
+.slick-prev {
+  transform: translate(1237px, -42px);
+}
+
+.slick-next:before, .slick-prev:before {
+  font-family: sans-serif;
+  color: #333
+}
+
+.slick-next:hover, .slick-prev:hover {
+  background: #ffd333;
+}
+
+.slick-next:focus,
+.slick-next:active,
+.slick-prev:active,
+.slick-prev:focus {
+  background: #ffd333;
 }
