@@ -32,6 +32,7 @@ export const PanelCatCover = Style.div`
   border-radius: 2px;
   display: flex;
   flex-direction: column;
+  z-index: 5;
 `;
 
 export const PanelCatHeading = Style.button`

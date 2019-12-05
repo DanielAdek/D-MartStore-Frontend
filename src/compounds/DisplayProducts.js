@@ -27,11 +27,13 @@ export const DisplayProducts = () => {
   const hideActionBtn = () => setShowProductActionBtns(false);
   return (
     <RC.DisplayProductsContainer id="products">
-      { ProductData.map((data, index) => <Product key={index}
+      { ProductData.map((data, index) => <Product
+        key={index}
         index={index} 
         data={data.product}
-        showProductActionBtns={showProductActionBtns}
+        Styles={{ mr: '5px', mb: '2px'}}
         hideActionBtn={hideActionBtn}
+        showProductActionBtns={showProductActionBtns}
         displayActionBtn={() => displayActionBtn(index)} />)}
     </RC.DisplayProductsContainer>
   )
