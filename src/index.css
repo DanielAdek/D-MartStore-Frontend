@@ -10,7 +10,11 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-    color: #3d464d;;
+    color: #3d464d;
+}
+
+input:checked ~ span::after{
+  display: block;
 }
 
 .slick-prev, .slick-next {
@@ -22,7 +26,7 @@ code {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  fill: rgb(153, 153, 153);
+  fill: #999999;
   padding: 0px;
   margin: 0px;
   border-width: initial;
@@ -30,7 +34,7 @@ code {
   border-color: initial;
   border-image: initial;
   border-radius: 1.5px;
-  background: rgb(242, 242, 242);
+  background: #f2f2f2;
   transition: all 0.15s ease 0s;
 }
 
@@ -53,3 +57,42 @@ code {
 .slick-prev:focus {
   background: #ffd333;
 }
+
+.input-range__label--min,
+.input-range__label--max,
+.input-range__label-container {
+  display: none;
+}
+
+.pagination {
+  border: 2.4px solid #f5f7f9;
+  padding: 14px;
+  justify-content: space-between;
+  width: 50%;
+  border-radius: 7px;
+}
+
+.pagination li {
+  cursor: pointer;
+  border-radius: 7px;
+  background: #f5f7f9;
+}
+
+.pagination-active {
+  background: #1515c7 !important;
+  border: 1px solid #1515c7;
+  color: #fff;
+  border-radius: 7px;
+}
+
+.pagination li a {
+  padding: 10px;
+  width: 12px;
+  height: 12px;
+  cursor: pointer;
+}
+
+.pagination li a:focus,
+.pagination li a:focus {
+  outline: none;
+} 

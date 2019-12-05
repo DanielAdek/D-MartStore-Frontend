@@ -8,9 +8,10 @@ export const ProductCardContainer = Style.div`
   outline: none;
   width: 280px;
   border: 1px solid #f0f0f0;
-  margin-right: 5px;
+  margin-right: ${props => props.mr};
+  margin-bottom: ${props => props.mb};
   &:hover {
-    border: 2px solid #ffd333;
+    border: 1px solid #ffd333;
   }
 `;
 

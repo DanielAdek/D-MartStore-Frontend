@@ -122,7 +122,7 @@ export const ProductData = [
       "productPrice": 230.50,
       "productStatus": "New",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ornare, mi in ornare elementum, libero nibh lacinia urna, quis convallis lorem erat at purus. Maecenas eu varius nisi",
-      "productBrand": "Versace",
+      "productBrand": "Jordan",
       "productCategory": "T-Shirt",
       "productCaptionHeading": "Best selling product just for you",
       "createdAt": "2019-11-20T15:43:16.992Z",
@@ -157,7 +157,7 @@ export const ProductData = [
       "productPrice": 410.20,
       "productStatus": "New",
       "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ornare, mi in ornare elementum, libero nibh lacinia urna, quis convallis lorem erat at purus. Maecenas eu varius nisi",
-      "productBrand": "Versace",
+      "productBrand": "Mikky",
       "productCategory": "T-Shirt",
       "productCaptionHeading": "Best selling product just for you",
       "createdAt": "2019-11-20T15:43:16.992Z",
@@ -234,6 +234,146 @@ export const ProductData = [
       "updatedAt": "2019-11-20T15:43:16.992Z",
       "__v": 0
     },
+  },
+  {
+    "product": {
+      "onOrderCount": 0,
+      "inCartCount": 0,
+      "_id": "5dd55f1403bf044b4e209594",
+      "ownersId": {
+        "isActive": true,
+        "_id": "5dd45267ebee560e01fc0234",
+        "username": "DanielAdek",
+        "email": "maildaniel.me1@gmail.com",
+        "phoneNumber": "+2348182089681",
+        "role": "customer",
+        "avatar": "https://s.gravatar.com/avatar/3da01347bbb2af09cd00cb4c445653a1?s=100&r=x&d=retro",
+        "createdAt": "2019-11-19T20:36:55.578Z",
+        "updatedAt": "2019-11-19T20:36:55.578Z",
+        "__v": 0
+      },
+      "productName": "Woman's Solid Color Short",
+      "productImages": [
+        {
+          "_id": "5dd55f1403bf044b4e209595",
+          "image": require('../assets/images/woman.png')
+        }
+      ],
+      "productPrice": 230.50,
+      "productStatus": "New",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ornare, mi in ornare elementum, libero nibh lacinia urna, quis convallis lorem erat at purus. Maecenas eu varius nisi",
+      "productBrand": "Nike",
+      "productCategory": "T-Shirt",
+      "productCaptionHeading": "Best selling product just for you",
+      "createdAt": "2019-11-20T15:43:16.992Z",
+      "updatedAt": "2019-11-20T15:43:16.992Z",
+      "__v": 0
+    },
+  },
+  {
+    "product": {
+      "onOrderCount": 0,
+      "inCartCount": 0,
+      "_id": "5dd55f1403bf044b4e209594",
+      "ownersId": {
+        "isActive": true,
+        "_id": "5dd45267ebee560e01fc0234",
+        "username": "DanielAdek",
+        "email": "maildaniel.me1@gmail.com",
+        "phoneNumber": "+2348182089681",
+        "role": "customer",
+        "avatar": "https://s.gravatar.com/avatar/3da01347bbb2af09cd00cb4c445653a1?s=100&r=x&d=retro",
+        "createdAt": "2019-11-19T20:36:55.578Z",
+        "updatedAt": "2019-11-19T20:36:55.578Z",
+        "__v": 0
+      },
+      "productName": "Woman Casual Soft",
+      "productImages": [
+        {
+          "_id": "5dd55f1403bf044b4e209595",
+          "image": require('../assets/images/w-w.png')
+        }
+      ],
+      "productPrice": 410.20,
+      "productStatus": "New",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ornare, mi in ornare elementum, libero nibh lacinia urna, quis convallis lorem erat at purus. Maecenas eu varius nisi",
+      "productBrand": "Mikky",
+      "productCategory": "T-Shirt",
+      "productCaptionHeading": "Best selling product just for you",
+      "createdAt": "2019-11-20T15:43:16.992Z",
+      "updatedAt": "2019-11-20T15:43:16.992Z",
+      "__v": 0
+    },
+  },
+  {
+    "product": {
+      "onOrderCount": 0,
+      "inCartCount": 0,
+      "_id": "5dd55f1403bf044b4e209594",
+      "ownersId": {
+        "isActive": true,
+        "_id": "5dd45267ebee560e01fc0234",
+        "username": "DanielAdek",
+        "email": "maildaniel.me1@gmail.com",
+        "phoneNumber": "+2348182089681",
+        "role": "customer",
+        "avatar": "https://s.gravatar.com/avatar/3da01347bbb2af09cd00cb4c445653a1?s=100&r=x&d=retro",
+        "createdAt": "2019-11-19T20:36:55.578Z",
+        "updatedAt": "2019-11-19T20:36:55.578Z",
+        "__v": 0
+      },
+      "productName": "Wrist Watch",
+      "productImages": [
+        {
+          "_id": "5dd55f1403bf044b4e209595",
+          "image": require('../assets/images/watch.png')
+        }
+      ],
+      "productPrice": 20.02,
+      "productStatus": "New",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ornare, mi in ornare elementum, libero nibh lacinia urna, quis convallis lorem erat at purus. Maecenas eu varius nisi",
+      "productBrand": "Apple",
+      "productCategory": "Watch",
+      "productCaptionHeading": "Best selling product just for you",
+      "createdAt": "2019-11-20T15:43:16.992Z",
+      "updatedAt": "2019-11-20T15:43:16.992Z",
+      "__v": 0
+    },
+  },
+  {
+    "product": {
+      "onOrderCount": 0,
+      "inCartCount": 0,
+      "_id": "5dd55f1403bf044b4e209594",
+      "ownersId": {
+        "isActive": true,
+        "_id": "5dd45267ebee560e01fc0234",
+        "username": "DanielAdek",
+        "email": "maildaniel.me1@gmail.com",
+        "phoneNumber": "+2348182089681",
+        "role": "customer",
+        "avatar": "https://s.gravatar.com/avatar/3da01347bbb2af09cd00cb4c445653a1?s=100&r=x&d=retro",
+        "createdAt": "2019-11-19T20:36:55.578Z",
+        "updatedAt": "2019-11-19T20:36:55.578Z",
+        "__v": 0
+      },
+      "productName": "Pionner Men Casual Long Sleeve",
+      "productImages": [
+        {
+          "_id": "5dd55f1403bf044b4e209595",
+          "image": require('../assets/images/sh.png')
+        }
+      ],
+      "productPrice": 200.00,
+      "productStatus": "New",
+      "productDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ornare, mi in ornare elementum, libero nibh lacinia urna, quis convallis lorem erat at purus. Maecenas eu varius nisi",
+      "productBrand": "Titan",
+      "productCategory": "T-Shirt",
+      "productCaptionHeading": "Best selling product just for you",
+      "createdAt": "2019-11-20T15:43:16.992Z",
+      "updatedAt": "2019-11-20T15:43:16.992Z",
+      "__v": 0
+    },
   }
 ];
 
@@ -271,6 +411,11 @@ export const FeaturedProData = [
   }
 ]
 
+
+export const Colors = ["#007bff", "#6610f2", "#6f42c1", "#e83e8c","#dc3545", "#fd7e14", "#ffc107",
+ "#28a745", "#20c997", "#17a2b8", "#fff", "#6c757d", "#343a40", "#007bff", "#6c757d",
+ "#28a745","#17a2b8", "#ffc107", "#dc3545", "#f8f9fa", "#343a40"
+]
 
 export const jumboPic = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5nnzC2jB5sO-ZpD8FsJeBQX9gkneIDDWQ5eGuPycz81J6ACaK6A&s",

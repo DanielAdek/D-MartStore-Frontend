@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 import * as Nav from '../assets/styles/nav-p';
 
-export const NavigationPanel = () => {
-  const [ catArrClicked, setCatArrClicked] = useState(true);
+export const NavigationPanel = props => {
+  const [ catArrClicked, setCatArrClicked] = useState(props.initialCatGrowState);
   const toggledCatArr = () => setCatArrClicked(!catArrClicked);
   return (
     <Nav.PanelCover>
