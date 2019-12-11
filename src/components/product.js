@@ -4,7 +4,7 @@ import * as RC from '../assets/styles/product';
 export const Product = props => {
   return (
     <RC.ProductCardContainer mr={props.Styles.mr} mb={props.Styles.mb} onMouseEnter={props.displayActionBtn} onMouseLeave={props.hideActionBtn}>
-      <RC.ProductMagnifyIcon>
+      <RC.ProductMagnifyIcon onClick={props.magnify}>
         <RC.ProductMagnifySVG>
           <RC.ProductSVGTitle>Magnify</RC.ProductSVGTitle>
           <RC.ProductSVGPath d={RC.MagnifyAttrD}></RC.ProductSVGPath>

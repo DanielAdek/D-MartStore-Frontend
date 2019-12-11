@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 import * as Nav from '../assets/styles/nav-p';
+import { ProductData } from '../assets/map.v';
 
 export const NavigationPanel = props => {
   const [ catArrClicked, setCatArrClicked] = useState(props.initialCatGrowState);
@@ -32,29 +33,43 @@ export const NavigationPanel = props => {
           </Nav.PanelCatCover>
           <Nav.PanelLinksCover>
             <Nav.PanelLinkUl>
-              <Nav.PanelLinKLi>Home</Nav.PanelLinKLi>
-              <Nav.PanelLinKLi>Shop</Nav.PanelLinKLi>
-              <Nav.PanelLinKLi>Account</Nav.PanelLinKLi>
-              <Nav.PanelLinKLi>Information</Nav.PanelLinKLi>
-              <Nav.PanelLinKLi>Gallery</Nav.PanelLinKLi>
+              <Nav.PanelLinKLi>
+                <Link to="/">Home</Link>
+              </Nav.PanelLinKLi>
+              <Nav.PanelLinKLi>
+                <Link to="/shop">Shop</Link>
+              </Nav.PanelLinKLi>
+              <Nav.PanelLinKLi>
+                <Link to="/account">Account</Link>
+              </Nav.PanelLinKLi>
+              <Nav.PanelLinKLi>
+                <Link to="/information">Information</Link>
+              </Nav.PanelLinKLi>
+              <Nav.PanelLinKLi>
+                <Link to="/gallery">Gallery</Link>
+              </Nav.PanelLinKLi>
             </Nav.PanelLinkUl>
           </Nav.PanelLinksCover>
           <Nav.PanelIndicatorCover>
 
             <Nav.PanelWLCountainer>
-              <Nav.PanelSVGKW>
-                <Nav.PanelSVGPath d={Nav.wishListSVGAttr}></Nav.PanelSVGPath>
-              </Nav.PanelSVGKW>
-              <Nav.PanelWLKCount>4</Nav.PanelWLKCount>
+              <Link to="/wishlist">
+                <Nav.PanelSVGKW>
+                  <Nav.PanelSVGPath d={Nav.wishListSVGAttr}></Nav.PanelSVGPath>
+                </Nav.PanelSVGKW>
+                <Nav.PanelWLKCount>{ProductData.length}</Nav.PanelWLKCount>
+              </Link>
             </Nav.PanelWLCountainer>
 
             <Nav.PanelKartCountainer>
-              <Nav.PanelSVGKW>
-                <Nav.PanelKartSVGCircl cx="7" cy="17" r="2"></Nav.PanelKartSVGCircl>
-                <Nav.PanelKartSVGCircl cx="15" cy="17" r="2"></Nav.PanelKartSVGCircl>
-                <Nav.PanelSVGPath d={Nav.kartSVGAttr}></Nav.PanelSVGPath>
-              </Nav.PanelSVGKW>
-                <Nav.PanelWLKCount>5</Nav.PanelWLKCount>
+              <Link to="/kart">
+                <Nav.PanelSVGKW>
+                  <Nav.PanelKartSVGCircl cx="7" cy="17" r="2"></Nav.PanelKartSVGCircl>
+                  <Nav.PanelKartSVGCircl cx="15" cy="17" r="2"></Nav.PanelKartSVGCircl>
+                  <Nav.PanelSVGPath d={Nav.kartSVGAttr}></Nav.PanelSVGPath>
+                </Nav.PanelSVGKW>
+                <Nav.PanelWLKCount>{ProductData.length}</Nav.PanelWLKCount>
+              </Link>
             </Nav.PanelKartCountainer>
 
           </Nav.PanelIndicatorCover>

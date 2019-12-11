@@ -24,7 +24,7 @@ export const PanelCatCover = Style.div`
   background: #3d464d;
   width: 22%;
   height: ${props => props.grow ? '450px' : '0px'};
-  transition: height 0.2s ease 0s, transform 0.2s ease 0s, -webkit-transform 0.2s ease 0s;
+  transition: height 0.2s ease 0.1s, transform 0.2s ease 0.1s, -webkit-transform 0.2s ease 0s;
   padding-top: 42px;
   position: absolute;
   box-shadow: none;
@@ -119,6 +119,10 @@ export const PanelLinkUl = Style.ul`
 
 export const PanelLinKLi = Style.li`
   margin-right: 68px;
+  cursor: pointer;
+  &:hover {
+    color: #333;
+  }
 `;
 
 export const PanelIndicatorCover = Style.div`
