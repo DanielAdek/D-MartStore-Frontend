@@ -22,6 +22,7 @@ export const ProductImageCont = Style.div`
 
 export const ProductImage = Style.img`
   max-width: 100%;
+  height: 250px;
   display: block;
 `;
 
@@ -93,7 +94,7 @@ export const ProductInfoTitle = Style.div`
 export const ProductInfoRRCont = Style.div`
   margin-top: 6px;
   display: flex;
-  align-items: center
+  align-items: center;
 `;
 
 export const ProductInfoRating = Style.div``;

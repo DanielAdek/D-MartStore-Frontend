@@ -11,6 +11,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
     color: #3d464d;
+    background: #7083ec;
+
+}
+
+thead {
+  font-size: 15px;
+  background: rgb(247, 247, 247);
+}
+
+a {
+  color: #3d464d;
+}
+
+li a {
+  color: #333;
+}
+
+li a:hover {
+  color: #c2c7cc;
+  text-decoration: none;
 }
 
 input:checked ~ span::after{
