@@ -39,11 +39,18 @@ export const NavigationPanel = props => {
               <Nav.PanelLinKLi>
                 <Link to="/shop">Shop</Link>
               </Nav.PanelLinKLi>
-              <Nav.PanelLinKLi>
-                <Link to="/account">Account</Link>
+              <Nav.PanelLinKLi className="nav-item">
+                <Link to="/dashboard" className="nav-link" id="navbarDropdown">Dashboard</Link>
               </Nav.PanelLinKLi>
-              <Nav.PanelLinKLi>
-                <Link to="/information">Information</Link>
+              <Nav.PanelLinKLi className="nav-item dropdown">
+                <Link to="/information" className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Information</Link>
+                <Nav.PanelDropdownMenu className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <Link className="dropdown-item" to="/contact-us">Contact Us</Link>
+                  <Link className="dropdown-item" to="/about">About Us</Link>
+                  <Link className="dropdown-item" to="/Delivery-info">Delivery Information</Link>
+                  <Nav.PanelDropdownDiver className="dropdown-divider"/>
+                  <Link className="dropdown-item" to="/privacy-policy">Privacy Policy</Link>
+                </Nav.PanelDropdownMenu>
               </Nav.PanelLinKLi>
               <Nav.PanelLinKLi>
                 <Link to="/gallery">Gallery</Link>

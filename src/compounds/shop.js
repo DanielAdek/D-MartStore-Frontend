@@ -18,12 +18,12 @@ export const Shop = () => {
 
   const hideActionBtn = () => setShowProductActionBtns(false);
 
-  const handleImageToManify = (dat) => setCurrentImage({ src: dat.image, type: dat.type});
+  const handleImageToManify = dat => setCurrentImage({ src: dat.image, id: dat.id});
 
   const handleMagnifyProduct = data => {
     setMagnifyProduct(true);
     setCurrentData(data)
-    setCurrentImage({ src: data.product.productImages[0].image, type: data.product.productImages[0].type })
+    setCurrentImage({ src: data.product.productImages[0].image, id: data.product.productImages[0].id })
   }
   
   const closeModal = data => {
