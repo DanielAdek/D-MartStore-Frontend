@@ -6,6 +6,8 @@ import { Landing } from './pages/Landing';
 import { WishListPage } from './pages/WishList';
 import { KartPage } from './pages/Kart';
 import { GetOneProduct } from './components/GetOneProduct';
+import { Dashboard } from './pages/MyAccount';
+
 function App() {
 	return (
 		<Router>
@@ -14,6 +16,7 @@ function App() {
 				<Route path="/shop" component={ShopPage} />
 				<Route path="/wishlist" component={WishListPage} />
 				<Route path="/kart" component={KartPage} />
+				<Route path="/dashboard" component={Dashboard} />
 				<Route path="/getoneproduct" component={GetOneProduct} />
 			</Switch>
 		</Router>
