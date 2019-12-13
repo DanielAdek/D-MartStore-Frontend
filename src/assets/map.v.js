@@ -57,7 +57,60 @@ export const TNavListData = [
     alt: "Intergram",
     clickable: false
   },
-]
+];
+
+export const Orders = [
+  {
+    "paymentStatus": "pending",
+    "orderStatus": "pending",
+    "_id": "5dd6e9df3c11332c7ee568a4",
+    "productId": [],
+    "customerId": "5dd45267ebee560e01fc0234",
+    "recipientName": "Daniel",
+    "recipientDeliveryAdr": "25b, ameen street unilag",
+    "recipientEmail": "maildaniel.me1@gmail.com",
+    "recipientPhoneNumber": "+2348180000009",
+    "recipientOrderNote": "I will be available at the address above by 6:00pm today, please be accurate in your timing",
+    "orderPaymentOption": "cash on delivery",
+    "sumTotalOrdersPrice": 120.04,
+    "createdAt": "2019-11-21T19:47:43.540Z",
+    "updatedAt": "2019-11-21T19:47:43.540Z",
+    "__v": 0
+  },
+  {
+    "paymentStatus": "pending",
+    "orderStatus": "pending",
+    "_id": "5dd6e9bd3c11332c7ee568a3",
+    "productId": [],
+    "recipientName": "Daniel",
+    "recipientDeliveryAdr": "25b, ameen street unilag",
+    "recipientEmail": "maildaniel.me1@gmail.com",
+    "recipientPhoneNumber": "+2348180000009",
+    "recipientOrderNote": "I will be available at the address above by 6:00pm today, please be accurate in your timing",
+    "orderPaymentOption": "cash on delivery",
+    "sumTotalOrdersPrice": 120.04,
+    "createdAt": "2019-11-21T19:47:09.071Z",
+    "updatedAt": "2019-11-21T19:47:09.071Z",
+    "__v": 0
+  },
+  {
+    "paymentStatus": "pending",
+    "orderStatus": "pending",
+    "_id": "5dd6d2db8ecb321c9eedc754",
+    "productId": [],
+    "customerId": "5dd45267ebee560e01fc0234",
+    "recipientName": "Daniel",
+    "recipientDeliveryAdr": "25b, ameen street unilag",
+    "recipientEmail": "maildaniel.me1@gmail.com",
+    "recipientPhoneNumber": "+2348180000009",
+    "recipientOrderNote": "I will be available at the address above by 6:00pm today, please be accurate in your timing",
+    "orderPaymentOption": "cash on delivery",
+    "sumTotalOrdersPrice": 120.04,
+    "createdAt": "2019-11-21T18:09:31.099Z",
+    "updatedAt": "2019-11-21T18:09:31.099Z",
+    "__v": 0
+  }
+];
 
 export const ProductData = [
   {
@@ -444,3 +497,5 @@ export const jumboPic = [
 
   "https://images.pexels.com/photos/2460438/pexels-photo-2460438.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=900"
 ]
+
+export const LoremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ornare, mi in ornare elementum, libero nibh lacinia urna, quis convallis lorem erat at purus. Maecenas eu varius nisi."

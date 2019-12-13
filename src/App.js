@@ -5,6 +5,7 @@ import { ShopPage } from './pages/Shop';
 import { Landing } from './pages/Landing';
 import { WishListPage } from './pages/WishList';
 import { KartPage } from './pages/Kart';
+import { Dashboard } from './pages/MyAccount';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route path="/shop" component={ShopPage} />
             <Route path="/wishlist" component={WishListPage} />
             <Route path="/kart" component={KartPage} />
+            <Route path="/dashboard" component={Dashboard} />
         </Switch>
     </Router>
   )

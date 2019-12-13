@@ -125,6 +125,12 @@ export const PanelLinKLi = Style.li`
   }
 `;
 
+export const PanelDropdownMenu = Style.div`
+  color: red;
+`;
+
+export const PanelDropdownDiver = Style.div``;
+
 export const PanelIndicatorCover = Style.div`
   display: flex;
   justify-content: space-around;
@@ -173,3 +179,32 @@ export const categoryArrowAttrSVG = "M0.2,0.4c0.4-0.4,1-0.5,1.4-0.1l2.9,3l2.9-3c
 export const wishListSVGAttr = "M14,3c2.2,0,4,1.8,4,4c0,4-5.2,10-8,10S2,11,2,7c0-2.2,1.8-4,4-4c1,0,1.9,0.4,2.7,1L10,5.2L11.3,4C12.1,3.4,13,3,14,3 M14,1 c-1.5,0-2.9,0.6-4,1.5C8.9,1.6,7.5,1,6,1C2.7,1,0,3.7,0,7c0,5,6,12,10,12s10-7,10-12C20,3.7,17.3,1,14,1L14,1z";
 
 export const kartSVGAttr = "M20,4.4V5l-1.8,6.3c-0.1,0.4-0.5,0.7-1,0.7H6.7c-0.4,0-0.8-0.3-1-0.7L3.3,3.9C3.1,3.3,2.6,3,2.1,3H0.4C0.2,3,0,2.8,0,2.6 V1.4C0,1.2,0.2,1,0.4,1h2.5c1,0,1.8,0.6,2.1,1.6L5.1,3l2.3,6.8c0,0.1,0.2,0.2,0.3,0.2h8.6c0.1,0,0.3-0.1,0.3-0.2l1.3-4.4 C17.9,5.2,17.7,5,17.5,5H9.4C9.2,5,9,4.8,9,4.6V3.4C9,3.2,9.2,3,9.4,3h9.2C19.4,3,20,3.6,20,4.4z";
+
+
+//=========== Sidebar nav ============= //
+
+export const SideBarContainer = Style.div`
+  padding: 20px;
+  border: 1px solid rgb(240, 240, 240);
+`;
+
+export const SideBarHeading = Style.div`
+  font-size: 22px;
+  color: #3d464d;
+  font-weight: bold;
+`;
+
+export const SideBarItems = Style.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`
+
+export const SideBarItem = Style.li`
+  margin-top: 30px;
+  padding: 10px;
+  padding-left: 0;
+  cursor: pointer;
+`;
+
+export const SideBarSpan = Style.span``;
