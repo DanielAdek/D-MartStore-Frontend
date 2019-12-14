@@ -7,6 +7,7 @@ import { WishListPage } from './pages/WishList';
 import { KartPage } from './pages/Kart';
 import { GetOneProduct } from './pages/GetOneProduct';
 import { Dashboard } from './pages/MyAccount';
+import { Checkout } from './components/checkout';
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 				<Route path="/kart" component={KartPage} />
 				<Route path="/dashboard" component={Dashboard} />
 				<Route path="/getoneproduct" component={GetOneProduct} />
+				<Route pah="/karts/checkout" component={Checkout} />
 			</Switch>
 		</Router>
 	);
