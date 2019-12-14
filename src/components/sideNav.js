@@ -17,7 +17,7 @@ export const SideBarNav = props => {
           <Nav.SideBarSpan onClick={() => props.clicked(3)}>Create Product</Nav.SideBarSpan>
         </Nav.SideBarItem>
         <Nav.SideBarItem>
-          <Nav.SideBarSpan onClick={() => props.clicked(5)}>Order History</Nav.SideBarSpan>
+          <Nav.SideBarSpan onClick={() => props.clicked(4)}>Order History</Nav.SideBarSpan>
         </Nav.SideBarItem>
         <Nav.SideBarItem>
           <Nav.SideBarSpan onClick={() => props.clicked(5)}>Logout</Nav.SideBarSpan>

@@ -5,6 +5,7 @@ export const ContactCover = Style.div``;
 export const Text = Style.div`
   font-size: 1.1rem;
   color: #999;
+  text-align: right;
 `;
 
 export const Number = Style.div`

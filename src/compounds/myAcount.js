@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import * as RC from '../assets/styles/myaccount';
-import { SideBarNav } from '../components/sideNav';
-import { DashBoard, EditProfile, OrderHistory, CreateProduct } from '../components/my-account';
+import { Alias } from '../importer';
+
+const RC = Alias.pathToSyles('myaccount');
+const { SideBarNav } = Alias.pathToComponents('sideNav');
+const { DashBoard, EditProfile, OrderHistory, CreateProduct } = Alias.pathToComponents('my-account');
 
 export const MyAccount = () => {
-  const [View, setView] = useState(<DashBoard />);
+  const DefaultComponent = <DashBoard />;
+
+  const [View, setView] = useState(DefaultComponent);
+
   const handleSideNavItemClicked = component => {
    const rightSide = component === 1 ? <DashBoard /> : component === 2 ? <EditProfile /> : component === 3 ? <CreateProduct /> : component === 4 ? <OrderHistory /> : View;
    setView(rightSide);

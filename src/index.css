@@ -120,3 +120,4 @@ input:checked ~ span::after {
 .pagination li a:focus {
 	outline: none;
 }
+
