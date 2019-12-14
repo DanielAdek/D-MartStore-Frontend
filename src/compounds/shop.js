@@ -1,5 +1,7 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Paginator from 'react-paginate';
+import { Alias } from '../importer';
 import * as RC from '../assets/styles/shop';
 import { ShopFilter } from '../components/shopFilter';
 import { Product } from '../components/product';
@@ -7,12 +9,27 @@ import { ProductData } from '../assets/map.v';
 import { Modal } from '../components/modal';
 import { MagnifyProduct } from '../components/magnifyProduct';
 
+const { retreiveProducts } = Alias.pathToActions('ProductCRUD');
+
 export const Shop = () => {
+	// Redux Hooks
+	const dispatch = useDispatch();
+	const products = useSelector(state => state.ProductCRUD.products);
+
+	// React Hooks
 	const [showProductActionBtns, setShowProductActionBtns] = useState(false);
 	const [currentData, setCurrentData] = useState(ProductData[0]);
 	const [currentFigure, setCurrentFigure] = useState(1);
 	const [magnifyProduct, setMagnifyProduct] = useState(false);
 	const [currentImage, setCurrentImage] = useState({});
+
+	useEffect(() => {
+		dispatch(retreiveProducts());
+		}, [dispatch]);
+
+		useEffect(() => {
+			// setCurrentData(products);
+		}, [products]);
 
 	const displayActionBtn = index => setShowProductActionBtns(index);
 
@@ -23,7 +40,7 @@ export const Shop = () => {
   const handleMagnifyProduct = data => {
     setMagnifyProduct(true);
     setCurrentData(data)
-    setCurrentImage({ src: data.product.productImages[0].image, id: data.product.productImages[0].id })
+    setCurrentImage({ src: data.productImages[0].image, id: data.productImages[0].id })
   }
   
   const closeModal = data => {
@@ -51,19 +68,29 @@ export const Shop = () => {
 		setCurrentFigure(event.target.value <= 1 ? 1 : parseInt(event.target.value, 10));
 	};
 
+	const handleKartCreate =() => {
+		alert('Coming Soon...')
+	}
+
+	const handleWishListCreate = () => {
+		alert("I'm on it....")
+	}
+
 	return (
 		<Fragment>
 			<RC.ShopContainer>
 				<ShopFilter />
 				<RC.ShopMainSection>
-					{ProductData.map((data, index) => (
+					{products && products.map((data, index) => (
 						<Product
 							key={index}
 							index={index}
-							data={data.product}
+							data={data}
 							hideActionBtn={hideActionBtn}
 							Styles={{ mr: '30px', mb: '20px' }}
+							handleKartCreate={handleKartCreate}
 							magnify={() => handleMagnifyProduct(data)}
+							handleWishListCreate={handleWishListCreate}
 							showProductActionBtns={showProductActionBtns}
 							displayActionBtn={() => displayActionBtn(index)}
 						/>
@@ -92,7 +119,9 @@ export const Shop = () => {
 					currentFigure={currentFigure}
 					handleQtyAmout={handleQtyAmout}
 					handleChangeQty={handleChangeQty}
+					handleKartCreate={handleKartCreate}
 					handleImageToManify={handleImageToManify}
+					handleWishListCreate={handleWishListCreate}
 				/>
 			</Modal>
 		</Fragment>

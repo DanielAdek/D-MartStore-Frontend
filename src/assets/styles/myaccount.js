@@ -280,6 +280,9 @@ export const CreateProductTitle = Style.h4`
   padding-bottom: 10px;
 `;
 
+export const Select = Style.select``;
+
+export const SelectOption = Style.option``;
 
 // ============ Preview Product Component ========= //
 
@@ -321,10 +324,16 @@ export const ProductRightSide = Style.div`
   width: 90%;
 `;
 
-export const ProductHeading = Style.div`
+export const ProductName = Style.div`
   font-weight: bold;
   font-size: 1.2rem;
-  margin-bottom: 18px;
+  margin-bottom: 5px;
+`;
+
+export const ProductHeading = Style.div`
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 10px;
 `;
 
 export const ProductDetails = Style.p`

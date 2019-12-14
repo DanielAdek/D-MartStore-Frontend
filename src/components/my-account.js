@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 import { Form } from 'form-my-simple-validation';
 import * as RC from '../assets/styles/myaccount';
 import FormSchema from '../utils/validationSchema';
-import { Orders, LoremIpsum } from '../assets/map.v';
+import { Spiner } from '../components/loader';
 import { Modal } from '../components/modal';
-import { ImageToBase64 } from '../utils/helpers';
+import { Orders, LoremIpsum } from '../assets/map.v';
+import { ImageToBase64, generateCode, Alert } from '../utils/helpers';
+import { handleProductCreate } from '../store/actions/ProductCRUD';
 
 export const formatDate = dateObject => {
   const [day, month, date, year] = new Date(dateObject).toDateString().split(" ");
@@ -45,12 +48,14 @@ const PreviewProduct = props => {
         </RC.ContentBody>
         <RC.ContentBody>
           <RC.ProductRightSide>
-            <RC.ProductHeading>{props.product.productName}</RC.ProductHeading>
+            <RC.ProductName>{props.product.productName}</RC.ProductName>
+            <RC.ProductHeading>{props.product.productCaptionHeading}!</RC.ProductHeading>
             <RC.ProductDetails>{props.product.productDescription}</RC.ProductDetails>
             <hr />
             <RC.ProductStatus>
               <RC.ProductStatText>Brand: {props.product.productBrand}</RC.ProductStatText>
-              <RC.ProductStatText>Code: 5cc3ef258fd50dce345</RC.ProductStatText>
+              <RC.ProductStatText>Category: {props.product.productCategory}</RC.ProductStatText>
+              <RC.ProductStatText>Code: {props.product.productCode}</RC.ProductStatText>
             </RC.ProductStatus>
             <RC.ProductPrice>${props.product.productPrice}</RC.ProductPrice>
             <RC.ProductActionButtonSec>
@@ -166,10 +171,18 @@ export const OrderHistory = () => {
 }
 
 export const CreateProduct = () => {
-  const productData = { productName: '', productPrice: '', productDescription: '', productBrand: '', productImages: [] };
+  const productData = { productName: '', productPrice: '', productDescription: '', productBrand: '', productCategory: '', productCaptionHeading: '', productColor: '', productTag: '', productCode: '', productImages: [] };
+  const labels = ["Upload product image", "Upload secondary image", "Upload secondary image2", "Upload secondary image3", "Upload secondary image4"];
+  
+  // React Hooks
   const [preview, setPreview] = useState(false);
   const [product, setProduct] = useState(productData);
   const [currentImage, setCurrentImage] = useState({});
+  const [choosenImages, setChoosenImages] = useState(labels);
+
+  // Redux Hooks
+  const processing = useSelector(state => state.loading);
+  const dispatch = useDispatch();
 
   const handleInputChange = event => {
     setProduct({ ...product, [event.target.name]: event.target.value });
@@ -178,49 +191,67 @@ export const CreateProduct = () => {
   const handleImageToManify = data => setCurrentImage({ src: data.image, id: data.id });
 
   const handleImageChange = (event, id) => {
-    const { name } = event.target;
+    const { target } = event;
+
+    // Copies from state
     const productImages = product.productImages.slice();
+    const initialLabels = choosenImages.slice();
+
     let result = null;
     ImageToBase64(event.target.files[0],  (base64) => {
       result = base64;
+
+      // Set states for labels
+      initialLabels.forEach((data, index) => {
+        if (index === (id - 1)) {
+          initialLabels.splice(index, 1, target.files[0].name)
+        }
+      });
+      setChoosenImages(initialLabels);
+
+      // Set states for uploaded files
       if (productImages.length) {
         const filtered = productImages.filter(data => data.id === id);
         if (filtered.length) {
           filtered[0].image = result;
         } else {
-          productImages.push({ [name]: result, id });
+          productImages.push({ [target.name]: result, id });
         }
       } else {
-        productImages.push({ [name]: result, id });
+        productImages.push({ [target.name]: result, id });
       }
       setProduct({ ...product, productImages });
-      setCurrentImage({ src: productImages[0] ? productImages[0].image : result, id: 1 })
+      setCurrentImage({ src: productImages[0] ? productImages[0].image : result, id })
     });
   }
 
 
   const handlePreview = event => {
     event.preventDefault();
+    
     const ValidationError = Form.validateFields('create_product', FormSchema, product);
     if (ValidationError.error) {
-      return alert("please fill form");
+      console.log(ValidationError)
+      return Alert.info(ValidationError.error.message);
     }
     if (product.productImages[0] && product.productImages[0].image) {
+      setProduct({ ...product, productCode: generateCode(7) });
       return setPreview(true);
     }
-    alert("Please Upload First Image");
+    Alert.info("Please Upload First Image");
   }
   
   const handleCreateProduct = event => {
     event.preventDefault();
     closeModal();
-    console.log(product);
+    dispatch(handleProductCreate(product));
   }
 
   const closeModal = () => setPreview(false)
 
   return (
     <RC.CreateProductContainer>
+      { processing && <Spiner type="dual-ring" size={150}/>}
       <RC.CreateProductTitle>Create Product</RC.CreateProductTitle>
       <RC.Form>
         <RC.FormGrid className="form-row">
@@ -237,29 +268,62 @@ export const CreateProduct = () => {
             <RC.FormInput type="number" name="productPrice" className="form-control" id="inputEmail4" placeholder="$2000" onChange={handleInputChange} />
           </RC.FormGroup>
          </RC.FormGrid>
+        <RC.FormGrid className="form-row">
+          <RC.FormGroup className="form-group col-md-5">
+            <RC.FormInputLabel htmlFor="inputEmail4">Product Caption Heading</RC.FormInputLabel>
+            <RC.FormInput type="text" className="form-control" id="inputEmail4" name="productCaptionHeading" onChange={handleInputChange} />
+          </RC.FormGroup>
+          <RC.FormGroup className="form-group col-md-3">
+            <RC.FormInputLabel htmlFor="inputEmail4">Product Category</RC.FormInputLabel>
+            <RC.Select name="productCategory" className="custom-select custom-select-md" onChange={handleInputChange}>
+              <RC.SelectOption selected>Choose...</RC.SelectOption>
+              <RC.SelectOption value="accessories">Accessories</RC.SelectOption>
+              <RC.SelectOption value="camera">Camera</RC.SelectOption>
+              <RC.SelectOption value="fashion">Fashion</RC.SelectOption>
+              <RC.SelectOption value="gamepad">Gamepad</RC.SelectOption>
+              <RC.SelectOption value="headphone">Headphone</RC.SelectOption>
+              <RC.SelectOption value="laptop">Laptop</RC.SelectOption>
+              <RC.SelectOption value="mobile">Mobile</RC.SelectOption>
+            </RC.Select>
+          </RC.FormGroup>
+          <RC.FormGroup className="form-group col-md-2">
+            <RC.FormInputLabel htmlFor="inputEmail4">Product Tag</RC.FormInputLabel>
+            <RC.Select name="productTag" className="custom-select custom-select-md" onChange={handleInputChange}>
+              <RC.SelectOption selected>Choose...</RC.SelectOption>
+              <RC.SelectOption value="None">None</RC.SelectOption>
+              <RC.SelectOption value="Hot">Hot</RC.SelectOption>
+              <RC.SelectOption value="Sale">Sale</RC.SelectOption>
+              <RC.SelectOption value="New">New</RC.SelectOption>
+            </RC.Select>
+          </RC.FormGroup>
+          <RC.FormGroup className="form-group col-md-2">
+            <RC.FormInputLabel htmlFor="inputEmail4">Product Color</RC.FormInputLabel>
+            <RC.FormInput type="color" name="productColor" className="form-control" id="inputEmail4" placeholder="$2000" onChange={handleInputChange} />
+          </RC.FormGroup>
+         </RC.FormGrid>
           <RC.FormGroup className="form-group mb-4">
             <RC.FormInputLabel htmlFor="exampleFormControlTextarea1">Description</RC.FormInputLabel>
             <RC.FormTextArea type="text" name="productDescription" className="form-control" rows="5" id="inputAddress" placeholder={LoremIpsum} onChange={handleInputChange} ></RC.FormTextArea>
           </RC.FormGroup>
           <RC.FormGroup className="custom-file mb-3">
             <RC.FormInput name="image" onChange={event => handleImageChange(event, 1)} type="file" className="custom-file-input" id="customFile"/>
-            <RC.FormInputLabel className="custom-file-label" for="customFile">Choose Product Image</RC.FormInputLabel>
+            <RC.FormInputLabel className="custom-file-label" for="customFile">{choosenImages[0]}</RC.FormInputLabel>
           </RC.FormGroup>
           <RC.FormGroup className="custom-file mb-3">
             <RC.FormInput name="image" onChange={event => handleImageChange(event, 2)} type="file" className="custom-file-input" id="customFile"/>
-            <RC.FormInputLabel className="custom-file-label" for="customFile">Choose support image for product</RC.FormInputLabel>
+            <RC.FormInputLabel className="custom-file-label" for="customFile">{choosenImages[1]}</RC.FormInputLabel>
           </RC.FormGroup>
           <RC.FormGroup className="custom-file mb-3">
             <RC.FormInput name="image" onChange={event => handleImageChange(event, 3)} type="file" className="custom-file-input" id="customFile"/>
-            <RC.FormInputLabel className="custom-file-label" for="customFile">Choose support image for product</RC.FormInputLabel>
+            <RC.FormInputLabel className="custom-file-label" for="customFile">{choosenImages[2]}</RC.FormInputLabel>
           </RC.FormGroup>
           <RC.FormGroup className="custom-file mb-3">
             <RC.FormInput name="image" onChange={event => handleImageChange(event, 4)} type="file" className="custom-file-input" id="customFile"/>
-            <RC.FormInputLabel className="custom-file-label" for="customFile">Choose support image for product</RC.FormInputLabel>
+            <RC.FormInputLabel className="custom-file-label" for="customFile">{choosenImages[3]}</RC.FormInputLabel>
           </RC.FormGroup>
           <RC.FormGroup className="custom-file mb-3">
             <RC.FormInput name="image" onChange={event => handleImageChange(event, 5)} type="file" className="custom-file-input" id="customFile"/>
-            <RC.FormInputLabel className="custom-file-label" for="customFile">Choose support image for product</RC.FormInputLabel>
+            <RC.FormInputLabel className="custom-file-label" for="customFile">{choosenImages[4]}</RC.FormInputLabel>
           </RC.FormGroup>
           <RC.FormButton onClick={handlePreview} type="button" color="#fff" className="btn btn-secondary">Preview</RC.FormButton>
       </RC.Form>

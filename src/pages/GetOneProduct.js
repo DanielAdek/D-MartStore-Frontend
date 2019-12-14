@@ -1,11 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import TopNav from './nav';
+import TopNav from '../components/nav';
 import { HeaderSection } from '../compounds/Header';
 import { NavigationPanel } from '../components/nav-panel';
 import { ProductData } from '../assets/map.v';
-import { Footer } from './footer';
-import NavTabs from './tab';
+import { Footer } from '../components/footer';
+import NavTabs from '../components/tab';
 import * as RC from '../assets/styles/magnify-Pro';
 import { DisplayProductHeading, DisplayProducts } from '../compounds/DisplayProducts';
 
@@ -57,8 +57,7 @@ export const GetOneProduct = () => {
 												product.product.productAvailablility === 'In Stock'
 													? '#28a745'
 													: '#ffd333'
-											}
-										>
+											}>
 											{product.product.productAvailablility}
 										</RC.ProductStatusColor>{' '}
 									</RC.ProductStatText>
@@ -110,9 +109,7 @@ export const GetOneProduct = () => {
 						</RC.ContentBody>
 					</RC.Body>
 				)}
-
 				<NavTabs />
-
 				<DisplayProductHeading />
 				<DisplayProducts />
 			</div>

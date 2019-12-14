@@ -2,8 +2,6 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import * as RC from '../assets/styles/magnify-Pro';
 
-// props.currentData.product.productName;
-
 export const MagnifyProduct = props => {
 	return (
 		<Fragment>
@@ -17,7 +15,7 @@ export const MagnifyProduct = props => {
 
 				<RC.ContentBody>
 					<RC.ProductRightSide>
-						<RC.ProductHeading>{props.currentData.product.productName}</RC.ProductHeading>
+						<RC.ProductHeading>{props.currentData.productName}</RC.ProductHeading>
 						<RC.ProductRR>
 							<RC.ProductInfoRating>
 								<RC.StarSVG>
@@ -36,22 +34,16 @@ export const MagnifyProduct = props => {
 						</RC.ProductDetails>
 						<hr />
 						<RC.ProductStatus>
-							<RC.ProductStatText>
-								Avaliablilty:{' '}
+							<RC.ProductStatText> Avaliablilty:
 								<RC.ProductStatusColor
-									statusText={
-										props.currentData.product.productAvailablility === 'In Stock'
-											? '#28a745'
-											: '#ffd333'
-									}
-								>
-									{props.currentData.product.productAvailablility}
-								</RC.ProductStatusColor>{' '}
+									statusText={ props.currentData.productStatus === 'In Stock' ? '#28a745' : '#ffd333'}>
+									{props.currentData.productStatus}
+								</RC.ProductStatusColor>
 							</RC.ProductStatText>
-							<RC.ProductStatText>Brand: {props.currentData.product.productBrand}</RC.ProductStatText>
-							<RC.ProductStatText>Code: {props.currentData.product._id}</RC.ProductStatText>
+							<RC.ProductStatText>Brand: {props.currentData.productBrand}</RC.ProductStatText>
+							<RC.ProductStatText>Code: {props.currentData._id}</RC.ProductStatText>
 						</RC.ProductStatus>
-						<RC.ProductPrice>${props.currentData.product.productPrice}</RC.ProductPrice>
+						<RC.ProductPrice>${props.currentData.productPrice}</RC.ProductPrice>
 						<RC.ProductActionsSection>
 							<RC.ProductQtySection>
 								<RC.ProductQtyInputDiv>
@@ -71,17 +63,17 @@ export const MagnifyProduct = props => {
 								</RC.ProductQtyInputDiv>
 							</RC.ProductQtySection>
 							<RC.ProductActionButtonSec>
-								<RC.ProductActionButton className="btn" bgColor="#ffd333" hClr="#9b9b9b">
+								<RC.ProductActionButton onClick={props.handleKartCreate} className="btn" bgColor="#ffd333" hClr="#9b9b9b">
 									Add Cart
 								</RC.ProductActionButton>
-								<RC.ProductActionButton className="btn" bgColor="blue" clr="#f3f3f3" hClr="#dbd8d8">
+								<RC.ProductActionButton onClick={props.handleWishListCreate} className="btn" bgColor="blue" clr="#f3f3f3" hClr="#dbd8d8">
 									WishList
 								</RC.ProductActionButton>
 							</RC.ProductActionButtonSec>
 						</RC.ProductActionsSection>
 					</RC.ProductRightSide>
 					<RC.ProductImagesContainer>
-						{props.currentData.product.productImages.map((dat, i) => (
+						{props.currentData.productImages && props.currentData.productImages.map((dat, i) => (
 							<RC.ProductImages onClick={() => props.handleImageToManify(dat)} src={dat.image} />
 						))}
 					</RC.ProductImagesContainer>

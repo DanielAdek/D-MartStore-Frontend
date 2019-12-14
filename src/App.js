@@ -5,7 +5,7 @@ import { ShopPage } from './pages/Shop';
 import { Landing } from './pages/Landing';
 import { WishListPage } from './pages/WishList';
 import { KartPage } from './pages/Kart';
-import { GetOneProduct } from './components/GetOneProduct';
+import { GetOneProduct } from './pages/GetOneProduct';
 import { Dashboard } from './pages/MyAccount';
 
 function App() {

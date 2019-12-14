@@ -15,12 +15,14 @@ export default {
   },
   productCreateForm: {
     formType: 'create_product',
-    productName: { field: 'productName', required: true, isName: true },
-    // productImages: { field: 'productImages', required: true, isArray: true },
+    productName: { field: 'productName', required: true },
+    productImages: { field: 'productImages', isArray: true },
     productPrice: { field: 'productPrice', required: true, isDecimal: true },
     productDesc: { field: 'productDescription', required: true },
     productBrand: { field: 'productBrand', required: true },
-    // productCategory: { field: 'productCategory', required: true }
+    productCategory: { field: 'productCategory', required: true },
+    productCapHead: { field: 'productCaptionHeading', required: true },
+    productColor: { field: 'productColor', required: true }
   },
   productEditFrom: {
     formType: 'edit_product',
