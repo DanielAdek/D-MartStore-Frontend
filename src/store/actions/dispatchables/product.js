@@ -10,4 +10,4 @@ export const create_product = product => ({
 export const get_products = products => ({
     type: Types.GET_PRODUCTS,
     payload: products
-})
+});

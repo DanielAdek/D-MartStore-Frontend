@@ -71,10 +71,12 @@ export const handleErr = error => {
 
 export const handleError = error => {
   if (error.response) {
-    if (error.response.data.data) {
-      return SweetAlert(error.response.data.data.error.details.operationStatus, error.response.data.data.error.details.message, 'error')
+    if (error.response.data.data.error && error.response.data.data.error.message) {
+      return SweetAlert(error.response.data.data.error.details.operationStatus, error.response.data.data.error.message, 'info')
     }
-    return SweetAlert('', error.response.data.message, 'error')
+    if (error.response.data.data) {
+      return SweetAlert(error.response.data.data.error.details.operationStatus, error.response.data.data.error.details.message, 'error');
+    }
   }
   return SweetAlert('', error.message, 'error')
 }

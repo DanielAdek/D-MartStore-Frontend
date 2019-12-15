@@ -10,11 +10,15 @@ import { Modal } from '../components/modal';
 import { MagnifyProduct } from '../components/magnifyProduct';
 
 const { retreiveProducts } = Alias.pathToActions('ProductCRUD');
+const { addToWishList, addToKart } = Alias.pathToActions('WishAndKartCRUD');
+const { Spiner } = Alias.pathToComponents('loader');
 
 export const Shop = () => {
 	// Redux Hooks
 	const dispatch = useDispatch();
 	const products = useSelector(state => state.ProductCRUD.products);
+	const processing = useSelector(state => state.Loading.loading);
+	const loading = useSelector(state => state.Loading.loadInComponent);
 
 	// React Hooks
 	const [showProductActionBtns, setShowProductActionBtns] = useState(false);
@@ -24,12 +28,10 @@ export const Shop = () => {
 	const [currentImage, setCurrentImage] = useState({});
 
 	useEffect(() => {
-		dispatch(retreiveProducts());
-		}, [dispatch]);
-
-		useEffect(() => {
-			// setCurrentData(products);
-		}, [products]);
+		if (!products) {
+			dispatch(retreiveProducts());
+		}
+	}, [dispatch, products]);
 
 	const displayActionBtn = index => setShowProductActionBtns(index);
 
@@ -43,7 +45,7 @@ export const Shop = () => {
     setCurrentImage({ src: data.productImages[0].image, id: data.productImages[0].id })
   }
   
-  const closeModal = data => {
+  const closeModal = () => {
     setMagnifyProduct(false);
     setCurrentFigure(1);
   }
@@ -68,17 +70,21 @@ export const Shop = () => {
 		setCurrentFigure(event.target.value <= 1 ? 1 : parseInt(event.target.value, 10));
 	};
 
-	const handleKartCreate =() => {
-		alert('Coming Soon...')
+	const handleKartCreate = product => {
+		const kartData = { productId: product._id, quantity: currentFigure, imageType: currentImage.id || 1};
+		dispatch(addToKart({ kartData }));
 	}
 
-	const handleWishListCreate = () => {
-		alert("I'm on it....")
+	const handleWishListCreate = product => {
+		const token = localStorage.getItem('token');
+		const data = { productId: product._id, wishlistcode: token || "" }
+		dispatch(addToWishList(data));
 	}
 
 	return (
 		<Fragment>
 			<RC.ShopContainer>
+			{ processing && <Spiner fullScreen={true} type="dual-ring" size={150}/>}
 				<ShopFilter />
 				<RC.ShopMainSection>
 					{products && products.map((data, index) => (
@@ -86,13 +92,14 @@ export const Shop = () => {
 							key={index}
 							index={index}
 							data={data}
+							loading={loading}
 							hideActionBtn={hideActionBtn}
 							Styles={{ mr: '30px', mb: '20px' }}
-							handleKartCreate={handleKartCreate}
 							magnify={() => handleMagnifyProduct(data)}
-							handleWishListCreate={handleWishListCreate}
 							showProductActionBtns={showProductActionBtns}
+							handleKartCreate={() => handleKartCreate(data)}
 							displayActionBtn={() => displayActionBtn(index)}
+							handleWishListCreate={() => handleWishListCreate(data)}
 						/>
 					))}
 				</RC.ShopMainSection>
@@ -119,9 +126,9 @@ export const Shop = () => {
 					currentFigure={currentFigure}
 					handleQtyAmout={handleQtyAmout}
 					handleChangeQty={handleChangeQty}
-					handleKartCreate={handleKartCreate}
 					handleImageToManify={handleImageToManify}
-					handleWishListCreate={handleWishListCreate}
+					handleKartCreate={() => handleKartCreate(currentData)}
+					handleWishListCreate={() => handleWishListCreate(currentData)}
 				/>
 			</Modal>
 		</Fragment>

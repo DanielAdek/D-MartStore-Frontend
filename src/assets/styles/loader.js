@@ -13,9 +13,10 @@ export const UnderLay = Style.div`
 export const Loader = Style.div`
   z-index: 11;
   margin: auto;
-  position: fixed;
-  top: 30%;
-  left: 45%;
+  position: ${props => props.pos || 'fixed'};
+  top: ${props => props.t || '30%'};
+  left: ${props => props.l || '45%'};
+  max-height: ${props => props.mh};
 `;
 
 export const styleLoader = {
