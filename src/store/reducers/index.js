@@ -5,7 +5,7 @@ const Types = Alias.pathToConstant('types').default;
 const file = Alias.pathToReducers;
 
 // CREATE REDUCER FOR LOADING STATE
-const initialState = { loading: false };
+const initialState = { loading: false, loadInComponent: false };
   
 const Loading =  (state = initialState, action) => {
   switch (action.type) {
@@ -14,10 +14,16 @@ const Loading =  (state = initialState, action) => {
         ...state,
         loading: true
       };
+    case Types.PROCESSING_SMALL_SPIN:
+      return {
+        ...state,
+        loadInComponent: true
+      };
     case Types.FINISHED:
       return {
         ...state,
-        loading: false
+        loading: false,
+        loadInComponent: false
       };
     default:
       return state;

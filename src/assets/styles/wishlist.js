@@ -14,12 +14,34 @@ export const WishListContainer = Style.div`
   border-bottom: 1px solid rgb(235, 235, 235);
 `;
 
+export const WishListBtnTitle = Style.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 export const WishListPageTitle = Style.div`
   font-weight: bolder;
   font-size: 40px;
   margin-top: 30px;
   margin-bottom: 30px;
   color: rgb(61, 70, 77);
+`;
+
+export const ButtonUploadToKart = Style.div`
+  cursor: pointer;
+  color:rgb(61,70,77);
+  border-color: rgb(255,211,51);
+  background: rgb(255,211,51);
+  margin-left: 60px;
+  text-align: center;
+  font-weight: bolder;
+  font-size: 17px;
+  width: 20%;
+  height: 43px;
+  // &:hover {
+  //   color: ${props => props.color};
+  // }
 `;
 
 /* ========== WishList Component Section ====== */
@@ -112,7 +134,7 @@ export const WhishListTableDataSSText = Style.div`
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  background-color: ${ props => props.stock === "In Stock" ? "rgb(40, 167, 69)" : "#fccccc"};
+  background-color: ${ props => props.stock === "In-Stock" ? "rgb(40, 167, 69)" : "#fccccc"};
   transition: color 0.15s ease-in-out 0s, background-color 0.15s ease-in-out 0s, border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
 `;
 

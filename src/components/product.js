@@ -1,7 +1,11 @@
 import React from 'react';
+import { Alias } from '../importer';
 import * as RC from '../assets/styles/product';
 
+const { Spiner } = Alias.pathToComponents('loader');
+
 export const Product = props => {
+  const targetedProduct = props.index === props.showProductActionBtns;
   return (
     <RC.ProductCardContainer mr={props.Styles.mr} mb={props.Styles.mb} onMouseEnter={props.displayActionBtn} onMouseLeave={props.hideActionBtn}>
       <RC.ProductMagnifyIcon onClick={props.magnify}>
@@ -27,10 +31,10 @@ export const Product = props => {
         </RC.ProductInfoRRCont>
         <RC.ProductInfoPrice>${props.data.productPrice}</RC.ProductInfoPrice>
       </RC.ProductInfoCont>
-      {props.index === props.showProductActionBtns && <RC.CardOverlay />}
-      <RC.ProductActionContainer show={props.index === props.showProductActionBtns}>
+      {targetedProduct && <RC.CardOverlay />}
+      <RC.ProductActionContainer show={targetedProduct}>
         <RC.ProductAddButton onClick={props.handleKartCreate} isWishListBtn={false}>Add Cart</RC.ProductAddButton>
-        <RC.ProductAddButton onClick={props.handleWishListCreate} isWishListBtn={true} >Wishlist</RC.ProductAddButton>
+        <RC.ProductAddButton onClick={props.handleWishListCreate} isWishListBtn={true} >{ (props.loading && targetedProduct)? <Spiner pos="relative" type="dual-ring" t="-5px" l="16px" mh="35px" size={30}/> : 'WishList' }</RC.ProductAddButton>
       </RC.ProductActionContainer>
     </RC.ProductCardContainer>
   )

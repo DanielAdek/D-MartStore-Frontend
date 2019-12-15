@@ -151,6 +151,7 @@ export const ProductAddButton = Style.button`
   color: ${ props => props.isWishListBtn ? '#fff' : '#3d464d'} 
   margin-top: 15px;
   font-family: Rubik;
+  max-height: 35px;
 `;
 
 

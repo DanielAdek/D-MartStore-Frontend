@@ -13,13 +13,13 @@ export const handleProductCreate = data => async dispatch => {
     dispatch(Alias.pathToDispatchAbles('loading').finished());
   }
 };
-export const retreiveProducts = data => async dispatch => {
+export const retreiveProducts = () => async dispatch => {
   try {
     dispatch(Alias.pathToDispatchAbles('loading').processing());
-    const response = await Alias.pathToUtils('helpers').Promise('GET', '/product/all', data);
+    const response = await Alias.pathToUtils('helpers').Promise('GET', '/product/all');
     dispatch(Alias.pathToDispatchAbles('product').get_products(response.data.data.details.products));
     dispatch(Alias.pathToDispatchAbles('loading').finished());
-    SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
+    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
   } catch (error) {
     Alias.pathToUtils('helpers').handleError(error)
     dispatch(Alias.pathToDispatchAbles('loading').finished());

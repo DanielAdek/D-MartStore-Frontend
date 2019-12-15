@@ -12,7 +12,7 @@ const initialState = {
   
 export default (state = initialState, action) => {
   switch (action.type) {
-    case Types.CREATE_WISHLIST:
+    case Types.ADD_TO_WISHLIST:
       return {
         ...state,
         wishList: action.payload
@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
         ...state,
         message: action.payload
       };
-    case Types.CREATE_KART:
+    case Types.ADD_TO_KART:
       return {
         ...state,
         kart: action.payload
