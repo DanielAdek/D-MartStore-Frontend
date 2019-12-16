@@ -68,7 +68,6 @@ export const LoginAuthentication = () => {
 							{processing && <RingLoad />}
 						</SI.SignupBotton>
 					</SI.Form>
-
 					<SI.ForgetPassword>
 						{' '}
 						<Link to="/forgetpassword">Forget Password</Link>
