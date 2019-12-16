@@ -10,6 +10,7 @@ import { Dashboard } from './pages/MyAccount';
 import { Checkout } from './components/checkout';
 import { SignupAuth } from './compounds/SignupAuth';
 import { LoginAuthentication } from './components/signinAuth';
+import { AboutPage } from './pages/AboutUs';
 
 function App() {
 	return (
@@ -19,6 +20,7 @@ function App() {
 				<Route path="/shop" component={ShopPage} />
 				<Route path="/signup" component={SignupAuth} />
 				<Route path="/login" component={LoginAuthentication} />
+				<Route path="/about" component={AboutPage} />
 				<Route path="/wishlist" component={WishListPage} />
 				<Route path="/kart" component={KartPage} />
 				<Route path="/dashboard" component={Dashboard} />
