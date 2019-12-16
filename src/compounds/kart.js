@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Alias } from '../importer';
 import * as RC from '../assets/styles/kart';
 import { Karts } from '../components/kart';
 import { Modal } from '../components/modal';
-import { ProductData } from '../assets/map.v';
-import { Link } from 'react-router-dom';
+
+const { retreiveKartList } = Alias.pathToActions('WishAndKartCRUD');
+const { DualRingLoadScreen } = Alias.pathToComponents('spiners');
+
+const totalPrice = prices => prices && prices.reduce((accumulatedPrice, current) => ( accumulatedPrice += current.cummulativePrice), 0);
 
 export const KartList = () => {
-	const [currentFigure, setCurrentFigure] = useState(null);
+		// Redux Hooks
+		const dispatch = useDispatch();
+		const kartList = useSelector(state => state.WishAndKartCRUD.karts);
+		const processing = useSelector(state => state.Loading.loading);
+
+	const [currentData, setCurrentData] = useState(null);
+	const [totalKart, setTotalKart] = useState(0.00);
 	const [visible, setVisible] = useState(false);
 
 	const hideModal = () => setVisible(false);
@@ -14,43 +26,50 @@ export const KartList = () => {
 	const showModal = () => setVisible(true);
 
 	useEffect(() => {
-		setCurrentFigure(
-			ProductData.map((data, index) => {
-				return { [index]: 1, data };
-			})
-		);
-	}, []);
+		if (!kartList) {
+			dispatch(retreiveKartList());
+		}
+	}, [dispatch, kartList]);
+
+	useEffect(() => {
+		setCurrentData(kartList && kartList.map(data => data));
+		setTotalKart(totalPrice(kartList));
+	}, [kartList]);
 
 	const handleQtyAmout = (event, index) => {
-		const currentFigures = currentFigure.slice();
-		currentFigures.forEach((value, idx) => {
+		const data = currentData.slice();
+		data.forEach((value, idx) => {
 			if (idx === index) {
-				const qty =
-					event.target.textContent === '+'
-						? (value[idx] += 1)
-						: event.target.textContent === '-' && value[idx] >= 2
-						? (value[idx] -= 1)
+				const qty = event.target.textContent === '+'
+						? (value.quantity += 1)
+						: event.target.textContent === '-' && value.quantity >= 2
+						? (value.quantity -= 1)
 						: 1;
-				setCurrentFigure([{ [index]: qty }]);
+				setCurrentData([{ ...value, quantity: qty }]);
 			}
-			setCurrentFigure(currentFigures);
+			setCurrentData(data, () => {
+				setTotalKart(totalPrice(data));
+			});
 		});
 	};
+
 
 	return (
 		<RC.KartWrapper>
 			<RC.KartContainer>
 				<RC.KartTopSection>
+				{ processing && <DualRingLoadScreen />}
 					<RC.KartPageTitle>Shopping Cart</RC.KartPageTitle>
 					<RC.KartTopButtonSection>
 						<RC.KartTopButtons
 							onClick={showModal}
+							title="Click to see more details"
 							className="btn btn-md"
-							bClr="rgb(61, 70, 77)"
+							bClr="#174a41"
 							color="#fff"
-							bgColor="rgb(61, 70, 77)"
+							bgColor="#174a41"
 						>
-							Cart Total
+							Total ${totalKart || 0.00}
 						</RC.KartTopButtons>
 						<RC.KartTopButtons
 							className="btn btn-sm"
@@ -72,12 +91,12 @@ export const KartList = () => {
 						<RC.KartTableHeader>Total</RC.KartTableHeader>
 						<RC.KartTableHeader>&nbsp;</RC.KartTableHeader>
 					</RC.KartTableRow>
-					{ProductData.map((data, index) => (
+					{kartList && kartList.map((data, index) => (
 						<Karts
 							key={index}
 							data={data}
 							index={index}
-							currentFigure={currentFigure}
+							currentData={currentData}
 							handleQtyAmout={handleQtyAmout}
 						/>
 					))}

@@ -2,7 +2,7 @@ import React from 'react';
 import { Alias } from '../importer';
 import * as RC from '../assets/styles/product';
 
-const { Spiner } = Alias.pathToComponents('loader');
+const { DualRingLoad } = Alias.pathToComponents('spiners');
 
 export const Product = props => {
   const targetedProduct = props.index === props.showProductActionBtns;
@@ -34,7 +34,7 @@ export const Product = props => {
       {targetedProduct && <RC.CardOverlay />}
       <RC.ProductActionContainer show={targetedProduct}>
         <RC.ProductAddButton onClick={props.handleKartCreate} isWishListBtn={false}>Add Cart</RC.ProductAddButton>
-        <RC.ProductAddButton onClick={props.handleWishListCreate} isWishListBtn={true} >{ (props.loading && targetedProduct)? <Spiner pos="relative" type="dual-ring" t="-5px" l="16px" mh="35px" size={30}/> : 'WishList' }</RC.ProductAddButton>
+        <RC.ProductAddButton onClick={props.handleWishListCreate} isWishListBtn={true} >{ (props.loading && targetedProduct)? <DualRingLoad /> : 'WishList' }</RC.ProductAddButton>
       </RC.ProductActionContainer>
     </RC.ProductCardContainer>
   )

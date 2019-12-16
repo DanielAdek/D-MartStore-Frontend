@@ -1,11 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import * as Nav from '../assets/styles/nav-p';
-import { ProductData } from '../assets/map.v';
+import { useDispatch, useSelector } from 'react-redux';
+import { Alias } from '../importer';
+
+const Nav = Alias.pathToSyles('nav-p');
+
+const { retreiveKartList, retreiveWishLists } = Alias.pathToActions('WishAndKartCRUD');
 
 export const NavigationPanel = props => {
+  // Redux Hooks
+  const dispatch = useDispatch();
+  const kartList = useSelector(state => state.WishAndKartCRUD.karts);
+  const wishList = useSelector(state => state.WishAndKartCRUD.wishLists);
+
+  // React Hooks
   const [ catArrClicked, setCatArrClicked] = useState(props.initialCatGrowState);
+
+  useEffect(() => {
+		if (!wishList || !kartList) {
+			dispatch(retreiveWishLists());
+			dispatch(retreiveKartList());
+		}
+  }, [dispatch, kartList, wishList]);
+
   const toggledCatArr = () => setCatArrClicked(!catArrClicked);
+
   return (
     <Nav.PanelCover>
       <Nav.PanelContainer>
@@ -64,7 +83,7 @@ export const NavigationPanel = props => {
                 <Nav.PanelSVGKW>
                   <Nav.PanelSVGPath d={Nav.wishListSVGAttr}></Nav.PanelSVGPath>
                 </Nav.PanelSVGKW>
-                <Nav.PanelWLKCount>{ProductData.length}</Nav.PanelWLKCount>
+                <Nav.PanelWLKCount>{(wishList && wishList.length) || 0}</Nav.PanelWLKCount>
               </Link>
             </Nav.PanelWLCountainer>
 
@@ -75,7 +94,7 @@ export const NavigationPanel = props => {
                   <Nav.PanelKartSVGCircl cx="15" cy="17" r="2"></Nav.PanelKartSVGCircl>
                   <Nav.PanelSVGPath d={Nav.kartSVGAttr}></Nav.PanelSVGPath>
                 </Nav.PanelSVGKW>
-                <Nav.PanelWLKCount>{ProductData.length}</Nav.PanelWLKCount>
+                <Nav.PanelWLKCount>{(kartList && kartList.length) || 0}</Nav.PanelWLKCount>
               </Link>
             </Nav.PanelKartCountainer>
 
