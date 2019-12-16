@@ -11,12 +11,14 @@ import { Checkout } from './components/checkout';
 import { SignupAuth } from './compounds/SignupAuth';
 import { LoginAuthentication } from './components/signinAuth';
 import { AboutPage } from './pages/AboutUs';
+import { Erro404 } from './pages/404';
 
 function App() {
 	return (
 		<Router>
 			<Switch>
 				<Route path="/" exact component={Landing} />
+				<Route path="/error" exact component={Erro404} />
 				<Route path="/shop" component={ShopPage} />
 				<Route path="/signup" component={SignupAuth} />
 				<Route path="/login" component={LoginAuthentication} />
