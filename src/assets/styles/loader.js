@@ -17,7 +17,23 @@ export const Loader = Style.div`
   top: ${props => props.t || '30%'};
   left: ${props => props.l || '45%'};
   max-height: ${props => props.mh};
+  width: 10%;
 `;
+
+export const LoaderTextCont = Style.div`
+  display: flex;
+  justify-content: center;
+  width: 100%
+`;
+
+export const LoaderText = Style.div`
+  font-weight: bold;
+  color: #fff;
+  cursor: not-allowed;
+  text-align: center;
+  font-family: Rubik, Roboto, monospace, sans-serif;
+`;
+
 
 export const styleLoader = {
   color: 'cornflowerblue'

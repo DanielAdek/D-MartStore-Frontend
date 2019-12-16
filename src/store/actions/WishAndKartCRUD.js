@@ -50,11 +50,11 @@ export const addToKart = data => async dispatch => {
 };
 
 export const retreiveKartList = token => async dispatch => {
-  const url = localStorage.getItem('x-auth-t') ? '/wishlist/customer' : `/wishlist/customer?token=${token}`;
+  const url = localStorage.getItem('x-auth-t') ? '/cart/customer' : `/cart/customer?token=${token}`;
   try {
     dispatch(Alias.pathToDispatchAbles('loading').processing());
     const response = await Alias.pathToUtils('helpers').Promise('GET', url);
-    dispatch(Alias.pathToDispatchAbles('wishandkart').get_kartList(response.data.data.details.foundRecentWishLists));
+    dispatch(Alias.pathToDispatchAbles('wishandkart').get_kartList(response.data.data.details.foundRecentKarts));
     dispatch(Alias.pathToDispatchAbles('loading').finished());
     // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
   } catch (error) {

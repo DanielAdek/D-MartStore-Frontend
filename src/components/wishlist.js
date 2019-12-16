@@ -2,12 +2,11 @@ import React, { useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alias } from '../importer';
 import * as RC from '../assets/styles/wishlist';
-// import { ProductData } from '../assets/map.v';
 
 const { addToKart, retreiveWishLists } = Alias.pathToActions('WishAndKartCRUD');
-const { Spiner } = Alias.pathToComponents('loader');
+const { DualRingLoadScreen, DualRingLoad } = Alias.pathToComponents('spiners');
 
-export const Whishlist = props => {
+export const Whishlist = () => {
   // Redux Hooks
   const dispatch = useDispatch();
   const wishlists = useSelector(state => state.WishAndKartCRUD.wishLists);
@@ -25,9 +24,11 @@ export const Whishlist = props => {
 
   const handlKartCreate = (data, index) => {
     setClickedBtn(index);
-    const kartData = props.kartAll ? wishlists : data;
+    const kartCode = localStorage.getItem('token');
+    const kartData = { kartCode: kartCode || "", productId: data.productId._id, quantity: 1, imageType: data.imageType};
     dispatch(addToKart({ kartData }));
   }
+
 
   return (
     <RC.WhishListTable>
@@ -42,7 +43,7 @@ export const Whishlist = props => {
     { wishlists && wishlists.map((data, index) => (
       <RC.WhishListTableRow key={index}>
         <RC.WhishListTableDataImage>
-          <RC.WhishListTableDataImageTag src={data.productId.productImages[0].image}/>
+          <RC.WhishListTableDataImageTag src={data.productId.productImages[data.imageType - 1].image}/>
         </RC.WhishListTableDataImage>
         <RC.WhishListTableDataItemName>
           <RC.WhishListTableDataProName>{data.productId.productName}</RC.WhishListTableDataProName>
@@ -59,14 +60,14 @@ export const Whishlist = props => {
         </RC.WhishListTableDataSS>
         <RC.WhishListTableDataPrice>${data.productId.productPrice}</RC.WhishListTableDataPrice>
         <RC.WhishListTableDataActionBtn>
-          <RC.WhishListTableActionBtn onClick={() => handlKartCreate(data, index)} className="btn btn-md">{(loading && clickedBtn === index) ? <Spiner fullScreen={true} type="dual-ring" size={150}/> : 'Add Cart'}</RC.WhishListTableActionBtn>
+          <RC.WhishListTableActionBtn onClick={() => handlKartCreate(data, index)} className="btn btn-md">{(loading && clickedBtn === index) ? <DualRingLoad /> : 'Add Cart'}</RC.WhishListTableActionBtn>
         </RC.WhishListTableDataActionBtn>
         <RC.WhishListTableDataDel>
           <RC.WhishListTableDataDelButton>x</RC.WhishListTableDataDelButton>
         </RC.WhishListTableDataDel>
       </RC.WhishListTableRow>
       ))}
-      { processing && <Spiner fullScreen={true} type="dual-ring" size={150}/>}
+      { processing && <DualRingLoadScreen />}
     </RC.WhishListTable>
   )
 }

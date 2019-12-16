@@ -307,23 +307,23 @@ export const CreateProduct = () => {
           </RC.FormGroup>
           <RC.FormGroup className="custom-file mb-3">
             <RC.FormInput name="image" onChange={event => handleImageChange(event, 1)} type="file" className="custom-file-input" id="customFile"/>
-            <RC.FormInputLabel className="custom-file-label" for="customFile">{choosenImages[0]}</RC.FormInputLabel>
+            <RC.FormInputLabel className="custom-file-label" htmlFor="customFile">{choosenImages[0]}</RC.FormInputLabel>
           </RC.FormGroup>
           <RC.FormGroup className="custom-file mb-3">
             <RC.FormInput name="image" onChange={event => handleImageChange(event, 2)} type="file" className="custom-file-input" id="customFile"/>
-            <RC.FormInputLabel className="custom-file-label" for="customFile">{choosenImages[1]}</RC.FormInputLabel>
+            <RC.FormInputLabel className="custom-file-label" htmlFor="customFile">{choosenImages[1]}</RC.FormInputLabel>
           </RC.FormGroup>
           <RC.FormGroup className="custom-file mb-3">
             <RC.FormInput name="image" onChange={event => handleImageChange(event, 3)} type="file" className="custom-file-input" id="customFile"/>
-            <RC.FormInputLabel className="custom-file-label" for="customFile">{choosenImages[2]}</RC.FormInputLabel>
+            <RC.FormInputLabel className="custom-file-label" htmlFor="customFile">{choosenImages[2]}</RC.FormInputLabel>
           </RC.FormGroup>
           <RC.FormGroup className="custom-file mb-3">
             <RC.FormInput name="image" onChange={event => handleImageChange(event, 4)} type="file" className="custom-file-input" id="customFile"/>
-            <RC.FormInputLabel className="custom-file-label" for="customFile">{choosenImages[3]}</RC.FormInputLabel>
+            <RC.FormInputLabel className="custom-file-label" htmlFor="customFile">{choosenImages[3]}</RC.FormInputLabel>
           </RC.FormGroup>
           <RC.FormGroup className="custom-file mb-3">
             <RC.FormInput name="image" onChange={event => handleImageChange(event, 5)} type="file" className="custom-file-input" id="customFile"/>
-            <RC.FormInputLabel className="custom-file-label" for="customFile">{choosenImages[4]}</RC.FormInputLabel>
+            <RC.FormInputLabel className="custom-file-label" htmlFor="customFile">{choosenImages[4]}</RC.FormInputLabel>
           </RC.FormGroup>
           <RC.FormButton onClick={handlePreview} type="button" color="#fff" className="btn btn-secondary">Preview</RC.FormButton>
       </RC.Form>

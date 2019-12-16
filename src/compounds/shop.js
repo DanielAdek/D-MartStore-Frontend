@@ -11,7 +11,7 @@ import { MagnifyProduct } from '../components/magnifyProduct';
 
 const { retreiveProducts } = Alias.pathToActions('ProductCRUD');
 const { addToWishList, addToKart } = Alias.pathToActions('WishAndKartCRUD');
-const { Spiner } = Alias.pathToComponents('loader');
+const { DualRingLoadScreen } = Alias.pathToComponents('spiners');
 
 export const Shop = () => {
 	// Redux Hooks
@@ -77,14 +77,14 @@ export const Shop = () => {
 
 	const handleWishListCreate = product => {
 		const token = localStorage.getItem('token');
-		const data = { productId: product._id, wishlistcode: token || "" }
+		const data = { imageType: currentImage.id || 1, productId: product._id, wishlistcode: token || "" }
 		dispatch(addToWishList(data));
 	}
 
 	return (
 		<Fragment>
 			<RC.ShopContainer>
-			{ processing && <Spiner fullScreen={true} type="dual-ring" size={150}/>}
+			{ processing && <DualRingLoadScreen />}
 				<ShopFilter />
 				<RC.ShopMainSection>
 					{products && products.map((data, index) => (
