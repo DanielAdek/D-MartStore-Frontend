@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Alias } from '../importer';
 
 const Nav = Alias.pathToSyles('nav-p');
-
+const userAuth = localStorage.getItem('x-auth-t');
 const { retreiveKartList, retreiveWishLists } = Alias.pathToActions('WishAndKartCRUD');
 
 export const NavigationPanel = props => {
@@ -59,7 +59,8 @@ export const NavigationPanel = props => {
                 <Link to="/shop">Shop</Link>
               </Nav.PanelLinKLi>
               <Nav.PanelLinKLi className="nav-item">
-                <Link to="/dashboard" className="nav-link" id="navbarDropdown">Dashboard</Link>
+                {!userAuth ? <Link to="/login">Login</Link> :
+                <Link to="/dashboard" className="nav-link" id="navbarDropdown">Dashboard</Link>}
               </Nav.PanelLinKLi>
               <Nav.PanelLinKLi className="nav-item dropdown">
                 <Link to="/information" className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Information</Link>
