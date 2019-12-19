@@ -12,6 +12,11 @@ export const get_wishLists = wishlist => ({
     payload: wishlist
 });
 
+export const del_wish = message => ({
+    type: Types.DEL_WISH,
+    payload: message
+});
+
 
 // KART SECTION
 export const add_kart = kart => ({
@@ -22,4 +27,9 @@ export const add_kart = kart => ({
 export const get_kartList = kartList => ({
   type: Types.GET_KARTS,
   payload: kartList
+});
+
+export const del_kart = message => ({
+  type: Types.ADD_TO_KART,
+  payload: message
 });

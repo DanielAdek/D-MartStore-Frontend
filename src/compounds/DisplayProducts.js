@@ -1,11 +1,21 @@
-import React, { useState, Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import Slider from '@brainhubeu/react-carousel'
+import '@brainhubeu/react-carousel/lib/style.css';
+import { Alias } from '../importer';
 import * as RC from '../assets/styles/displayProducts';
 import { Product } from '../components/product';
-import { ProductData, FeaturedProData } from '../assets/map.v';
+// import { FeaturedProData } from '../assets/map.v';
 import { FeaturedProducts } from '../components/featuredPro';
 import { Modal } from '../components/modal';
 import { MagnifyProduct } from '../components/magnifyProduct';
 
+const { retreiveProducts } = Alias.pathToActions('ProductCRUD');
+const { RingLoadScreen } = Alias.pathToComponents('spiners');
+const { addToWishList, addToKart } = Alias.pathToActions('WishAndKartCRUD');
+const { ProductData } = Alias.pathToAssets('map.v');
+const token = localStorage.getItem('token');
 export const DisplayProductHeading = () => {
   return (
     <RC.DisplayHeadingContainer>
@@ -22,25 +32,41 @@ export const DisplayProductHeading = () => {
 }
 
 export const DisplayProducts = () => {
+  // Redux Hooks
+  const dispatch = useDispatch();
+	const products = useSelector(state => state.ProductCRUD.products);
+	const processing = useSelector(state => state.Loading.loading);
+	const kartBtnClicked = useSelector(state => state.Loading.loadInComponent);
+	const wishBtnClicked = useSelector(state => state.Loading.loadInComponent);
+  
+  // React Hooks
   const [showProductActionBtns, setShowProductActionBtns] = useState(false);
-  const [currentData, setCurrentData] = useState(ProductData[0]);
+  const [currentData, setCurrentData] = useState(null);
   const [currentFigure, setCurrentFigure] = useState(1);
   const [magnifyProduct, setMagnifyProduct] = useState(false);
   const [currentImage, setCurrentImage] = useState({});
 
+  useEffect(() => {
+		if (!products) {
+			dispatch(retreiveProducts());
+		}
+  }, [dispatch, products]);
+  
   const hideActionBtn = () => setShowProductActionBtns(false);
 
-  const handleImageToManify = (dat) => setCurrentImage({ src: dat.image, type: dat.type});
+  const handleImageToManify = (dat) => setCurrentImage({ src: dat.image, id: dat.id});
 
   const handleMagnifyProduct = data => {
     setMagnifyProduct(true);
     setCurrentData(data)
-    setCurrentImage({ src: data.product.productImages[0].image, type: data.product.productImages[0].type })
+    setCurrentImage({ src: data.productImages[0].image, id: data.productImages[0].id })
   }
   
   const closeModal = data => {
     setMagnifyProduct(false);
     setCurrentFigure(1);
+    setCurrentImage({});
+    setCurrentData(null)
   }
 
   // const handleStars = () => {}
@@ -59,39 +85,81 @@ export const DisplayProducts = () => {
     setCurrentFigure(event.target.value <= 1 ? 1 : parseInt(event.target.value, 10));
   }
 
+	const handleKartCreate = product => {
+    const kartData = { productId: product._id, quantity: currentFigure, imageType: currentImage.id || 1, kartCode: token || ''};
+		dispatch(addToKart({ kartData }));
+	}
+  
+	const handleWishListCreate = product => {
+		const data = { imageType: currentImage.id || 1, productId: product._id, wishlistcode: token || "" }
+		dispatch(addToWishList(data));
+	}
+
   const displayActionBtn = index => setShowProductActionBtns(index);
 
   return (
     <Fragment>
-    <RC.DisplayProductsContainer id="products">
-      { ProductData.map((data, index) => <Product
-        key={index}
-        index={index} 
-        data={data.product}
-        Styles={{ mr: '5px', mb: '2px'}}
-        hideActionBtn={hideActionBtn}
-        showProductActionBtns={showProductActionBtns}
-        magnify={() => handleMagnifyProduct(data)}
-        displayActionBtn={() => displayActionBtn(index)} />)}
-    </RC.DisplayProductsContainer>
-    <Modal visible={magnifyProduct}>
-        <MagnifyProduct 
-          closeModal={closeModal}
-          currentData={currentData}
-          currentImage={currentImage}
-          currentFigure={currentFigure}
-          handleQtyAmout={handleQtyAmout}
-          handleChangeQty={handleChangeQty}
-          handleImageToManify={handleImageToManify}
-        />
-      </Modal>
+      { processing && <RingLoadScreen text="Loading.." />}
+      <RC.DisplayProductsContainer>
+        <Slider
+          arrows
+          slidesPerPage={5}
+          slidesPerScroll={2}
+          infinite
+          animationSpeed={1500}
+          autoPlay={3000}
+          stopAutoPlayOnHover
+          offset={50}
+          itemWidth={350}
+          clickToChange
+          centered>
+          { (products || ProductData).map((data, index) => <Product
+            key={index}
+            index={index} 
+            data={data}
+            wishBtnClicked={wishBtnClicked}
+            kartBtnClicked={kartBtnClicked}
+            Styles={{ mr: '5px', mb: '2px'}}
+            hideActionBtn={hideActionBtn}
+            magnify={() => handleMagnifyProduct(data)}
+            showProductActionBtns={showProductActionBtns}
+            handleKartCreate={() => handleKartCreate(data)}
+            displayActionBtn={() => displayActionBtn(index)} 
+            handleWishListCreate={() => handleWishListCreate(data)}
+            />)}
+        </Slider>
+      </RC.DisplayProductsContainer>
+      <Modal visible={magnifyProduct}>
+          <MagnifyProduct 
+            loading={processing}
+            closeModal={closeModal}
+            currentData={currentData}
+            currentImage={currentImage}
+            currentFigure={currentFigure}
+            wishBtnClicked={wishBtnClicked}
+            kartBtnClicked={kartBtnClicked}
+            handleQtyAmout={handleQtyAmout}
+            handleChangeQty={handleChangeQty}
+            handleImageToManify={handleImageToManify}
+            handleKartCreate={() => handleKartCreate(currentData)}
+            handleWishListCreate={() => handleWishListCreate(currentData)}
+          />
+        </Modal>
     </Fragment>
   )
 }
 
-
 export const DisplayFeaturedProducts = () => {
-  const handleShowAll = (x) => alert(x)
+  // Redux Hook
+  const history = useHistory();
+
+  // React Hook
+  const products = useSelector(state => state.ProductCRUD.products);
+  const FeaturedPro = [(products && products[0]), (products && products[1]), (products && products[2]), (products && products[3]), (products && products[0]), (products && products[1])]
+  const handleShowAll = data => {
+    localStorage.setItem('category', data.productCategory);
+    history.push('/shop');
+  }
   return (
     <RC.Wrapper>
         <RC.SectionHeadingCont>
@@ -99,8 +167,8 @@ export const DisplayFeaturedProducts = () => {
           <RC.HorizontalRule />
         </RC.SectionHeadingCont>
       <RC.CardsContainer>
-        {FeaturedProData.map((data, i) => (
-          <FeaturedProducts key={i} clicked={() => handleShowAll(`${data.alt} is coming soon`)} data={data} />
+        {products && FeaturedPro.map((data, i) => (
+          <FeaturedProducts key={i} clicked={() => handleShowAll(data)} data={data} />
         ))}
       </RC.CardsContainer>
     </RC.Wrapper>

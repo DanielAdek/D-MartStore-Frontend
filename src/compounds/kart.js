@@ -6,16 +6,16 @@ import * as RC from '../assets/styles/kart';
 import { Karts } from '../components/kart';
 import { Modal } from '../components/modal';
 
-const { retreiveKartList } = Alias.pathToActions('WishAndKartCRUD');
+const { retreiveKartList, deleteKart } = Alias.pathToActions('WishAndKartCRUD');
 const { DualRingLoadScreen } = Alias.pathToComponents('spiners');
 
 const totalPrice = prices => prices && prices.reduce((accumulatedPrice, current) => ( accumulatedPrice += current.cummulativePrice), 0);
 
 export const KartList = () => {
-		// Redux Hooks
-		const dispatch = useDispatch();
-		const kartList = useSelector(state => state.WishAndKartCRUD.karts);
-		const processing = useSelector(state => state.Loading.loading);
+	// Redux Hooks
+	const dispatch = useDispatch();
+	const kartList = useSelector(state => state.WishAndKartCRUD.karts);
+	const processing = useSelector(state => state.Loading.loading);
 
 	const [currentData, setCurrentData] = useState(null);
 	const [totalKart, setTotalKart] = useState(0.00);
@@ -25,11 +25,11 @@ export const KartList = () => {
 
 	const showModal = () => setVisible(true);
 
-	useEffect(() => {
-		if (!kartList) {
-			dispatch(retreiveKartList());
-		}
-	}, [dispatch, kartList]);
+	// useEffect(() => {
+	// 	if (!kartList) {
+	// 		dispatch(retreiveKartList());
+	// 	}
+	// }, [dispatch, kartList]);
 
 	useEffect(() => {
 		setCurrentData(kartList && kartList.map(data => data));
@@ -53,6 +53,7 @@ export const KartList = () => {
 		});
 	};
 
+	const handleDelKart = kartId => dispatch(deleteKart(kartId, retreiveKartList));
 
 	return (
 		<RC.KartWrapper>
@@ -97,6 +98,7 @@ export const KartList = () => {
 							data={data}
 							index={index}
 							currentData={currentData}
+							handleDelKart={() => handleDelKart(data._id)}
 							handleQtyAmout={handleQtyAmout}
 						/>
 					))}

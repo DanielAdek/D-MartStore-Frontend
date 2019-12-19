@@ -1,20 +1,31 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import TopNav from '../components/nav';
 import { HeaderSection } from '../compounds/Header';
 import { NavigationPanel } from '../components/nav-panel';
-import { ProductData } from '../assets/map.v';
+// import { ProductData } from '../assets/map.v';
 import { Footer } from '../components/footer';
 import NavTabs from '../components/tab';
 import * as RC from '../assets/styles/magnify-Pro';
 import { DisplayProductHeading, DisplayProducts } from '../compounds/DisplayProducts';
 
 export const GetOneProduct = () => {
+	// Redux Hooks
+	// const dispatch = useDispatch();
+	const products = useSelector(state => state.ProductCRUD.products);
+
+	// React Hooks
 	const [product, setProduct] = useState(null);
 
 	useEffect(() => {
-		setProduct(ProductData[0]);
-	}, []);
+		setProduct(
+			products && products.filter(data => data.productCode === localStorage.getItem('productSelected'))[0]
+		);
+	}, [products]);
+
+	console.log(product);
+
 	return (
 		<Fragment>
 			<TopNav />
@@ -25,13 +36,13 @@ export const GetOneProduct = () => {
 					<RC.Body>
 						<RC.ContentBody>
 							<RC.ProductMagnifiedImageCont>
-								<RC.ProductMagnifiedImage src={product.product.productImages[0].image} alt="product" />
+								<RC.ProductMagnifiedImage src={product.productImages[0].image} alt="product" />
 							</RC.ProductMagnifiedImageCont>
 						</RC.ContentBody>
 
 						<RC.ContentBody>
 							<RC.ProductRightSide>
-								<RC.ProductHeading>{product.product.productName}</RC.ProductHeading>
+								<RC.ProductHeading>{product.productName}</RC.ProductHeading>
 								<RC.ProductRR>
 									<RC.ProductInfoRating>
 										<RC.StarSVG>
@@ -43,28 +54,24 @@ export const GetOneProduct = () => {
 										<Link to="/getoneproduct"> 12 Reviews</Link>
 									</RC.ProductInfoReview>
 								</RC.ProductRR>
-								<RC.ProductDetails>
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ornare, mi in
-									ornare elementum, libero nibh lacinia urna, quis convallis lorem erat at purus.
-									Maecenas eu varius nisi.
-								</RC.ProductDetails>
+								<RC.ProductDetails>{product.productDescription}</RC.ProductDetails>
 								<hr />
 								<RC.ProductStatus>
 									<RC.ProductStatText>
 										Avaliablilty:{' '}
 										<RC.ProductStatusColor
 											statusText={
-												product.product.productAvailablility === 'In Stock'
+												product.productStatus=== 'In-Stock'
 													? '#28a745'
 													: '#ffd333'
 											}>
-											{product.product.productAvailablility}
+											{product.productStatus}
 										</RC.ProductStatusColor>{' '}
 									</RC.ProductStatText>
-									<RC.ProductStatText>Brand: {product.product.productBrand}</RC.ProductStatText>
-									<RC.ProductStatText>Code: {product.product._id}</RC.ProductStatText>
+									<RC.ProductStatText>Brand: {product.productBrand}</RC.ProductStatText>
+									<RC.ProductStatText>Code: {product.productCode}</RC.ProductStatText>
 								</RC.ProductStatus>
-								<RC.ProductPrice>${product.product.productPrice}</RC.ProductPrice>
+								<RC.ProductPrice>${product.productPrice}</RC.ProductPrice>
 								<RC.ProductActionsSection>
 									<RC.ProductQtySection>
 										<RC.ProductQtyInputDiv>
@@ -99,7 +106,7 @@ export const GetOneProduct = () => {
 								</RC.ProductActionsSection>
 							</RC.ProductRightSide>
 							<RC.ProductImagesContainer>
-								{product.product.productImages.map((dat, i) => (
+								{product.productImages.map((dat, i) => (
 									<RC.ProductImages
 										onClick={() => product.handleImageToManify(dat)}
 										src={dat.image}

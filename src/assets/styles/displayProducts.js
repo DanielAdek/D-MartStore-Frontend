@@ -40,7 +40,6 @@ export const DisplaySubNav = Style.div`
 
 
 export const DisplayProductsContainer = Style.div`
-  display: flex;
   width: 90%;
   margin: 1px auto;
 `;

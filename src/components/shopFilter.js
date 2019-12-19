@@ -6,7 +6,7 @@ import "react-input-range/lib/css/index.css"
 
 export const ShopFilter = () => {
   const brands = {};
-  ProductData.forEach(data => brands[data.product.productBrand] = data.product.productBrand);
+  ProductData.forEach(data => brands[data.productBrand] = data.productBrand);
   const [currentPrice, setCurrentPrices] = useState({ min: 200, max: 750 });
 
   return (

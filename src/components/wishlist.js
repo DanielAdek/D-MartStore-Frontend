@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Alias } from '../importer';
 import * as RC from '../assets/styles/wishlist';
 
-const { addToKart, retreiveWishLists } = Alias.pathToActions('WishAndKartCRUD');
+const { addToKart, retreiveWishLists, deleteWish } = Alias.pathToActions('WishAndKartCRUD');
 const { DualRingLoadScreen, DualRingLoad } = Alias.pathToComponents('spiners');
 
 export const Whishlist = () => {
@@ -28,6 +28,8 @@ export const Whishlist = () => {
     const kartData = { kartCode: kartCode || "", productId: data.productId._id, quantity: 1, imageType: data.imageType};
     dispatch(addToKart({ kartData }));
   }
+
+  const handleDelWish = wish => dispatch(deleteWish(wish._id, retreiveWishLists));
 
 
   return (
@@ -63,7 +65,7 @@ export const Whishlist = () => {
           <RC.WhishListTableActionBtn onClick={() => handlKartCreate(data, index)} className="btn btn-md">{(loading && clickedBtn === index) ? <DualRingLoad /> : 'Add Cart'}</RC.WhishListTableActionBtn>
         </RC.WhishListTableDataActionBtn>
         <RC.WhishListTableDataDel>
-          <RC.WhishListTableDataDelButton>x</RC.WhishListTableDataDelButton>
+          <RC.WhishListTableDataDelButton onClick={() => handleDelWish(data)}>x</RC.WhishListTableDataDelButton>
         </RC.WhishListTableDataDel>
       </RC.WhishListTableRow>
       ))}

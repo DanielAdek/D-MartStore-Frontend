@@ -6,7 +6,7 @@ export const ProductCardContainer = Style.div`
   flex-direction: column;
   padding: 1px;
   outline: none;
-  width: 280px;
+  // width: 280px;
   border: 1px solid #f0f0f0;
   margin-right: ${props => props.mr};
   margin-bottom: ${props => props.mb};

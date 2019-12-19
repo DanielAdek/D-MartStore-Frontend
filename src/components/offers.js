@@ -2,8 +2,8 @@ import React from 'react';
 import * as RC from '../assets/styles/offers';
 
 export const OfferBox = props => {
-  return props.data.map(data => (
-    <RC.OfferContainer>
+  return props.data.map((data, i) => (
+    <RC.OfferContainer key={i}>
      <RC.OfferIcon src={data.image}/>
       <RC.OfferDetails>
         <RC.OfferDetailTitle>{data.dTitle}</RC.OfferDetailTitle>
@@ -14,7 +14,7 @@ export const OfferBox = props => {
 }
 
 export const OfferBox2 = ({ images }) => (
-  images.map(image => (
-    <RC.OfferSection2Images src={image.source} alt={images.alt} />
+  images.map((image, i) => (
+    <RC.OfferSection2Images key={i} src={image.source} alt={images.alt} />
   ))
 );

@@ -1,21 +1,31 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { Alias } from '../importer';
 import * as RC from '../assets/styles/magnify-Pro';
 
+const { DualRingLoad } = Alias.pathToComponents('spiners');
+
 export const MagnifyProduct = props => {
+	// Redux Hooks
+	const history = useHistory();
+
+	const handelProductSelected = productId => {
+		localStorage.setItem('productSelected', productId)
+		history.push('/getoneproduct');
+	}
 	return (
 		<Fragment>
 			<RC.Body>
 				<RC.CloseBtn onClick={props.closeModal}>X</RC.CloseBtn>
 				<RC.ContentBody>
 					<RC.ProductMagnifiedImageCont>
-						<RC.ProductMagnifiedImage src={props.currentImage.src} alt="product" />
+						<RC.ProductMagnifiedImage src={props.currentData && props.currentImage.src} alt="product" />
 					</RC.ProductMagnifiedImageCont>
 				</RC.ContentBody>
 
 				<RC.ContentBody>
 					<RC.ProductRightSide>
-						<RC.ProductHeading>{props.currentData.productName}</RC.ProductHeading>
+						<RC.ProductHeading onClick={() => handelProductSelected(props.currentData.productCode)}>{props.currentData && props.currentData.productName}</RC.ProductHeading>
 						<RC.ProductRR>
 							<RC.ProductInfoRating>
 								<RC.StarSVG>
@@ -23,41 +33,41 @@ export const MagnifyProduct = props => {
 									<RC.ProductSVGPath d={RC.StarAttrPerimeter}></RC.ProductSVGPath>
 								</RC.StarSVG>
 							</RC.ProductInfoRating>
-							<RC.ProductInfoReview onClick>
-								<Link to="/getoneproduct"> 12 Reviews</Link>
+							<RC.ProductInfoReview onClick={() => handelProductSelected(props.currentData.productCode)}>
+								12 Reviews
 							</RC.ProductInfoReview>
 						</RC.ProductRR>
-						<RC.ProductDetails>{props.currentData.productDescription}</RC.ProductDetails>
+						<RC.ProductDetails>{props.currentData && props.currentData.productDescription}</RC.ProductDetails>
 						<hr />
 						<RC.ProductStatus>
-							<RC.ProductStatText>Brand: {props.currentData.productBrand}</RC.ProductStatText>
-							<RC.ProductStatText>Category: {props.currentData.productCategory}</RC.ProductStatText>
-							<RC.ProductStatText>Code: {props.currentData._id}</RC.ProductStatText>
+							<RC.ProductStatText>Brand: {props.currentData && props.currentData.productBrand}</RC.ProductStatText>
+							<RC.ProductStatText>Category: {props.currentData && props.currentData.productCategory}</RC.ProductStatText>
+							<RC.ProductStatText>Code: {props.currentData && props.currentData.productCode}</RC.ProductStatText>
 						</RC.ProductStatus>
-						<RC.ProductStatText> Avaliablilty:
+						<RC.ProductStatText>Avaliablilty:
 								<RC.ProductStatusColor
-									statusText={ props.currentData.productStatus && props.currentData.productStatus.toLowerCase() === 'in-stock' ? '#28a745' : '#ffd333'}>
-									{props.currentData.productStatus}
+									statusText={ props.currentData && props.currentData.productStatus === 'In-Stock' ? '#28a745' : '#ffd333'}>
+									{props.currentData && props.currentData.productStatus}
 								</RC.ProductStatusColor>
 								<br />
 							</RC.ProductStatText>
-						<RC.ProductPrice className="mt-3">${props.currentData.productPrice}</RC.ProductPrice>
+						<RC.ProductPrice className="mt-3">${props.currentData && props.currentData.productPrice}</RC.ProductPrice>
 						<RC.ProductImagesContainer>
-						{props.currentData.productImages && props.currentData.productImages.map((dat, i) => (
-							<RC.ProductImages onClick={() => props.handleImageToManify(dat)} src={dat.image} />
+						{props.currentData && props.currentData.productImages && props.currentData.productImages.map((dat, i) => (
+							<RC.ProductImages onClick={() => props.handleImageToManify(dat)} key={i} src={dat.image} />
 						))}
 					</RC.ProductImagesContainer>
 						<RC.ProductActionsSection>
 							<RC.ProductQtySection>
 								<RC.ProductQtyInputDiv>
-									<RC.ProductQtyInput type="number" min="1" step="1" value={props.currentFigure} onChange={props.handleChangeQty}/>
+									<RC.ProductQtyInput type="number" min="1" step="1" value={props.currentFigure && props.currentFigure} onChange={props.handleChangeQty}/>
 									<RC.ProductQtyButton onClick={props.handleQtyAmout} posL="1px">-</RC.ProductQtyButton>
 									<RC.ProductQtyButton onClick={props.handleQtyAmout} posR="1px">+</RC.ProductQtyButton>
 								</RC.ProductQtyInputDiv>
 							</RC.ProductQtySection>
 							<RC.ProductActionButtonSec>
-								<RC.ProductActionButton onClick={props.handleKartCreate} className="btn" bgColor="#ffd333" hClr="#9b9b9b">Add Cart</RC.ProductActionButton>
-								<RC.ProductActionButton onClick={props.handleWishListCreate} className="btn" bgColor="blue" clr="#f3f3f3" hClr="#dbd8d8">WishList</RC.ProductActionButton>
+								<RC.ProductActionButton onClick={props.handleKartCreate} className="btn" bgColor="#ffd333" hClr="#9b9b9b">{props.loading ? <DualRingLoad /> : 'Add Cart' }</RC.ProductActionButton>
+								<RC.ProductActionButton onClick={props.handleWishListCreate} className="btn" bgColor="blue" clr="#f3f3f3" hClr="#dbd8d8">{props.loading ? <DualRingLoad /> : 'WishList'}</RC.ProductActionButton>
 							</RC.ProductActionButtonSec>
 						</RC.ProductActionsSection>
 					</RC.ProductRightSide>

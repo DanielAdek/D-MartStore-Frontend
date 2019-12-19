@@ -121,3 +121,14 @@ input:checked ~ span::after {
 	outline: none;
 }
 
+button:hover, button:active,
+button:focus {
+	background:#3d464d;
+	color:#fff;
+	fill: #3d464d;
+	outline: none;
+}
+
+.BrainhubCarousel {
+	background: ghostwhite;
+}
