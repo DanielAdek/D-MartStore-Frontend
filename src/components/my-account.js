@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Form } from 'form-my-simple-validation';
+import { Alias } from '../importer';
 import * as RC from '../assets/styles/myaccount';
 import FormSchema from '../utils/validationSchema';
 import { Spiner } from '../components/loader';
@@ -9,6 +10,8 @@ import { Orders, LoremIpsum } from '../assets/map.v';
 import { ImageToBase64, generateCode, Alert } from '../utils/helpers';
 import { handleProductCreate } from '../store/actions/ProductCRUD';
 
+const { retreiveOrders } = Alias.pathToActions('Orders');
+
 export const formatDate = dateObject => {
   const [day, month, date, year] = new Date(dateObject).toDateString().split(" ");
   console.log(day);
@@ -16,7 +19,7 @@ export const formatDate = dateObject => {
 };
 
 const TableRows = orders => {
-  return orders.map((data, index) => (
+  return orders && orders.map((data, index) => (
     <RC.DashboardTableRow key={index} bgColorOnHover="#f2f2f2">
       <RC.DashboardTableData>{data._id}</RC.DashboardTableData>
       <RC.DashboardTableData>{formatDate(data.createdAt)}</RC.DashboardTableData>
@@ -72,6 +75,14 @@ const PreviewProduct = props => {
 }
 
 export const DashBoard = props => {
+  //Redux Hooks
+  const dispatch = useDispatch();
+  const orders = useSelector(state => state.Orders.orders);
+
+  useEffect(() => {
+    dispatch(retreiveOrders());
+  }, [dispatch]);
+
   return (
       <RC.DashboardContainer>
       <RC.DashboardCardContainer>
@@ -105,7 +116,7 @@ export const DashBoard = props => {
               <RC.DashboardTableHeader>Status</RC.DashboardTableHeader>
               <RC.DashboardTableHeader>Total</RC.DashboardTableHeader>
             </RC.DashboardTableRow>
-            {TableRows(Orders)}
+            {TableRows(orders)}
           </RC.DashboardTbody>
         </RC.DashboardTable>
       </RC.DashboardCardContainer>

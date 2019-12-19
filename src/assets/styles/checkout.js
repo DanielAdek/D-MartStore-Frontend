@@ -1,81 +1,85 @@
 import Style from 'styled-components';
 
-export const CheckoutHeader = Style.h1`
-margin:30px;
-margin-left:50px;
+export const CheckoutHeader = Style.h3`
+  font-weight: bold;
+  margin: 25px 0;
+  color: #3d464d;
+  margin-bottom: 40px;
 `;
+
 export const TableHead = Style.div`
-flex:1
-font-size:20px;
-font-weight:500
+  font-size: 17px;
+  font-weight: bold;
 `;
-export const TableHeadB = Style.div`
-flex:1
-padding-left:250px;
-font-size:20px;
-font-weight:500
-`;
+
 export const HeaderContainer = Style.div`
-display:flex;
-margin-bottom:30px;
+  display:flex;
+  justify-content: space-between;
 `;
 export const CheckoutContainer = Style.div`
-  margin:1px auto;
-  width:90%;
+  margin: 1px auto;
+  width: 90%;
  
 `;
 
 export const OrderTableContainer = Style.div`
-
+  margin-top: 20px;
 `;
+
+export const OrderedItemImg = Style.img`
+  width: 70px;
+  height: 70px;
+`;
+
 export const OrderedWrapper = Style.div`
-display:flex;
-padding:20px;
-font-size:17px;
-font-weight:400;
-border-bottom:1px solid #ebebeb
-font-family: Roboto,"sans-serif"
-color: #3d464d
+  display:flex;
+  padding: 15px 0;
+  font-size: 17px;
+  font-weight: 600;
+  border-bottom: 1px solid #ebebeb;
+  font-family: Roboto,"sans-serif";
+  color: #3d464d;
+  max-height: 95px;
+  overflow-y: auto;
+  justify-content: space-between;
 `;
 export const OrderProduct = Style.div`
-flex:2;
-    font-size: 17px;
-    line-height: 19px;
-    width: 100%;
-    margin-bottom: 40px;
-}
+  width: 70%;
 `;
+
+export const OrderProductName = Style.div`
+  color: #3d464d;
+  transform: translate(90px, -44px);
+`;
+
 export const orderTotal = Style.div`
-flex:1;
-    font-size: 17px;
-    line-height: 19px;
-    width: 100%;
-    margin-bottom: 40px;
-   padding-left: 130px;
-}
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  max-height: 76px;
 `;
 export const FillMyInformation = Style.div`
-    width:100%;
-    height:60px;
-   background:#b2d9ff;
-   font-size:17px;
-   padding-top:20px;
-   padding-left:20px;
-   font-weight:bold;
-   font-style:capiterlize;
+  width:100%;
+  height:60px;
+  background:#b2d9ff;
+  font-size:17px;
+  padding-top:20px;
+  padding-left:20px;
+  font-weight:bold;
+  font-style:capiterlize;
 
 `;
 
 export const RadioButton = Style.div`
   width:200px;
   margin-left: 30px;
-  padding-left:10px;
+  padding-left:0;
 `;
 export const RadioInput = Style.input`
-padding-left:30px;
+padding-left:10px;
 `;
 export const Radiolabel = Style.label`
-margin-left: 10px;
+margin-left: 2px;
 padding-right:10px
 `;
 export const CheckBoxLabel = Style.label`
@@ -85,12 +89,12 @@ font-size:16px;
 `;
 
 export const CheckBox = Style.input`
-width:40px
-marggin-bottom:40px;
+  width:40px
+  marggin-bottom:40px;
 `;
 
 export const BillingContainer = Style.div`
- display: flex;
+  display: flex;
   justify-content: space-between;
   height:auto;
   margin-top:50px;
@@ -99,20 +103,24 @@ export const BillingContainer = Style.div`
 
 `;
 export const BilingDetails = Style.div`
-border:1px solid #f0f0f0;
-width:750px
-border-radius:0.25rem;
-background:#fff;
-height:650px;
+  width: 60%;
+  border-radius:0.25rem;
+  background:#fff;
   height:auto
   border-right:none;
   border-top:none;
 `;
 
 export const Order = Style.div`
-border:1px solid #f0f0f0;
-width:520px;
-height:auto;
+  border:1px solid #f0f0f0;
+  width: 40%;
+  height:auto;
+`;
+
+export const OrderCardBody = Style.div`
+  width: 90%;
+  margin: 2px auto;
+  padding: 10px;
 `;
 
 export const SubTotal = Style.div`
@@ -122,82 +130,76 @@ display:grid
 `;
 
 export const GridItem = Style.div`
-padding:10px;
-font-weight:500;
+  padding:10px;
+  font-weight:500;
 `;
 
 export const OrderedTotal = Style.div`
-font-size:40px;
-margin-top:20px;
-border-top:1px solid #f0f0f0
-
+  font-size: 25px;
+  margin-top: 20px;
+  border-top: 1px solid #f0f0f0;
+  font-weight: bolder;
 `;
 
 export const PaymentContainer = Style.div`
-margin-top:40px;
+  margin-top:40px;
 `;
 
 export const PaymentLabals = Style.label`
-border:1px solid #f0f0f0;
-margin-left:20px;
-width:85%;
-height:35px;
-padding-top: 5px;
-padding-left:20px;
-&:hover{
-  background:#f0f0f0;
-}
+  border:1px solid #f0f0f0;
+  width: 100%;
+  height:35px;
+  padding-top: 5px;
+  padding-left:20px;
+  &:hover{
+    background:#f0f0f0;
+  }
 `;
 
 export const Span = Style.span`
-margin-left:20px
+  margin-left:20px
+  color: #3d464d;
+  font-weight: bold;
 `;
 
 export const Radio = Style.input``;
 
 export const PaymentMethodInfo = Style.div`
-font-size: 15px;
-    line-height: 20px;
-    padding: 2px 16px 13px 20px;
-    text-align:justify
-    width:85%
-    background:#f0f0f0;
-    color:#6c757d;
-    margin-left:20px
-   margin-bottom: 10px;
-   display: ${props => (props.show ? 'block' : 'none')};
-  `;
+  font-size: 15px;
+  line-height: 20px;
+  padding: 2px 16px 13px 20px;
+  text-align:justify
+  width: 100%
+  background:#f0f0f0;
+  color:#6c757d;
+  margin-bottom: 10px;
+  display: ${props => (props.show ? 'block' : 'none')};
+`;
 
 export const OrderButton = Style.button`
   width:100%;
   border-color:#ffd333;
+  background-color:#ffd333;
+  fill: #ffd333;
   border:none;
-  &:focus{
-  background:#3d464d;
-  border:none;
-  fill:: #3d464d
-}
-  fill: #3d464d
-  cursor:pinter;
-  &:hover{
-    background:#3d464d;
-    color:#fff;
-    fill:: #3d464d
-      border:none
-  }
+  border-radius: 5px;
+  cursor:pointer;
   margin-top:40px;
   height: calc(3.625rem + 2px);
-  background: ${props => (props.applyBackground ? '#3d464d' : '#ffd333')};
-  line-height: 1;
-   font-weight: 500;
-    border-radius: 2px;
-    color:white
+  font-weight: bold;
+  color: rgb(61, 70, 77);
+  &:hover, &:focus{
+    background:#3d464d;
+    color:#fff;
+    fill: #3d464d;
+    outline: none;
+  }
 `;
 
 // ========== Edit Profile Component ========== //
 
 export const EditProfileContainer = Style.div`
-  width: 90%;
+  width: 95%;
   border: 2.3px solid rgb(240, 240, 240);
   padding: 2rem;
 `;
@@ -249,8 +251,9 @@ export const FormInput = Style.input`
 `;
 
 export const FormTextArea = Style.textarea`
-height:100px;
-margin-top:40px;
+  height:100px;
+  margin-top:10px;
+  border: 1px solid #ccc;
 `;
 
 export const FormButton = Style.button`
@@ -260,6 +263,6 @@ export const FormButton = Style.button`
   color: ${props => props.color};
   margin-top: 2rem;
 `;
-export const ShippingdetailsHeader = Style.h1`
+export const ShippingdetailsHeader = Style.h3`
 margin-top:40px;
 `;

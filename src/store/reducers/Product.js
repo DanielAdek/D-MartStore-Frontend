@@ -19,6 +19,11 @@ export default (state = initialState, action) => {
         ...state,
         products: action.payload
       };
+    case Types.GET_ONE_PRODUCTS:
+      return {
+        ...state,
+        product: action.payload
+      };
     default:
       return state;
   }

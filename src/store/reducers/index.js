@@ -35,5 +35,6 @@ export default combineReducers({
     Loading,
     Authenticate: file('Authenticate').default,
     ProductCRUD: file('Product').default,
-    WishAndKartCRUD: file('WishAndKartCRUD').default
+    WishAndKartCRUD: file('WishAndKartCRUD').default,
+    Orders: file('Order').default
 });

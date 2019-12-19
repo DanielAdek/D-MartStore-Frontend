@@ -22,7 +22,7 @@ export const Karts = props => {
       </RC.KartTableDataQty>
       <RC.KartTableDataPrice>${props.currentData ? parseFloat(props.data.productId.productPrice, 10) * parseFloat(props.currentData[props.index].quantity, 10) : '0.00'}</RC.KartTableDataPrice>
       <RC.KartTableDataDel>
-        <RC.KartTableDataDelButton>x</RC.KartTableDataDelButton>
+        <RC.KartTableDataDelButton onClick={props.handleDelKart}>x</RC.KartTableDataDelButton>
       </RC.KartTableDataDel>
     </RC.KartTableRow>
   )

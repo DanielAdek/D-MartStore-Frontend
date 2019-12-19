@@ -1,5 +1,7 @@
-import SweetAlert from 'sweetalert';
+// import SweetAlert from 'sweetalert';
 import { Alias } from '../../importer';
+
+const { Alert } = Alias.pathToUtils('helpers');
 
 // WISH LIST ACTION SECTION
 export const addToWishList = data => async dispatch => {
@@ -8,7 +10,8 @@ export const addToWishList = data => async dispatch => {
     const response = await Alias.pathToUtils('helpers').Promise('POST', `/wishlist/create/${data.productId}`, data);
     dispatch(Alias.pathToDispatchAbles('wishandkart').add_wish(response.data.data.details));
     dispatch(Alias.pathToDispatchAbles('loading').finished());
-    SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
+    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
+    Alert.success(response.data.data.message);
   } catch (error) {
     dispatch(Alias.pathToDispatchAbles('loading').finished());
     Alias.pathToUtils('helpers').handleError(error)
@@ -24,8 +27,23 @@ export const retreiveWishLists = token => async dispatch => {
     dispatch(Alias.pathToDispatchAbles('loading').finished());
     // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
   } catch (error) {
-    Alias.pathToUtils('helpers').handleError(error)
+    // Alias.pathToUtils('helpers').handleError(error)
     dispatch(Alias.pathToDispatchAbles('loading').finished());
+  }
+};
+
+export const deleteWish = (wishId, updateWishList) => async dispatch => {
+  try {
+    dispatch(Alias.pathToDispatchAbles('loading').processing_small_spin());
+    const response = await Alias.pathToUtils('helpers').Promise('delete', `/wishlist/delete/${wishId}`);
+    dispatch(Alias.pathToDispatchAbles('wishandkart').del_wish(response.data.data.details));
+    dispatch(Alias.pathToDispatchAbles('loading').finished());
+    dispatch(updateWishList());
+    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
+    Alert.success(response.data.data.message);
+  } catch (error) {
+    dispatch(Alias.pathToDispatchAbles('loading').finished());
+    Alias.pathToUtils('helpers').handleError(error)
   }
 };
 
@@ -42,7 +60,8 @@ export const addToKart = data => async dispatch => {
     const response = await Alias.pathToUtils('helpers').Promise('POST', url, data);
     dispatch(Alias.pathToDispatchAbles('wishandkart').add_kart(response.data.data.details));
     dispatch(Alias.pathToDispatchAbles('loading').finished());
-    SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
+    Alert.success(response.data.data.message);
+    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
   } catch (error) {
     dispatch(Alias.pathToDispatchAbles('loading').finished());
     Alias.pathToUtils('helpers').handleError(error)
@@ -60,5 +79,20 @@ export const retreiveKartList = token => async dispatch => {
   } catch (error) {
     Alias.pathToUtils('helpers').handleError(error)
     dispatch(Alias.pathToDispatchAbles('loading').finished());
+  }
+};
+
+export const deleteKart = (kartId, updateKartList) => async dispatch => {
+  try {
+    dispatch(Alias.pathToDispatchAbles('loading').processing_small_spin());
+    const response = await Alias.pathToUtils('helpers').Promise('delete', `/cart/delete/${kartId}`);
+    dispatch(Alias.pathToDispatchAbles('wishandkart').del_kart(response.data.data.details));
+    dispatch(Alias.pathToDispatchAbles('loading').finished());
+    dispatch(updateKartList());
+    Alert.success(response.data.data.message);
+    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
+  } catch (error) {
+    dispatch(Alias.pathToDispatchAbles('loading').finished());
+    Alias.pathToUtils('helpers').handleError(error)
   }
 };

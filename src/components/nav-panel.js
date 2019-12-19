@@ -17,11 +17,11 @@ export const NavigationPanel = props => {
   const [ catArrClicked, setCatArrClicked] = useState(props.initialCatGrowState);
 
   useEffect(() => {
-		if (!wishList || !kartList) {
+		// if (!wishList || !kartList) {
 			dispatch(retreiveWishLists());
 			dispatch(retreiveKartList());
-		}
-  }, [dispatch, kartList, wishList]);
+		// }
+  }, [dispatch]);
 
   const toggledCatArr = () => setCatArrClicked(!catArrClicked);
 

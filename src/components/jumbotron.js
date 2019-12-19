@@ -4,7 +4,7 @@ import { jumboPic } from '../assets/map.v';
 
 const JumbotronImages = props => {
   return props.data.map((img, i) => (
-    <RC.JumbtronImageCover className={`carousel-item ${i === 0 ? 'active' : ''}`}>
+    <RC.JumbtronImageCover key={i} className={`carousel-item ${i === 0 ? 'active' : ''}`}>
       <RC.JumbotronImage src={img} className="d-block w-100" alt="?" />
     </RC.JumbtronImageCover>
   ));
@@ -13,7 +13,7 @@ const JumbotronImages = props => {
 
 const Indicators = props => {
   return props.data.map((img, i) => (
-    <RC.JumbotronSliderLine data-target="#carouselExampleCaptions" data-slide-to={i} className={`${i === 0 ? 'active' : ''}`} />
+    <RC.JumbotronSliderLine key={i} data-target="#carouselExampleCaptions" data-slide-to={i} className={`${i === 0 ? 'active' : ''}`} />
   ));
 }
 

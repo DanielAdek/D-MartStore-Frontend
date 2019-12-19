@@ -7,8 +7,8 @@ import { TNavListData } from '../assets/map.v';
 
 const { RingLoad } = Alias.pathToComponents('spiners');
 
-const TNavListIcon = TNavListData.map(data => (
-	<RC.TNavListIcon src={data.source} pointer={data.clickable} alt={data.alt} />
+const TNavListIcon = TNavListData.map((data, i) => (
+	<RC.TNavListIcon key={i} src={data.source} pointer={data.clickable} alt={data.alt} />
 ));
 
 export default () => {

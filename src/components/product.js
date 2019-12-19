@@ -33,8 +33,8 @@ export const Product = props => {
       </RC.ProductInfoCont>
       {targetedProduct && <RC.CardOverlay />}
       <RC.ProductActionContainer show={targetedProduct}>
-        <RC.ProductAddButton onClick={props.handleKartCreate} isWishListBtn={false}>Add Cart</RC.ProductAddButton>
-        <RC.ProductAddButton onClick={props.handleWishListCreate} isWishListBtn={true} >{ (props.loading && targetedProduct)? <DualRingLoad /> : 'WishList' }</RC.ProductAddButton>
+        <RC.ProductAddButton onClick={props.handleKartCreate} isWishListBtn={false}>{ (props.kartBtnClicked && targetedProduct)? <DualRingLoad /> : 'Add Cart' }</RC.ProductAddButton>
+        <RC.ProductAddButton onClick={props.handleWishListCreate} isWishListBtn={true} >{ (props.wishBtnClicked && targetedProduct)? <DualRingLoad /> : 'WishList' }</RC.ProductAddButton>
       </RC.ProductActionContainer>
     </RC.ProductCardContainer>
   )

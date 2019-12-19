@@ -31,7 +31,7 @@ export const handleAuthenticate = (data, history) => async dispatch => {
   }
 };
 
-export const handleOnboard = (data, history) => async dispatch => {
+export const handleOnBoard = (data, history) => async dispatch => {
   try {
     dispatch(Alias.pathToDispatchAbles('loading').processing());
     const response = await Alias.pathToUtils('helpers').Promise('POST', '/users/create', data);
@@ -42,6 +42,19 @@ export const handleOnboard = (data, history) => async dispatch => {
     dispatch(Alias.pathToDispatchAbles('loading').finished());
     history.push('/');
     SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
+  } catch (error) {
+    Alias.pathToUtils('helpers').handleError(error)
+    dispatch(Alias.pathToDispatchAbles('loading').finished());
+  }
+};
+
+export const retrieveUserData = () => async dispatch => {
+  try {
+    dispatch(Alias.pathToDispatchAbles('loading').processing());
+    const response = await Alias.pathToUtils('helpers').Promise('GET', `/users/details`);
+    await dispatch(Alias.pathToDispatchAbles('auth').auth_user(response.data.data.details.user));
+    dispatch(Alias.pathToDispatchAbles('loading').finished());
+    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
   } catch (error) {
     Alias.pathToUtils('helpers').handleError(error)
     dispatch(Alias.pathToDispatchAbles('loading').finished());

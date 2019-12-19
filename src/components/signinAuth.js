@@ -18,13 +18,12 @@ export const LoginAuthentication = () => {
 	// React Hooks
 	const [authLogin, setAuthLogin] = useState({});
 
-	const handleChange = e => {
-		setAuthLogin({ ...authLogin, [e.target.name]: e.target.value });
-	};
+	const handleChange = e =>
+			setAuthLogin({ ...authLogin, [e.target.name]: e.target.value });
 	
-	const handleSubmit = e => {
-		dispatch(handleAuthenticate(authLogin, history));
-	};
+	const handleSubmit = () =>
+			dispatch(handleAuthenticate(authLogin, history));
+
 	return (
 		<SI.signupContainer>
 			<SI.SignupLeft>
@@ -37,7 +36,7 @@ export const LoginAuthentication = () => {
 
 			<SI.Signupright>
 				<SI.SignupRightContainer>
-					<SI.Div>Welcome Back!</SI.Div>
+					<SI.Div>Welcome!</SI.Div>
 					<SI.SignupHeadText>
 						Don't have an account? <Link to="/signup">Sign Up </Link>
 					</SI.SignupHeadText>
@@ -64,12 +63,10 @@ export const LoginAuthentication = () => {
 							</SI.formGroup>
 						</SI.formRow>
 						<SI.SignupBotton type="button" onClick={handleSubmit}>
-							Sign In
-							{processing && <RingLoad />}
+							{processing ? <RingLoad /> : 'Sign In'}
 						</SI.SignupBotton>
 					</SI.Form>
 					<SI.ForgetPassword>
-						{' '}
 						<Link to="/forgetpassword">Forget Password</Link>
 					</SI.ForgetPassword>
 				</SI.SignupRightContainer>

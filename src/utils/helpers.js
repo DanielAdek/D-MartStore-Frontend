@@ -44,9 +44,8 @@ export const Alert = {
   },
   success: message => {
     toastr.options.closeButton = true
-    toastr.options.timeOut = 6200
+    toastr.options.timeOut = 2400
     toastr.options.preventDuplicates = true;
-    toastr.options.rtl = true;
     toastr.success(message)
   },
   info: message => {
