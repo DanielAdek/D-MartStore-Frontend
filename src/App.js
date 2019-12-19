@@ -12,6 +12,7 @@ import { SignupAuth } from './compounds/SignupAuth';
 import { LoginAuthentication } from './components/signinAuth';
 import { AboutPage } from './pages/AboutUs';
 import { Erro404 } from './pages/404';
+import { contactUsPage } from './pages/conatact-us';
 
 function App() {
 	return (
@@ -25,6 +26,7 @@ function App() {
 				<Route path="/about" component={AboutPage} />
 				<Route path="/wishlist" component={WishListPage} />
 				<Route path="/kart" component={KartPage} />
+				<Route path="/contact-us" component={contactUsPage} />
 				<Route path="/dashboard" component={Dashboard} />
 				<Route path="/getoneproduct" component={GetOneProduct} />
 				<Route pah="/karts/checkout" component={Checkout} />
