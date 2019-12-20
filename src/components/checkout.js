@@ -41,7 +41,8 @@ const payOpts = [
 ];
 const token = localStorage.getItem('x-auth-t');
 
-const subTotal = prices => prices && prices.reduce((accumulatedPrice, current) => ( accumulatedPrice += current.cummulativePrice), 0);
+const subTotal = prices =>
+	prices && prices.reduce((accumulatedPrice, current) => (accumulatedPrice += current.cummulativePrice), 0);
 
 export const Checkout = () => {
 	// Redux Hooks
@@ -66,33 +67,33 @@ export const Checkout = () => {
 	const handleChange = e => {
 		setRecipient({ ...recipient, [e.target.name]: e.target.value });
 	};
-	
+
 	const handleUseMyDetail = event => {
 		if (!token && event.target.value === 'true') {
-			return SweetAlert('Login', 'Sorry, we couldn\'t find your details!', 'info')
+			return SweetAlert('Login', "Sorry, we couldn't find your details!", 'info');
 		}
 		if (event.target.value === 'true') {
 			return setRecipient({
 				recipientDeliveryAdr: user.userAddress,
 				recipientName: user.username,
 				recipientPhoneNumber: user.phoneNumber,
-				recipientEmail: user.email
+				recipientEmail: user.email,
 			});
 		}
 		setRecipient({
 			recipientDeliveryAdr: '',
 			recipientName: '',
 			recipientPhoneNumber: '',
-			recipientEmail: ''
+			recipientEmail: '',
 		});
-	}
-	
+	};
+
 	const handleSubmit = e => {
 		e.preventDefault();
-		const data = { ...recipient, productId: kartList.map(dat => ({ _id: dat._id })) }
+		const data = { ...recipient, productId: kartList && kartList.map(dat => ({ _id: dat._id })) };
 		console.log(data);
 	};
-	
+
 	const handlePaymentSelected = data => {
 		setSelectedOption(data);
 		setRecipient({ ...recipient, orderPaymentOption: data.value });
@@ -139,7 +140,7 @@ export const Checkout = () => {
 							<Ch.EditProfileHeading>Billing Details</Ch.EditProfileHeading>
 							<Ch.Form>
 								<Ch.FormGrid className="form-row">
-								<Ch.FormGroup className="form-group col-md-12">
+									<Ch.FormGroup className="form-group col-md-12">
 										<Ch.FormInputLabel htmlFor="inputEmail4">
 											Recipient Delivery Address
 										</Ch.FormInputLabel>
@@ -151,14 +152,14 @@ export const Checkout = () => {
 											line={true}
 											onChange={handleChange}
 											value={recipient.recipientDeliveryAdr}
-											/>
+										/>
 									</Ch.FormGroup>
 									<Ch.FormGroup className="form-group col-md-6">
 										<Ch.FormInputLabel htmlFor="inputEmail4">Recipient Name</Ch.FormInputLabel>
 										<Ch.FormInput
 											type="text"
 											name="recipientName"
-											class="form-control"
+											className="form-control"
 											id="inputEmail4"
 											line={true}
 											onChange={handleChange}
@@ -170,7 +171,7 @@ export const Checkout = () => {
 										<Ch.FormInputLabel htmlFor="inputEmail4">Email Address</Ch.FormInputLabel>
 										<Ch.FormInput
 											type="email"
-											class="form-control"
+											className="form-control"
 											name="recipientEmail"
 											id="inputEmail4"
 											line={true}
@@ -182,7 +183,7 @@ export const Checkout = () => {
 										<Ch.FormInputLabel htmlFor="inputEmail4">Phone Number</Ch.FormInputLabel>
 										<Ch.FormInput
 											type="text"
-											class="form-control"
+											className="form-control"
 											name="recipientPhoneNumber"
 											id="inputEmail4"
 											line={true}
@@ -195,8 +196,15 @@ export const Checkout = () => {
 								<Ch.ShippingdetailsHeader>Shipping Details</Ch.ShippingdetailsHeader>
 								<hr></hr>
 								<Ch.FormGroup>
-									<Ch.FormInputLabel htmlFor="inputEmail4" className="d-1">Order Note (Optional)</Ch.FormInputLabel>
-									<Ch.FormTextArea name="recipientOrderNote" onChange={handleChange} className="form-group col-md-12" rows={3}></Ch.FormTextArea>
+									<Ch.FormInputLabel htmlFor="inputEmail4" className="d-1">
+										Order Note (Optional)
+									</Ch.FormInputLabel>
+									<Ch.FormTextArea
+										name="recipientOrderNote"
+										onChange={handleChange}
+										className="form-group col-md-12"
+										rows={3}
+									></Ch.FormTextArea>
 								</Ch.FormGroup>
 							</Ch.Form>
 						</Ch.EditProfileContainer>
@@ -211,15 +219,22 @@ export const Checkout = () => {
 							</Ch.HeaderContainer>
 							<hr />
 							<Ch.OrderTableContainer>
-								{kartList && kartList.map((data, i) => (
-									<Ch.OrderedWrapper key={i}>
-										<Ch.OrderProduct>
-											<Ch.OrderedItemImg src={data.productId.productImages[data.imageType - 1].image} />
-											<Ch.OrderProductName>{data.quantity === 1 ? data.productId.productName : `${data.productId.productName} (${data.quantity}-Items)`}</Ch.OrderProductName>
-										</Ch.OrderProduct>
-										<Ch.orderTotal>${data.cummulativePrice}</Ch.orderTotal>
-									</Ch.OrderedWrapper>
-								))}
+								{kartList &&
+									kartList.map((data, i) => (
+										<Ch.OrderedWrapper key={i}>
+											<Ch.OrderProduct>
+												<Ch.OrderedItemImg
+													src={data.productId.productImages[data.imageType - 1].image}
+												/>
+												<Ch.OrderProductName>
+													{data.quantity === 1
+														? data.productId.productName
+														: `${data.productId.productName} (${data.quantity}-Items)`}
+												</Ch.OrderProductName>
+											</Ch.OrderProduct>
+											<Ch.orderTotal>${data.cummulativePrice}</Ch.orderTotal>
+										</Ch.OrderedWrapper>
+									))}
 							</Ch.OrderTableContainer>
 
 							<Ch.OrderTableContainer>
@@ -237,7 +252,9 @@ export const Checkout = () => {
 								</Ch.HeaderContainer>
 								<Ch.HeaderContainer>
 									<Ch.OrderedTotal>Total</Ch.OrderedTotal>
-									<Ch.OrderedTotal>${subTotal(kartList) ? subTotal(kartList) - 5 : '0.00'}</Ch.OrderedTotal>
+									<Ch.OrderedTotal>
+										${subTotal(kartList) ? subTotal(kartList) - 5 : '0.00'}
+									</Ch.OrderedTotal>
 								</Ch.HeaderContainer>
 							</Ch.OrderTableContainer>
 
@@ -258,7 +275,9 @@ export const Checkout = () => {
 									</Fragment>
 								))}
 							</Ch.PaymentContainer>
-							<Ch.OrderButton type="button" onClick={handleSubmit}>Place Order</Ch.OrderButton>
+							<Ch.OrderButton type="button" onClick={handleSubmit}>
+								Place Order
+							</Ch.OrderButton>
 						</Ch.OrderCardBody>
 					</Ch.Order>
 				</Ch.BillingContainer>
