@@ -155,7 +155,7 @@ export const EditProfile = () => {
             <RC.FormInputLabel htmlFor="inputEmail4">Confirm Password</RC.FormInputLabel>
             <RC.FormInput type="password" class="form-control" id="inputEmail4"line={true} />
           </RC.FormGroup>
-          <RC.FormButton bgColor="#ffd333" color="#3d464d" className="btn">Update</RC.FormButton>
+          <RC.FormButton type="button" bgColor="#ffd333" color="#3d464d" className="btn">Update</RC.FormButton>
         </RC.FormGrid>
       </RC.Form>
     </RC.EditProfileContainer>

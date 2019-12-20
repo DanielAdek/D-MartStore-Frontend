@@ -3,13 +3,13 @@ import * as Rview from '../assets/styles/review';
 import { ReviewForm } from './reviewForm';
 import { ReviewersData } from '../assets/UserData';
 
-export const Reviews = () => {
+export const Reviews = props => {
 	const [userReview, setUserReview] = useState(null);
 
 	useEffect(() => {
 		setUserReview(ReviewersData);
 	}, []);
-	console.log(userReview);
+
 	return (
 		<Fragment>
 			<Rview.ReviewTitle>Customer Reviews</Rview.ReviewTitle>

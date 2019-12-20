@@ -1,14 +1,16 @@
 import Style from 'styled-components';
 
 export const Description = Style.div`
-  width:85%;
-  height:500px
+  width: 87%;
+  max-height: 500px;
+  overflow-y: auto;
   text-align:justify;
-  margin 0 auto;
+  margin 50px 25px;
 `;
-export const DescriptionH4 = Style.h1`
-  color:black;
-  
+export const DescriptionH4 = Style.h4`
+  color: black;
 `;
 
-export const DescriptionParagraph = Style.p``;
+export const DescriptionParagraph = Style.p`
+  font-family: Rubik, Roboto, sans-serif;
+`;

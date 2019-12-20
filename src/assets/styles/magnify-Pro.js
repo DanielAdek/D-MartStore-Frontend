@@ -43,7 +43,18 @@ export const ProductRightSide = Style.div`
 export const ProductHeading = Style.div`
   font-weight: bold;
   font-size: 1.2rem;
-  margin-bottom: 18px;
+  margin-bottom: 0px;
+  &:hover {
+    cursor: pointer;
+    color: blue;
+  }
+`;
+
+export const ProductCaptionHeading = Style.div`
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 13px;
+  margin-top: 1px;
 `;
 
 export const ProductRR = Style.div`
@@ -72,6 +83,11 @@ export const ProductInfoReview = Style.div`
   line-height: 1;
   color: rgb(179, 179, 179);
   padding-top: 1px;
+  &:hover {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+  }
 `;
 
 export const ProductDetails = Style.p`
@@ -192,6 +208,22 @@ export const ProductImages = Style.img`
     border-color: #ffd333;
     cursor: pointer;
   }
+`;
+
+export const ProductReviewSecWrapper = Style.div`
+  width: 90%;
+  margin: 30px auto;
+  border: 1px solid #ccc;
+  margin-bottom: 80px;
+`;
+
+export const TabLinksWrapper = Style.div`
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+`;
+
+export const TabLink = Style.a`
+  padding: 10px;
 `;
 
 /* ================ PATH ATTRIBUTES FOR SVGs ============= */

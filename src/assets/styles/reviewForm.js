@@ -4,7 +4,7 @@ export const FormRow = Style.div`
 `;
 
 export const FormGroup = Style.div`
-padding:20px;
+  padding:20px 4px;
 `;
 export const Form = Style.form``;
 
@@ -16,21 +16,23 @@ export const Select = Style.select``;
 
 export const Option = Style.option``;
 export const TextArea = Style.textarea`
-width:800px
+  width: 780px;
+  padding: 10px;
 `;
 
 export const FormContainer = Style.div`
-width:60%;
-margin-left:70px;
-padding-top:70px;
-margin-bottom: 50px;
+  width:60%;
+  margin-left:70px;
+  padding-top:70px;
+  margin-bottom: 50px;
 `;
 
 export const Button = Style.button`
-color:white
-width:200px
-padding:15px
-margin-buttom:40px;
+  color:white
+  width:200px
+  padding:15px
+  margin-buttom:40px;
+  font-weight: bold;
 `;
 
 export const HeaderTest = Style.h1`

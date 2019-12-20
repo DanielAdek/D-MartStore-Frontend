@@ -1,23 +1,26 @@
 import React, { Fragment } from 'react';
+import { Alias } from '../importer';
 import { Reviews } from './reviews';
 import { Descriptions } from './description';
 
-export default () => (
+const RC = Alias.pathToSyles('magnify-Pro');
+
+export default props => (
 	<Fragment>
 		<nav>
-			<div class="nav nav-tabs" id="nav-tab" role="tablist">
-				<a
+			<RC.TabLinksWrapper class="nav nav-tabs" id="nav-tab" role="tablist">
+				<RC.TabLink
 					class="nav-item nav-link active"
 					id="nav-home-tab"
 					data-toggle="tab"
+					aria-controls="nav-home"
 					href="#nav-home"
 					role="tab"
-					aria-controls="nav-home"
 					aria-selected="true"
 				>
-					Description
-				</a>
-				<a
+					Review
+				</RC.TabLink>
+				<RC.TabLink
 					class="nav-item nav-link"
 					id="nav-profile-tab"
 					data-toggle="tab"
@@ -26,16 +29,16 @@ export default () => (
 					aria-controls="nav-profile"
 					aria-selected="false"
 				>
-					Review
-				</a>
-			</div>
+					Description
+				</RC.TabLink>
+			</RC.TabLinksWrapper>
 		</nav>
 		<div class="tab-content" id="nav-tabContent">
-			<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-				<Descriptions />
-			</div>
-			<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-				<Reviews />
+		<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+			<Reviews product={props.product}/>
+		</div>
+		<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+				<Descriptions product={props.product} />
 			</div>
 		</div>
 	</Fragment>

@@ -14,7 +14,7 @@ export const Product = props => {
           <RC.ProductSVGPath d={RC.MagnifyAttrD}></RC.ProductSVGPath>
         </RC.ProductMagnifySVG>
       </RC.ProductMagnifyIcon>
-      <RC.ProductBadge>{props.data.productTag}</RC.ProductBadge>
+      <RC.ProductBadge bColor={props.data.productTag}>{props.data.productTag}</RC.ProductBadge>
       <RC.ProductImageCont>
         <RC.ProductImage src={props.data.productImages[0].image}/>
       </RC.ProductImageCont>

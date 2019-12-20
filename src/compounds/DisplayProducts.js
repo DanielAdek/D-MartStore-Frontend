@@ -16,6 +16,7 @@ const { RingLoadScreen } = Alias.pathToComponents('spiners');
 const { addToWishList, addToKart } = Alias.pathToActions('WishAndKartCRUD');
 const { ProductData } = Alias.pathToAssets('map.v');
 const token = localStorage.getItem('token');
+
 export const DisplayProductHeading = () => {
   return (
     <RC.DisplayHeadingContainer>

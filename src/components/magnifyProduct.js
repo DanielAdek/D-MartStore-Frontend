@@ -9,8 +9,9 @@ export const MagnifyProduct = props => {
 	// Redux Hooks
 	const history = useHistory();
 
-	const handelProductSelected = productId => {
-		localStorage.setItem('productSelected', productId)
+	const handelProductSelected = (productId, image) => {
+		localStorage.setItem('productSelected', productId);
+		localStorage.setItem('productSelectedImage', image);
 		history.push('/getoneproduct');
 	}
 	return (
@@ -25,7 +26,8 @@ export const MagnifyProduct = props => {
 
 				<RC.ContentBody>
 					<RC.ProductRightSide>
-						<RC.ProductHeading onClick={() => handelProductSelected(props.currentData.productCode)}>{props.currentData && props.currentData.productName}</RC.ProductHeading>
+						<RC.ProductHeading onClick={() => handelProductSelected(props.currentData.productCode, props.currentData.src)}>{props.currentData && props.currentData.productName}</RC.ProductHeading>
+						<RC.ProductCaptionHeading>{props.currentData && props.currentData.productCaptionHeading}</RC.ProductCaptionHeading>
 						<RC.ProductRR>
 							<RC.ProductInfoRating>
 								<RC.StarSVG>
@@ -51,7 +53,7 @@ export const MagnifyProduct = props => {
 								</RC.ProductStatusColor>
 								<br />
 							</RC.ProductStatText>
-						<RC.ProductPrice className="mt-3">${props.currentData && props.currentData.productPrice}</RC.ProductPrice>
+						<RC.ProductPrice className="mt-3">${props.currentData && (props.currentData.productPrice * (props.currentFigure && props.currentFigure))}</RC.ProductPrice>
 						<RC.ProductImagesContainer>
 						{props.currentData && props.currentData.productImages && props.currentData.productImages.map((dat, i) => (
 							<RC.ProductImages onClick={() => props.handleImageToManify(dat)} key={i} src={dat.image} />

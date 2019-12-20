@@ -61,9 +61,8 @@ export const ProductBadge = Style.div`
   align-items: flex-start;
   z-index: 1;
   left: 18px;
-
   color: rgb(255, 255, 255);
-  background: rgb(51, 119, 255);
+  background: ${props => props.bColor === 'Sale' ? 'purple' : props.bColor === 'Hot' ? 'red' : 'rgb(51, 119, 255)'};
   font-size: 11px;
   letter-spacing: 0.02em;
   line-height: 1;
