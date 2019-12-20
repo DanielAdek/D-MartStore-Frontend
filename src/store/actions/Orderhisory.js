@@ -5,7 +5,9 @@ export const retreiveOrders = recent => async dispatch => {
 		dispatch(Alias.pathToDispatchAbles('loading').processing());
 		const url = recent ? `/order/customer?recent=${recent}` : '/order/customer';
 		const response = await Alias.pathToUtils('helpers').Promise('get', url);
-		await dispatch(Alias.pathToDispatchAbles('orders').get_orders(response.data.data.details.foundOrders));
+		await dispatch(
+			Alias.pathToDispatchAbles('ordershistory').ordersHistory(response.data.data.details.foundOrders)
+		);
 		console.log(response);
 		Alias.pathToUtils('helpers').Alert.success(response.data.data.message);
 	} catch (error) {
