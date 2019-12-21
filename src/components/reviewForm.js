@@ -19,24 +19,23 @@ export const ReviewForm = () => {
 	return (
 		<RF.FormContainer>
 			<hr />
-
 			<RF.HeaderTest>Write A Review</RF.HeaderTest>
 			<RF.Form>
 				<RF.FormRow className="form-row">
 					<RF.FormGroup className="form-group col-md-4">
-						<RF.Label for="InoutRating">Rating</RF.Label>
+						<RF.Label htmlFor="InoutRating">Rating</RF.Label>
 						<RF.Select className="form-control" name="rating" onChange={handleChange}>
-							<RF.Option selected> Choose Rating</RF.Option>
-							<RF.Option>5 Star Rating</RF.Option>
-							<RF.Option>4 Star Rating</RF.Option>
-							<RF.Option>3 Star Rating</RF.Option>
-							<RF.Option>2 Star Rating</RF.Option>
-							<RF.Option>1 Star Rating</RF.Option>
+							<RF.Option defaultValue="Choose Rating"> Choose Rating</RF.Option>
+							<RF.Option value="5">5 Star Rating</RF.Option>
+							<RF.Option value="4">4 Star Rating</RF.Option>
+							<RF.Option value="3">3 Star Rating</RF.Option>
+							<RF.Option value="2">2 Star Rating</RF.Option>
+							<RF.Option value="1">1 Star Rating</RF.Option>
 						</RF.Select>
 					</RF.FormGroup>
 
 					<RF.FormGroup className="form-group col-md-4">
-						<RF.Label for="inputEmail4">Email</RF.Label>
+						<RF.Label htmlFor="inputEmail4">Email</RF.Label>
 						<RF.Input
 							type="email"
 							name="email"
@@ -47,7 +46,7 @@ export const ReviewForm = () => {
 					</RF.FormGroup>
 
 					<RF.FormGroup className="form-group col-md-4">
-						<RF.Label for="Name">Name</RF.Label>
+						<RF.Label htmlFor="Name">Name</RF.Label>
 						<RF.Input
 							type="test"
 							name="name"
@@ -59,7 +58,7 @@ export const ReviewForm = () => {
 
 					<RF.FormGroup className="form-gropup">
 						<RF.TextArea
-							class="form-control"
+							className="form-control"
 							rows="5"
 							name="message"
 							onChange={handleChange}
