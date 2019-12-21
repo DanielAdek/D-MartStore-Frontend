@@ -12,6 +12,7 @@ import { handleProductCreate } from '../store/actions/ProductCRUD';
 
 const { retreiveOrders } = Alias.pathToActions('Orders');
 const { editProfile } = Alias.pathToActions('EditProfile');
+const { retrieveUserData } = Alias.pathToActions('Authentication');
 
 export const formatDate = dateObject => {
 	const [day, month, date, year] = new Date(dateObject).toDateString().split(' ');
@@ -106,9 +107,11 @@ export const DashBoard = props => {
 	//Redux Hooks
 	const dispatch = useDispatch();
 	const orders = useSelector(state => state.Orders.orders);
+	const user = useSelector(state => state.Authenticate.user);
 
 	useEffect(() => {
-		dispatch(retreiveOrders());
+    dispatch(retreiveOrders());
+    dispatch(retrieveUserData())
 	}, [dispatch]);
 
 	return (
@@ -116,22 +119,22 @@ export const DashBoard = props => {
 			<RC.DashboardCardContainer>
 				<RC.DashboardCardBody className="card">
 					<RC.DashboardAvatar>
-						<RC.DashboardImageAvatar src={props.avatar} />
+						<RC.DashboardImageAvatar src={user && user.avatar} />
 					</RC.DashboardAvatar>
-					<RC.DashboardUserName className="mt-3">{props.username || 'Daniel Adek'}</RC.DashboardUserName>
-					<RC.DashboardUserEmail>{props.email || 'maildaniel.me1@gmail.com'}</RC.DashboardUserEmail>
-					<RC.DashboardEditButton className="btn btn-sm mt-3">Edit Profile</RC.DashboardEditButton>
+					<RC.DashboardUserName className="mt-3">{user && (user.username || 'Daniel Adek')}</RC.DashboardUserName>
+					<RC.DashboardUserEmail>{user && (user.email || 'maildaniel.me1@gmail.com')}</RC.DashboardUserEmail>
+					{/* <RC.DashboardEditButton className="btn btn-sm mt-3">Edit Profile</RC.DashboardEditButton> */}
 				</RC.DashboardCardBody>
 			</RC.DashboardCardContainer>
 			<RC.DashboardCardContainer>
 				<RC.DashboardCardBody className="card" align="flex-start">
 					<RC.DashboardContact>Contact</RC.DashboardContact>
 					<RC.DashboardAddrLabel>Address</RC.DashboardAddrLabel>
-					<RC.DashboardAddr>{props.addr || 'Plot 225, Freedom Way Lekki, Lagos, Nigeria.'}</RC.DashboardAddr>
+					<RC.DashboardAddr>{user && (user.userAddress || 'Plot 225, Freedom Way Lekki, Lagos, Nigeria.')}</RC.DashboardAddr>
 					<RC.DashboardPhoneLabel>Phone Number</RC.DashboardPhoneLabel>
-					<RC.DashboardPhoneNo>{props.phone || '(+234) 8182089681'}</RC.DashboardPhoneNo>
+					<RC.DashboardPhoneNo>{user && (user.phoneNumber || '(+234) 8182089681')}</RC.DashboardPhoneNo>
 					<RC.DashboardEmailLabel>Email Address</RC.DashboardEmailLabel>
-					<RC.DashboardEmail>{props.email || 'maildaniel.me1@gmail.com'}</RC.DashboardEmail>
+					<RC.DashboardEmail>{user && (user.email || 'maildaniel.me1@gmail.com')}</RC.DashboardEmail>
 				</RC.DashboardCardBody>
 			</RC.DashboardCardContainer>
 			<RC.DashboardCardContainer w="100%" mt="20px">
@@ -153,29 +156,59 @@ export const DashBoard = props => {
 };
 
 export const EditProfile = () => {
-	const [editprofile, setEditProfile] = useState({});
+  //React Hooks
+  const [userProfile, setUserProfile] = useState({});
+  const [choosenImages, setChoosenImages] = useState('Upload Profile');
 
 	//Redux Hooks
 	const dispatch = useDispatch();
-	// const EditProfile = useSelector(state => state.EditProfile.edithistory);
-
-	useEffect(() => {
-		dispatch(editProfile());
-	}, [dispatch]);
 
 	const handlechange = e => {
-		setEditProfile({ ...editprofile, [e.target.name]: e.target.value });
+		setUserProfile({ ...userProfile, [e.target.name]: e.target.value });
+  };
+  
+  const handleImageChange = event => {
+		const { target } = event;
+
+		ImageToBase64(event.target.files[0], base64 => {
+
+			// Set states for labels
+			setChoosenImages(target.files[0].name);
+
+			// Set states for uploaded files
+			setUserProfile({ ...userProfile, [target.name]: base64 });
+		});
 	};
 
-	const handleUpdate = e => {
-		e.preventDefault();
-	};
+
+	const handleUpdate = () => {
+    dispatch(editProfile(userProfile));
+    setUserProfile({});
+  }
+
 
 	return (
 		<RC.EditProfileContainer>
 			<RC.EditProfileHeading>Edit Profile</RC.EditProfileHeading>
-			<RC.EditProfilePicture>Upload Picture</RC.EditProfilePicture>
-			<RC.Form>
+      <RC.EditProfilePicture>{ userProfile.avatar ?
+        <RC.EditProfileImage src={userProfile.avatar} alt="Uploaded Profile" /> : 'Upload Picture' }
+      </RC.EditProfilePicture>
+      <RC.FormGroup 
+        className="custom-file mb-3"
+        style={{ width: '23%', margin: '0px 38%'}}
+        >
+        <RC.FormInput
+          type="file"
+          name="avatar"
+          id="customFile"
+          onChange={handleImageChange}
+          className="custom-file-input"
+        />
+        <RC.FormInputLabel className="custom-file-label" htmlFor="customFile">
+          {choosenImages}
+        </RC.FormInputLabel>
+				</RC.FormGroup>
+			<RC.Form className="mt-5">
 				<RC.FormGrid className="form-row">
 					<RC.FormGroup className="form-group col-md-6">
 						<RC.FormInputLabel htmlFor="inputEmail4">Username</RC.FormInputLabel>
@@ -207,21 +240,21 @@ export const EditProfile = () => {
 							className="form-control"
 							id="inputEmail4"
 							line={true}
-							name="phone"
+							name="phoneNumber"
 						/>
 					</RC.FormGroup>
 					<RC.FormGroup className="form-group col-md-6">
-						<RC.FormInputLabel htmlFor="inputEmail4">Address</RC.FormInputLabel>
+						<RC.FormInputLabel htmlFor="inputEmail4">Contact Address</RC.FormInputLabel>
 						<RC.FormInput
 							onChange={handlechange}
 							type="text"
 							className="form-control"
 							id="inputEmail4"
 							line={true}
-							name="address"
+							name="userAddress"
 						/>
 					</RC.FormGroup>
-					<RC.FormGroup className="form-group col-md-6">
+					{/* <RC.FormGroup className="form-group col-md-6">
 						<RC.FormInputLabel htmlFor="inputEmail4">Password</RC.FormInputLabel>
 						<RC.FormInput
 							onChange={handlechange}
@@ -242,7 +275,7 @@ export const EditProfile = () => {
 							line={true}
 							name="confirm-password"
 						/>
-					</RC.FormGroup>
+					</RC.FormGroup> */}
 					<RC.FormButton
 						onClick={handleUpdate}
 						type="button"

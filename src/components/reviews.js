@@ -14,8 +14,8 @@ export const Reviews = props => {
 		<Fragment>
 			<Rview.ReviewTitle>Customer Reviews</Rview.ReviewTitle>
 			{userReview &&
-				userReview.map(data => (
-					<Rview.ReviewContainer>
+				userReview.map((data, index) => (
+					<Rview.ReviewContainer key={index}>
 						<Rview.imageContainer>
 							<Rview.UserImage src={data.avatar} />
 						</Rview.imageContainer>

@@ -8,9 +8,9 @@ const RC = Alias.pathToSyles('magnify-Pro');
 export default props => (
 	<Fragment>
 		<nav>
-			<RC.TabLinksWrapper class="nav nav-tabs" id="nav-tab" role="tablist">
+			<RC.TabLinksWrapper className="nav nav-tabs" id="nav-tab" role="tablist">
 				<RC.TabLink
-					class="nav-item nav-link active"
+					className="nav-item nav-link active"
 					id="nav-home-tab"
 					data-toggle="tab"
 					aria-controls="nav-home"
@@ -21,7 +21,7 @@ export default props => (
 					Review
 				</RC.TabLink>
 				<RC.TabLink
-					class="nav-item nav-link"
+					className="nav-item nav-link"
 					id="nav-profile-tab"
 					data-toggle="tab"
 					href="#nav-profile"
@@ -33,11 +33,11 @@ export default props => (
 				</RC.TabLink>
 			</RC.TabLinksWrapper>
 		</nav>
-		<div class="tab-content" id="nav-tabContent">
-		<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+		<div className="tab-content" id="nav-tabContent">
+		<div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 			<Reviews product={props.product}/>
 		</div>
-		<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+		<div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 				<Descriptions product={props.product} />
 			</div>
 		</div>

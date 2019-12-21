@@ -26,13 +26,13 @@ export const retreiveProducts = () => async dispatch => {
   }
 };
 
-export const retreiveProduct = data => async dispatch => {
+export const retreiveProduct = productId => async dispatch => {
   try {
     dispatch(Alias.pathToDispatchAbles('loading').processing());
-    const response = await Alias.pathToUtils('helpers').Promise('POST', '/product/create', data);
-    dispatch(Alias.pathToDispatchAbles('product').create_product(response));
+    const response = await Alias.pathToUtils('helpers').Promise('get', `/product/${productId}`);
+    dispatch(Alias.pathToDispatchAbles('product').get_one_product(response.data.data.details));
     dispatch(Alias.pathToDispatchAbles('loading').finished());
-    SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
+    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
   } catch (error) {
     Alias.pathToUtils('helpers').handleError(error)
     dispatch(Alias.pathToDispatchAbles('loading').finished());

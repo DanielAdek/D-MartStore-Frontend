@@ -11,29 +11,27 @@ import { DisplayProductHeading, DisplayProducts } from '../compounds/DisplayProd
 
 // const { DualRingLoadScreen } = Alias.pathToComponents('spiners');
 const { addToWishList, addToKart } = Alias.pathToActions('WishAndKartCRUD');
+const { retreiveProduct } = Alias.pathToActions('ProductCRUD');
 
 export const GetOneProduct = () => {
 	// Redux Hooks
 	const dispatch = useDispatch();
-	const products = useSelector(state => state.ProductCRUD.products);
+	const product = useSelector(state => state.ProductCRUD.product);
 
 	// React Hooks
-	const [product, setProduct] = useState(null);
   const [currentFigure, setCurrentFigure] = useState(1);
-  const [currentImage, setCurrentImage] = useState({ src: products && products[0].productImages[0].image, id: 1});
+  const [currentImage, setCurrentImage] = useState({});
 	const navDiv = useRef(null);
 
 	useEffect(() => {
-		setProduct(
-			products && products.filter(data => data.productCode === localStorage.getItem('productSelected'))[0]
-		)
+		dispatch(retreiveProduct(localStorage.getItem('productSelected')));
 		if (navDiv.current) {
 			navDiv.current.scrollIntoView({ 
 				behavior: "smooth", 
 				block: "end"
 		 });
 		}
-	}, [products]);
+	}, [dispatch]);
 
 
 	const handleGoToReview = () => {
@@ -82,16 +80,16 @@ export const GetOneProduct = () => {
 			<h4 className="mt-5 mb-5" style={{width: '90%', margin: '1px auto', fontFamily: 'Rubik sans-serif', fontWeight: 'bolder'}}>DMStore Product</h4>
 			<div className="wrapers">
 				{product && (
-					<RC.Body>
+					<RC.MainWrapper>
 						<RC.ContentBody>
 							<RC.ProductMagnifiedImageCont>
-								<RC.ProductMagnifiedImage src={currentImage.src || localStorage.getItem('productSelectedImage')} alt="product" />
+								<RC.ProductMagnifiedImage src={currentImage.src || (product && product.product.productImages[0].image)} alt="product" />
 							</RC.ProductMagnifiedImageCont>
 						</RC.ContentBody>
 
 						<RC.ContentBody>
 							<RC.ProductRightSide>
-								<RC.ProductHeading>{product.productName}</RC.ProductHeading>
+								<RC.ProductHeading>{product.product.productName}</RC.ProductHeading>
 								<RC.ProductRR>
 									<RC.ProductInfoRating>
 										<RC.StarSVG>
@@ -103,26 +101,26 @@ export const GetOneProduct = () => {
 										12 Reviews
 									</RC.ProductInfoReview>
 								</RC.ProductRR>
-								<RC.ProductDetails>{product.productDescription}</RC.ProductDetails>
+								<RC.ProductDetails>{product.product.productDescription}</RC.ProductDetails>
 								<hr />
 								<RC.ProductStatus>
 									<RC.ProductStatText>
 										Avaliablilty:{' '}
 										<RC.ProductStatusColor
 											statusText={
-												product.productStatus=== 'In-Stock'
+												product.product.productStatus=== 'In-Stock'
 													? '#28a745'
 													: '#ffd333'
 											}>
-											{product.productStatus}
+											{product.product.productStatus}
 										</RC.ProductStatusColor>{' '}
 									</RC.ProductStatText>
-									<RC.ProductStatText>Brand: {product.productBrand}</RC.ProductStatText>
-									<RC.ProductStatText>Code: {product.productCode}</RC.ProductStatText>
+									<RC.ProductStatText>Brand: {product.product.productBrand}</RC.ProductStatText>
+									<RC.ProductStatText>Code: {product.product.productCode}</RC.ProductStatText>
 								</RC.ProductStatus>
-								<RC.ProductPrice>${currentFigure * product.productPrice}</RC.ProductPrice>
+								<RC.ProductPrice>${currentFigure * product.product.productPrice}</RC.ProductPrice>
 									<RC.ProductImagesContainer>
-									{product.productImages.map((dat, i) => (
+									{product.product.productImages.map((dat, i) => (
 										<RC.ProductImages
 											key={i}
 											onClick={() => handleImageToManify(dat)}
@@ -149,7 +147,7 @@ export const GetOneProduct = () => {
 										</RC.ProductQtyInputDiv>
 									</RC.ProductQtySection>
 									<RC.ProductActionButtonSec>
-										<RC.ProductActionButton onClick={() => handleKartCreate(product)}
+										<RC.ProductActionButton onClick={() => handleKartCreate(product.product)}
 											className="btn"
 											bgColor="#ffd333"
 											hClr="#9b9b9b">
@@ -160,7 +158,7 @@ export const GetOneProduct = () => {
 											bgColor="blue"
 											clr="#f3f3f3"
 											hClr="#dbd8d8"
-											onClick={() => handleWishListCreate(product)}
+											onClick={() => handleWishListCreate(product.product)}
 										>
 											WishList
 										</RC.ProductActionButton>
@@ -168,7 +166,7 @@ export const GetOneProduct = () => {
 								</RC.ProductActionsSection>
 							</RC.ProductRightSide>
 						</RC.ContentBody>
-					</RC.Body>
+					</RC.MainWrapper>
 				)}
 				<RC.ProductReviewSecWrapper ref={navDiv}>
 					<NavTabs product={product}/>
