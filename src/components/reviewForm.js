@@ -10,29 +10,29 @@ export const ReviewForm = () => {
 			<RF.Form>
 				<RF.FormRow className="form-row">
 					<RF.FormGroup className="form-group col-md-4">
-						<RF.Label for="InoutRating">Rating</RF.Label>
+						<RF.Label htmlFor="InoutRating">Rating</RF.Label>
 						<RF.Select className="form-control">
-							<RF.Option selected> Choose Rating</RF.Option>
-							<RF.Option>5 Star Rating</RF.Option>
-							<RF.Option>4 Star Rating</RF.Option>
-							<RF.Option>3 Star Rating</RF.Option>
-							<RF.Option>2 Star Rating</RF.Option>
-							<RF.Option>1 Star Rating</RF.Option>
+							<RF.Option defaultValue="Choose Rating"> Choose Rating</RF.Option>
+							<RF.Option value="5">5 Star Rating</RF.Option>
+							<RF.Option value="4">4 Star Rating</RF.Option>
+							<RF.Option value="3">3 Star Rating</RF.Option>
+							<RF.Option value="2">2 Star Rating</RF.Option>
+							<RF.Option value="1">1 Star Rating</RF.Option>
 						</RF.Select>
 					</RF.FormGroup>
 
 					<RF.FormGroup className="form-group col-md-4">
-						<RF.Label for="inputEmail4">Email</RF.Label>
+						<RF.Label htmlFor="inputEmail4">Email</RF.Label>
 						<RF.Input type="email" className="form-control" placeholder="Email" />
 					</RF.FormGroup>
 
 					<RF.FormGroup className="form-group col-md-4">
-						<RF.Label for="Name">Name</RF.Label>
+						<RF.Label htmlFor="Name">Name</RF.Label>
 						<RF.Input type="test" className="form-control" placeholder="Your Name" />
 					</RF.FormGroup>
 
 					<RF.FormGroup className="form-gropup">
-						<RF.TextArea class="form-control" rows="5" placeholder=" your Reviews"></RF.TextArea>
+						<RF.TextArea className="form-control" rows="5" placeholder=" your Reviews"></RF.TextArea>
 					</RF.FormGroup>
 				</RF.FormRow>
 

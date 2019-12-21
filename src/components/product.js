@@ -1,10 +1,19 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Alias } from '../importer';
 import * as RC from '../assets/styles/product';
 
 const { DualRingLoad } = Alias.pathToComponents('spiners');
 
 export const Product = props => {
+  // Redux Hooks
+	const history = useHistory();
+
+	const handelProductSelected = productId => {
+		localStorage.setItem('productSelected', productId);
+		history.push('/getoneproduct');
+  }
+  
   const targetedProduct = props.index === props.showProductActionBtns;
   return (
     <RC.ProductCardContainer mr={props.Styles.mr} mb={props.Styles.mb} onMouseEnter={props.displayActionBtn} onMouseLeave={props.hideActionBtn}>
@@ -19,7 +28,7 @@ export const Product = props => {
         <RC.ProductImage src={props.data.productImages[0].image}/>
       </RC.ProductImageCont>
       <RC.ProductInfoCont>
-        <RC.ProductInfoTitle>{props.data.productName}</RC.ProductInfoTitle>
+        <RC.ProductInfoTitle  onClick={() => handelProductSelected(props.data._id)}>{props.data.productName}</RC.ProductInfoTitle>
         <RC.ProductInfoRRCont>
           <RC.ProductInfoRating>
             <RC.StarSVG>
@@ -27,7 +36,7 @@ export const Product = props => {
               <RC.ProductSVGPath d={RC.StarAttrPerimeter}></RC.ProductSVGPath>
             </RC.StarSVG>
           </RC.ProductInfoRating>
-          <RC.ProductInfoReview>12 Reviews</RC.ProductInfoReview>
+          <RC.ProductInfoReview  onClick={() => handelProductSelected(props.data._id)}>12 Reviews</RC.ProductInfoReview>
         </RC.ProductInfoRRCont>
         <RC.ProductInfoPrice>${props.data.productPrice}</RC.ProductInfoPrice>
       </RC.ProductInfoCont>

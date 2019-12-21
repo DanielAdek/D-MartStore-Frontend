@@ -9,9 +9,8 @@ export const MagnifyProduct = props => {
 	// Redux Hooks
 	const history = useHistory();
 
-	const handelProductSelected = (productId, image) => {
+	const handelProductSelected = productId => {
 		localStorage.setItem('productSelected', productId);
-		localStorage.setItem('productSelectedImage', image);
 		history.push('/getoneproduct');
 	}
 	return (
@@ -26,7 +25,7 @@ export const MagnifyProduct = props => {
 
 				<RC.ContentBody>
 					<RC.ProductRightSide>
-						<RC.ProductHeading onClick={() => handelProductSelected(props.currentData.productCode, props.currentData.src)}>{props.currentData && props.currentData.productName}</RC.ProductHeading>
+						<RC.ProductHeading onClick={() => handelProductSelected(props.currentData._id)}>{props.currentData && props.currentData.productName}</RC.ProductHeading>
 						<RC.ProductCaptionHeading>{props.currentData && props.currentData.productCaptionHeading}</RC.ProductCaptionHeading>
 						<RC.ProductRR>
 							<RC.ProductInfoRating>
@@ -35,7 +34,7 @@ export const MagnifyProduct = props => {
 									<RC.ProductSVGPath d={RC.StarAttrPerimeter}></RC.ProductSVGPath>
 								</RC.StarSVG>
 							</RC.ProductInfoRating>
-							<RC.ProductInfoReview onClick={() => handelProductSelected(props.currentData.productCode)}>
+							<RC.ProductInfoReview onClick={() => handelProductSelected(props.currentData._id)}>
 								12 Reviews
 							</RC.ProductInfoReview>
 						</RC.ProductRR>

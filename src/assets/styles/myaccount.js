@@ -69,7 +69,11 @@ export const DashboardAvatar = Style.div`
   background: #ccc;
 `;
 
-export const DashboardImageAvatar = Style.img``;
+export const DashboardImageAvatar = Style.img`
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+`;
 
 export const DashboardUserName = Style.h4`
   font-family: Roboto, sans-serif;
@@ -173,14 +177,21 @@ export const EditProfileHeading = Style.h4`
 export const EditProfilePicture = Style.div`
   text-align: center;
   margin-bottom: 20px;
-  width: 200px;
-  height: 200px;
+  margin: 30px 40%;
+  font-size: 15px;
+  width: 150px;
+  height: 150px;
   background: gainsboro;
   display: flex;
   justify-content: center;
   align-items:center;
   color: rgb(61, 70, 77);
   font-weight: bold;
+`;
+
+export const EditProfileImage = Style.img`
+  width: inherit;
+  height: inherit;
 `;
 
 export const Form = Style.form``;
@@ -197,7 +208,7 @@ export const FormInputLabel = Style.label`
 
 export const FormInput = Style.input`
   width: 90%;
-  padding: 9px;
+  padding: 7px;
   border-top: ${props => props.line ? 'none' : 'default'};
   border-left: ${props => props.line ? 'none' : 'default'};;
   border-right: ${props => props.line ? 'none' : 'default'};;
