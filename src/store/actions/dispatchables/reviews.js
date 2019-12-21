@@ -2,7 +2,7 @@ import { Alias } from '../../../importer';
 
 const Types = Alias.pathToConstant('types').default;
 
-export const createReview = createReview => ({
+export const create_review = newReview => ({
 	type: Types.CREATE_REVIEW,
-	payload: createReview,
+	payload: newReview,
 });

@@ -2,7 +2,7 @@ import { Alias } from '../../importer';
 const Types = Alias.pathToConstant('types').default;
 
 const initialState = {
-	createReview: null,
+	review: null,
 };
 
 export default (state = initialState, action) => {
@@ -10,7 +10,7 @@ export default (state = initialState, action) => {
 		case Types.CREATE_REVIEW:
 			return {
 				...state,
-				createreview: action.payload,
+				review: action.payload,
 			};
 		default:
 			return state;

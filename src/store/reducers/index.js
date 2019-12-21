@@ -39,5 +39,5 @@ export default combineReducers({
 	Orders: file('Order').default,
 	Orderhistory: file('Orderhistory').default,
 	EditProfile: file('EditProfile').default,
-	CreateReview: file('CreateReview').default,
+	Review: file('Review').default,
 });
