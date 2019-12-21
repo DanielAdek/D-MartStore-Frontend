@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import { Alias } from '../../importer';
-import Orderhistory from './Orderhistory';
 
 const Types = Alias.pathToConstant('types').default;
 const file = Alias.pathToReducers;
@@ -40,4 +39,5 @@ export default combineReducers({
 	Orders: file('Order').default,
 	Orderhistory: file('Orderhistory').default,
 	EditProfile: file('EditProfile').default,
+	CreateReview: file('CreateReview').default,
 });
