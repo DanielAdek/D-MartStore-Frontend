@@ -1,6 +1,6 @@
 import { Alias } from '../../importer';
 
-export const createOrUpdateReview = data => async dispatch => {
+export const createReview = data => async dispatch => {
 	try {
 		dispatch(Alias.pathToDispatchAbles('loading').processing());
 		const url = `/review/create/${data.productId}`;

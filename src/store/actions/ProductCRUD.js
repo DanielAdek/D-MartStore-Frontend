@@ -17,7 +17,7 @@ export const retreiveProducts = () => async dispatch => {
   try {
     dispatch(Alias.pathToDispatchAbles('loading').processing());
     const response = await Alias.pathToUtils('helpers').Promise('GET', '/product/all');
-    dispatch(Alias.pathToDispatchAbles('product').get_products(response.data.data.details.products));
+    dispatch(Alias.pathToDispatchAbles('product').get_products(response.data.data.details));
     dispatch(Alias.pathToDispatchAbles('loading').finished());
     // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
   } catch (error) {

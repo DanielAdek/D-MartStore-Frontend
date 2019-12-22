@@ -249,3 +249,25 @@ export const MainWrapper = Style.div`
   border: 1px solid #ccc;
   box-shadow: 1px 1px 1px 2px #F5F7F9;
 `;
+
+export const RelatedProductsCont = Style.div`
+  display: flex;
+  margin: 11.4px auto;
+  width: 90%;
+  justify-content: space-between;
+`;
+
+export const RelatedProductHeading = Style.div`
+  font-weight: 700;
+  font-size: 20px;
+  font-family: Roboto, sans-serif;
+  color: rgb(61, 70, 77);
+  color: purple;
+`;
+
+export const HorizontalRule = Style.div`
+  height: 2px;
+  background: rgb(235, 235, 235);
+  width: 85%;
+  transform: translate(0px, 13px);
+`;

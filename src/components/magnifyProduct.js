@@ -1,60 +1,69 @@
 import React, { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Alias } from '../importer';
 import * as RC from '../assets/styles/magnify-Pro';
 
 const { DualRingLoad } = Alias.pathToComponents('spiners');
+const { yellowStars, greyStars, calculateFrequency } = Alias.pathToComponents('stars');
 
 export const MagnifyProduct = props => {
 	// Redux Hooks
 	const history = useHistory();
+	const products = useSelector(state => state.ProductCRUD.products);
 
 	const handelProductSelected = productId => {
 		localStorage.setItem('productSelected', productId);
 		history.push('/getoneproduct');
 	}
+
+	const findRatingByProductId = productId => 
+		products && products.ratings.filter(data => data.productId._id === productId)
+
 	return (
 		<Fragment>
-			<RC.Body>
+			{
+				props.currentData &&
+				<RC.Body>
 				<RC.CloseBtn onClick={props.closeModal}>X</RC.CloseBtn>
 				<RC.ContentBody>
 					<RC.ProductMagnifiedImageCont>
-						<RC.ProductMagnifiedImage src={props.currentData && props.currentImage.src} alt="product" />
+						<RC.ProductMagnifiedImage src={props.currentImage.src} alt="product" />
 					</RC.ProductMagnifiedImageCont>
 				</RC.ContentBody>
 
 				<RC.ContentBody>
 					<RC.ProductRightSide>
-						<RC.ProductHeading onClick={() => handelProductSelected(props.currentData._id)}>{props.currentData && props.currentData.productName}</RC.ProductHeading>
-						<RC.ProductCaptionHeading>{props.currentData && props.currentData.productCaptionHeading}</RC.ProductCaptionHeading>
+						<RC.ProductHeading onClick={() => handelProductSelected(props.currentData._id)}>{props.currentData.productName}</RC.ProductHeading>
+						<RC.ProductCaptionHeading>{props.currentData.productCaptionHeading}</RC.ProductCaptionHeading>
 						<RC.ProductRR>
 							<RC.ProductInfoRating>
-								<RC.StarSVG>
-									<RC.ProductSVGPath d={RC.StarAttrArea}></RC.ProductSVGPath>
-									<RC.ProductSVGPath d={RC.StarAttrPerimeter}></RC.ProductSVGPath>
-								</RC.StarSVG>
+								{yellowStars(calculateFrequency(findRatingByProductId(props.currentData._id)))}
+								{greyStars(calculateFrequency(findRatingByProductId(props.currentData._id)))}
 							</RC.ProductInfoRating>
 							<RC.ProductInfoReview onClick={() => handelProductSelected(props.currentData._id)}>
-								12 Reviews
+							{findRatingByProductId(props.currentData._id).length === 1 ? 
+							`${findRatingByProductId(props.currentData._id).length} Review` : 
+							`${findRatingByProductId(props.currentData._id).length} Reviews`}
 							</RC.ProductInfoReview>
 						</RC.ProductRR>
-						<RC.ProductDetails>{props.currentData && props.currentData.productDescription}</RC.ProductDetails>
+						<RC.ProductDetails>{props.currentData.productDescription}</RC.ProductDetails>
 						<hr />
 						<RC.ProductStatus>
-							<RC.ProductStatText>Brand: {props.currentData && props.currentData.productBrand}</RC.ProductStatText>
-							<RC.ProductStatText>Category: {props.currentData && props.currentData.productCategory}</RC.ProductStatText>
-							<RC.ProductStatText>Code: {props.currentData && props.currentData.productCode}</RC.ProductStatText>
+							<RC.ProductStatText>Brand: {props.currentData.productBrand}</RC.ProductStatText>
+							<RC.ProductStatText>Category: {props.currentData.productCategory}</RC.ProductStatText>
+							<RC.ProductStatText>Code: {props.currentData.productCode}</RC.ProductStatText>
 						</RC.ProductStatus>
 						<RC.ProductStatText>Avaliablilty:
 								<RC.ProductStatusColor
-									statusText={ props.currentData && props.currentData.productStatus === 'In-Stock' ? '#28a745' : '#ffd333'}>
-									{props.currentData && props.currentData.productStatus}
+									statusText={ props.currentData.productStatus === 'In-Stock' ? '#28a745' : '#ffd333'}>
+									{props.currentData.productStatus}
 								</RC.ProductStatusColor>
 								<br />
 							</RC.ProductStatText>
-						<RC.ProductPrice className="mt-3">${props.currentData && (props.currentData.productPrice * (props.currentFigure && props.currentFigure))}</RC.ProductPrice>
+						<RC.ProductPrice className="mt-3">${(props.currentData.productPrice * (props.currentFigure && props.currentFigure))}</RC.ProductPrice>
 						<RC.ProductImagesContainer>
-						{props.currentData && props.currentData.productImages && props.currentData.productImages.map((dat, i) => (
+						{props.currentData.productImages && props.currentData.productImages.map((dat, i) => (
 							<RC.ProductImages onClick={() => props.handleImageToManify(dat)} key={i} src={dat.image} />
 						))}
 					</RC.ProductImagesContainer>
@@ -74,6 +83,7 @@ export const MagnifyProduct = props => {
 					</RC.ProductRightSide>
 				</RC.ContentBody>
 			</RC.Body>
+			}
 		</Fragment>
 	);
 };

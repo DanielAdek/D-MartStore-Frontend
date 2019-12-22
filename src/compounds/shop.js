@@ -87,7 +87,7 @@ export const Shop = () => {
 			{ processing && <DualRingLoadScreen />}
 				<ShopFilter />
 				<RC.ShopMainSection>
-					{products && products.map((data, index) => (
+					{products && products.products.map((data, index) => (
 						<Product
 							key={index}
 							index={index}

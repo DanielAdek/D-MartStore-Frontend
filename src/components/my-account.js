@@ -13,12 +13,7 @@ import { handleProductCreate } from '../store/actions/ProductCRUD';
 const { retreiveOrders } = Alias.pathToActions('Orders');
 const { editProfile } = Alias.pathToActions('EditProfile');
 const { retrieveUserData } = Alias.pathToActions('Authentication');
-
-export const formatDate = dateObject => {
-	const [day, month, date, year] = new Date(dateObject).toDateString().split(' ');
-	console.log(day);
-	return `${date} ${month}, ${year}`;
-};
+const { formatDate } = Alias.pathToUtils('helpers');
 
 const TableRows = orders => {
 	return (

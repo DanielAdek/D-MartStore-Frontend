@@ -3,7 +3,7 @@ import * as RF from '../assets/styles/reviewForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alias } from '../importer';
 
-const { createOrUpdateReview } = Alias.pathToActions('Review');
+const { createReview } = Alias.pathToActions('Review');
 
 export const ReviewForm = () => {
 	// Redux Hooks
@@ -19,7 +19,7 @@ export const ReviewForm = () => {
 
 	const handleSubmit = productId => {
 		const data = { ...userReview, productId };
-		dispatch(createOrUpdateReview(data));
+		dispatch(createReview(data));
 	}
 
 	return (
