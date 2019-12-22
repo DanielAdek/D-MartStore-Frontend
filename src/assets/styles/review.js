@@ -7,7 +7,7 @@ export const ReviewContainer = Style.div`
 
 export const ReviewTitle = Style.h1`
   font-style: capiterlize;
-  margin: 50px 22px;
+  margin: 50px;
 `;
 
 export const UserReviewcontent = Style.div`

@@ -6,7 +6,7 @@ export const Descriptions = props => {
 			<Description.DescriptionH4>Product Full Description</Description.DescriptionH4>
 			<br />
 			<Description.DescriptionParagraph>
-				{props.product && props.product.productDescription}
+				{props.product && props.product.product.productDescription}
 				<br /><br />
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum, diam non iaculis finibus,
 				ipsum arcu sollicitudin dolor, ut cursus sapien sem sed purus. Donec vitae fringilla tortor, sed
@@ -18,10 +18,10 @@ export const Descriptions = props => {
 				vitae tellus
 			</Description.DescriptionParagraph>
 
-			<Description.DescriptionH4>{props.product && props.product.productCaptionHeading}</Description.DescriptionH4>
+			<Description.DescriptionH4>{props.product && props.product.product.productCaptionHeading}</Description.DescriptionH4>
 			<br />
 			<Description.DescriptionParagraph>
-				{props.product && props.product.productDescription}
+				{props.product && props.product.product.productDescription}
 				<br /><br />
 				Praesent mattis eget augue ac elementum. Maecenas vel ante ut enim mollis accumsan. Vestibulum vel eros
 				at mi suscipit feugiat. Sed tortor purus, vulputate et eros a, rhoncus laoreet orci. Proin sapien neque,

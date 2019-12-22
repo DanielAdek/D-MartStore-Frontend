@@ -4,14 +4,13 @@ import { useHistory } from 'react-router-dom';
 import Slider from '@brainhubeu/react-carousel'
 import '@brainhubeu/react-carousel/lib/style.css';
 import { Alias } from '../importer';
-import * as RC from '../assets/styles/displayProducts';
 import { Product } from '../components/product';
-// import { FeaturedProData } from '../assets/map.v';
 import { FeaturedProducts } from '../components/featuredPro';
 import { Modal } from '../components/modal';
 import { MagnifyProduct } from '../components/magnifyProduct';
 
 const { retreiveProducts } = Alias.pathToActions('ProductCRUD');
+const RC = Alias.pathToSyles('displayProducts');
 const { RingLoadScreen } = Alias.pathToComponents('spiners');
 const { addToWishList, addToKart } = Alias.pathToActions('WishAndKartCRUD');
 const { ProductData } = Alias.pathToAssets('map.v');
@@ -114,7 +113,7 @@ export const DisplayProducts = () => {
           itemWidth={350}
           clickToChange
           centered>
-          { (products || ProductData).map((data, index) => <Product
+          { ((products && products.products) || ProductData).map((data, index) => <Product
             key={index}
             index={index} 
             data={data}
@@ -156,7 +155,7 @@ export const DisplayFeaturedProducts = () => {
 
   // React Hook
   const products = useSelector(state => state.ProductCRUD.products);
-  const FeaturedPro = [(products && products[0]), (products && products[1]), (products && products[2]), (products && products[3]), (products && products[0]), (products && products[1])]
+  const FeaturedPro = [(products && products.products[0]), (products && products.products[1]), (products && products.products[2]), (products && products.products[3]), (products && products.products[0]), (products && products.products[1])]
   const handleShowAll = data => {
     localStorage.setItem('category', data.productCategory);
     history.push('/shop');

@@ -11,6 +11,12 @@ export const Promise = (method, path, data) => {
   return Axios(object);
 }
 
+export const formatDate = dateObject => {
+	const [day, month, date, year] = new Date(dateObject).toDateString().split(' ');
+	console.log(day);
+	return `${date} ${month}, ${year}`;
+};
+
 export const ImageToBase64 = (file, callback) => {
   let reader = new FileReader();
   if (file && file.type.match('image.*')) {

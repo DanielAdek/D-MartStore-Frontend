@@ -1,7 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import * as Rview from '../assets/styles/review';
-import { ReviewForm } from './reviewForm';
-import { ReviewersData } from '../assets/UserData';
+import { Alias } from '../importer';
+
+const { ReviewForm } = Alias.pathToComponents('reviewForm')
+const { ReviewersData } = Alias.pathToAssets('UserData');
+const { formatDate } = Alias.pathToUtils('helpers');
+const Rview = Alias.pathToSyles('review');
 
 export const Reviews = props => {
 	const [userReview, setUserReview] = useState(null);
@@ -12,9 +15,9 @@ export const Reviews = props => {
 
 	return (
 		<Fragment>
-			<Rview.ReviewTitle>Customer Reviews</Rview.ReviewTitle>
-			{userReview &&
-				userReview.map((data, index) => (
+			<Rview.ReviewTitle>Customers Review</Rview.ReviewTitle>
+			{props.product &&
+				(props.product.reviews || userReview).map((data, index) => (
 					<Rview.ReviewContainer key={index}>
 						<Rview.imageContainer>
 							<Rview.UserImage src={data.avatar} />
@@ -23,7 +26,7 @@ export const Reviews = props => {
 						<Rview.UserReviewcontent>
 							<Rview.userName>{data.username}</Rview.userName>
 							<Rview.userReviewParagraph>{data.review}</Rview.userReviewParagraph>
-							<Rview.ReviewDate>{data.createdAt}</Rview.ReviewDate>
+							<Rview.ReviewDate>{formatDate(data.createdAt)}</Rview.ReviewDate>
 						</Rview.UserReviewcontent>
 					</Rview.ReviewContainer>
 				))}

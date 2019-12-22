@@ -7,11 +7,12 @@ import { NavigationPanel } from '../components/nav-panel';
 import { Footer } from '../components/footer';
 import NavTabs from '../components/tab';
 import * as RC from '../assets/styles/magnify-Pro';
-import { DisplayProductHeading, DisplayProducts } from '../compounds/DisplayProducts';
+import { DisplayProducts } from '../compounds/DisplayProducts';
 
 // const { DualRingLoadScreen } = Alias.pathToComponents('spiners');
 const { addToWishList, addToKart } = Alias.pathToActions('WishAndKartCRUD');
 const { retreiveProduct } = Alias.pathToActions('ProductCRUD');
+const { yellowStars, greyStars, calculateFrequency } = Alias.pathToComponents('stars');
 
 export const GetOneProduct = () => {
 	// Redux Hooks
@@ -92,13 +93,11 @@ export const GetOneProduct = () => {
 								<RC.ProductHeading>{product.product.productName}</RC.ProductHeading>
 								<RC.ProductRR>
 									<RC.ProductInfoRating>
-										<RC.StarSVG>
-											<RC.ProductSVGPath d={RC.StarAttrArea}></RC.ProductSVGPath>
-											<RC.ProductSVGPath d={RC.StarAttrPerimeter}></RC.ProductSVGPath>
-										</RC.StarSVG>
+										{yellowStars(calculateFrequency(product.ratings))}
+										{greyStars(calculateFrequency(product.ratings))}
 									</RC.ProductInfoRating>
 									<RC.ProductInfoReview onClick={handleGoToReview}>
-										12 Reviews
+										{product.reviews.length === 1 ? `${product.reviews.length} Review` : `${product.reviews.length} Reviews`}
 									</RC.ProductInfoReview>
 								</RC.ProductRR>
 								<RC.ProductDetails>{product.product.productDescription}</RC.ProductDetails>
@@ -171,7 +170,10 @@ export const GetOneProduct = () => {
 				<RC.ProductReviewSecWrapper ref={navDiv}>
 					<NavTabs product={product}/>
 				</RC.ProductReviewSecWrapper>
-				<DisplayProductHeading />
+				<RC.RelatedProductsCont>
+					<RC.RelatedProductHeading>Related Products</RC.RelatedProductHeading>
+					<RC.HorizontalRule />
+				</RC.RelatedProductsCont>
 				<DisplayProducts />
 			</div>
 			<div className="mt-5">
