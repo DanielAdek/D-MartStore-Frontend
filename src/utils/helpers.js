@@ -5,8 +5,8 @@ import SweetAlert from 'sweetalert';
 
 export const Promise = (method, path, data) => {
   const token = localStorage.getItem('x-auth-t');
-  const url = `http://localhost:8081/api/v1${path}`;
-  // const url = `https://daniel-martstore.herokuapp.com/api/v1${path}`;
+  // const url = `http://localhost:8081/api/v1${path}`;
+  const url = `https://daniel-martstore.herokuapp.com/api/v1${path}`;
   const headers = token ? { "Access-Control-Allow-Origin": "*", "Authorization" : token } : { "Access-Control-Allow-Origin": "*"};
   const object = (method.toUpperCase() === 'GET' || method.toUpperCase() === 'DELETE') ? { method: method.toUpperCase(), url, headers } : { method: method.toUpperCase(), url, headers, data };
   return Axios(object);
