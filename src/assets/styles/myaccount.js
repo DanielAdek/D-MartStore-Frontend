@@ -25,8 +25,6 @@ export const SectionLayout = Style.div`
   column-gap: 20px;
 `;
 
-
-
 // ========= Dashboard Section Right Side ======== //
 
 export const DashboardContainer = Style.div`

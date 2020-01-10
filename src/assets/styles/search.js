@@ -1,6 +1,6 @@
 import Style from 'styled-components';
 
-export const SearchBox = Style.form`
+export const SearchBox = Style.div`
   position: relative;
   height: 42px;
   display: flex;

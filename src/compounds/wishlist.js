@@ -1,20 +1,21 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alias } from '../importer';
-import * as RC from '../assets/styles/wishlist';
-import { Whishlist } from '../components/wishlist'
 
+const RC = Alias.pathToSyles('wishlist');
 const { addToKart } = Alias.pathToActions('WishAndKartCRUD');
 const { DualRingLoad } = Alias.pathToComponents('spiners');
+const { Whishlist } = Alias.pathToComponents('wishlist');
 
 export const WishList = () => {
   // Redux Hooks
   const dispatch = useDispatch();
-  const loading = useSelector(state => state.Loading.loadInComponent);
+  const loading = useSelector(state => state.Loading.kartAll);
   const wishlists = useSelector(state => state.WishAndKartCRUD.wishLists);
 
   // React Hooks
   const handlKartCreate = () => {
+    console.log({ kartData: wishlists });
     dispatch(addToKart({ kartData: wishlists }));
   }
 

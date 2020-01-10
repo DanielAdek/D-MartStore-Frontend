@@ -24,17 +24,17 @@ export const SignupAuthentication = () => {
 			dispatch(handleOnBoard(authSignup, history));
 
 	return (
-		<SA.signupContainer>
-			<SA.SignupLeft>
-				<SA.SiteLogo>
-					<Link to="/">
-						<Logo />
-					</Link>
-				</SA.SiteLogo>
-			</SA.SignupLeft>
-			<SA.Signupright>
-				<SA.SignupHeadText>
-					Already have an account? <Link to="/login">Signin </Link>
+			<SA.signupContainer>
+				<SA.SignupLeft />
+					<SA.Signupright>
+						<SA.SiteLogo>
+							<Link to="/">
+								<Logo />
+							</Link>
+						</SA.SiteLogo>
+					<SA.SignupwelcomeText>Welcome to DMS</SA.SignupwelcomeText>
+					<SA.SignupHeadText pos="center">
+					Already have an account? <Link to="/login">Sign In </Link>
 				</SA.SignupHeadText>
 				<SA.Form>
 					<SA.formRow className="form-row">
@@ -58,16 +58,6 @@ export const SignupAuthentication = () => {
 							/>
 						</SA.formGroup>
 
-						<SA.formGroup className="form-group col-lg-12">
-							<SA.FormInput
-								type="text"
-								name="userAddress"
-								placeholder="Full Address"
-								className="form-control"
-								onChange={handleChange}
-							/>
-						</SA.formGroup>
-
 						{/* <SA.formGroup className="form-group col-md-6">
 							<SA.FormInput
 								type="text"
@@ -83,7 +73,7 @@ export const SignupAuthentication = () => {
 								type="email"
 								name="email"
 								placeholder="Email"
-								class="form-control"
+								className="form-control"
 								onChange={handleChange}
 							/>
 						</SA.formGroup>
@@ -93,7 +83,16 @@ export const SignupAuthentication = () => {
 								type="password"
 								name="password"
 								placeholder="Password"
-								class="form-control"
+								className="form-control"
+								onChange={handleChange}
+							/>
+						</SA.formGroup>
+						<SA.formGroup className="form-group col-lg-12">
+							<SA.FormInput
+								type="text"
+								name="userAddress"
+								placeholder="Full Address"
+								className="form-control"
 								onChange={handleChange}
 							/>
 						</SA.formGroup>
@@ -101,6 +100,9 @@ export const SignupAuthentication = () => {
 					<SA.SignupBotton type="button" onClick={handleSubmit}>
 						{processing ? <RingLoad /> : 'Sign Up'}
 					</SA.SignupBotton>
+				<SA.SignupHeadText pos="left" color="blue" arr="pointer">
+					<Link to="/">View the latest trending shopables</Link>
+				</SA.SignupHeadText>
 				</SA.Form>
 			</SA.Signupright>
 		</SA.signupContainer>

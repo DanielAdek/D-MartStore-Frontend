@@ -8,7 +8,6 @@ export const MyMapComponent = withScriptjs(
 				<GoogleMap defaultZoom={8} defaultCenter={{ lat: 6.605874, lng: 3.349149 }}>
 					{props.isMarkerShown && <Marker position={{ lat: 6.605874, lng: 3.349149 }} />}
 				</GoogleMap>
-				>
 			</Fragment>
 		);
 	})

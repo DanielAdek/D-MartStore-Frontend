@@ -26,17 +26,13 @@ export const LoginAuthentication = () => {
 
 	return (
 		<SI.signupContainer>
-			<SI.SignupLeft>
-				<SI.SiteLogo>
-					<Link to="/">
-						<Logo />
-					</Link>
-				</SI.SiteLogo>
-			</SI.SignupLeft>
-
+			<SI.SignupLeft />
 			<SI.Signupright>
 				<SI.SignupRightContainer>
-					<SI.Div>Welcome!</SI.Div>
+					<SI.SiteLogo>
+						<Link to="/"><Logo /></Link>
+					</SI.SiteLogo>
+					<SI.Div>Welcome Back!</SI.Div>
 					<SI.SignupHeadText>
 						Don't have an account? <Link to="/signup">Sign Up </Link>
 					</SI.SignupHeadText>
@@ -47,7 +43,7 @@ export const LoginAuthentication = () => {
 									type="text"
 									name="dataField"
 									placeholder="Email or Phone Number"
-									class="form-control"
+									className="form-control"
 									onChange={handleChange}
 								></SI.FormInput>
 							</SI.formGroup>
@@ -57,7 +53,7 @@ export const LoginAuthentication = () => {
 									type="password"
 									name="password"
 									placeholder="Password"
-									class="form-control"
+									className="form-control"
 									onChange={handleChange}
 								></SI.FormInput>
 							</SI.formGroup>
@@ -67,7 +63,7 @@ export const LoginAuthentication = () => {
 						</SI.SignupBotton>
 					</SI.Form>
 					<SI.ForgetPassword>
-						<Link to="/forgetpassword">Forget Password</Link>
+						<Link to="/">View the latest trending shopables</Link>
 					</SI.ForgetPassword>
 				</SI.SignupRightContainer>
 			</SI.Signupright>

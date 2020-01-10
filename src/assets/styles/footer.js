@@ -47,6 +47,7 @@ export const ContactOptionsListIcon = Style.img`
   width: 26px;
   height: 22px;
   margin-right: 5px;
+  color: #fff;
 `;
 
 
@@ -115,11 +116,15 @@ export const FooterMinorContainer = Style.div`
 `;
 
 export const FooterMinorWrapper = Style.div`
-  background: #fff;
+  background: #2d2d2d;
+  color: #999;
 `;
 
 export const FooterMinorText = Style.p`
   font-family: Rubik;
 `;
 
-export const FooterMinorLink = Style.a``;
+export const FooterMinorLink = Style.a`
+  color: #fff;
+  text-decoration: underline;
+`;

@@ -6,7 +6,8 @@ export const ProductCardContainer = Style.div`
   flex-direction: column;
   padding: 1px;
   outline: none;
-  // width: 280px;
+  width: ${props => props.width};
+  max-height: 400px;
   border: 1px solid #f0f0f0;
   margin-right: ${props => props.mr};
   margin-bottom: ${props => props.mb};
@@ -24,6 +25,7 @@ export const ProductImage = Style.img`
   max-width: 100%;
   height: 250px;
   display: block;
+  width: inherit;
 `;
 
 export const ProductMagnifyIcon = Style.button`

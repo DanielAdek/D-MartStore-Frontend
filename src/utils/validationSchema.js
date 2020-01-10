@@ -30,13 +30,13 @@ export default {
   },
   orderForm: {
     formType: 'create_order',
-    recipientName: { field: 'recipientName', isName: true },
+    recipientName: { field: 'recipientName', required: true, isName: true },
     deliveryAdr: { field: 'recipientDeliveryAdr' },
-    email: { field: 'recipientEmail', isEmail: true },
-    phone: { field: 'recipientPhoneNumber', isPhoneNumber: true },
+    email: { field: 'recipientEmail', required: true, isEmail: true },
+    phone: { field: 'recipientPhoneNumber', required: true, isPhoneNumber: true },
     note: { field: 'recipientOrderNote' },
     payOpt: { field: 'orderPaymentOption', required: true },
-    productId: { field: 'productId', required: true, isArray: true }
+    productId: { field: 'productId', isArray: true }
   },
   kartForm: {
     formType: 'create_kart',

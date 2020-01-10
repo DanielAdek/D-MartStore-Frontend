@@ -3,7 +3,8 @@ import { Alias } from '../../importer';
 const Types = Alias.pathToConstant('types').default;
   
 const initialState = {
-  orders: null
+  orders: null,
+  order: null
 };
 
 export default (state = initialState, action) => {
@@ -12,6 +13,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         orders: action.payload
+      };
+    case Types.CREATE_ORDER:
+      return {
+        ...state,
+        order: action.payload
       };
     default:
       return state;

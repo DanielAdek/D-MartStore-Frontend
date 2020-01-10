@@ -1,27 +1,39 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Alias } from '../importer'; 
-import TopNav from '../components/nav';
-import { HeaderSection } from '../compounds/Header';
-import { NavigationPanel } from '../components/nav-panel';
-import { Footer } from '../components/footer';
-import NavTabs from '../components/tab';
-import * as RC from '../assets/styles/magnify-Pro';
-import { DisplayProducts } from '../compounds/DisplayProducts';
+import Slider from '@brainhubeu/react-carousel'
+import '@brainhubeu/react-carousel/lib/style.css';
+import { Alias } from '../importer';
+
+const NavTabs= Alias.pathToComponents('tab').default;
+const TopNav = Alias.pathToComponents('nav').default;
 
 // const { DualRingLoadScreen } = Alias.pathToComponents('spiners');
-const { addToWishList, addToKart } = Alias.pathToActions('WishAndKartCRUD');
+const RC = Alias.pathToSyles('magnify-Pro');
+const { Modal } = Alias.pathToComponents('modal');
+const { Footer } = Alias.pathToComponents('footer');
+// const { ProductData } = Alias.pathToAssets('map.v');
+const { Product } = Alias.pathToComponents('product');
+const { HeaderSection } = Alias.pathToCompounds('Header');
 const { retreiveProduct } = Alias.pathToActions('ProductCRUD');
+const { NavigationPanel } = Alias.pathToComponents('nav-panel');
+const { MagnifyProduct } = Alias.pathToComponents('magnifyProduct');
+const { addToWishList, addToKart } = Alias.pathToActions('WishAndKartCRUD');
 const { yellowStars, greyStars, calculateFrequency } = Alias.pathToComponents('stars');
 
 export const GetOneProduct = () => {
 	// Redux Hooks
 	const dispatch = useDispatch();
 	const product = useSelector(state => state.ProductCRUD.product);
+	const processing = useSelector(state => state.Loading.loading);
+	const kartBtnClicked = useSelector(state => state.Loading.loadInComponent);
+	const wishBtnClicked = useSelector(state => state.Loading.loadInComponent);
 
 	// React Hooks
   const [currentFigure, setCurrentFigure] = useState(1);
-  const [currentImage, setCurrentImage] = useState({});
+	const [currentImage, setCurrentImage] = useState({});
+	const [currentData, setCurrentData] = useState(null);
+	const [magnifyProduct, setMagnifyProduct] = useState(false);
+	const [showProductActionBtns, setShowProductActionBtns] = useState(false);
 	const navDiv = useRef(null);
 
 	useEffect(() => {
@@ -44,8 +56,25 @@ export const GetOneProduct = () => {
 		}
 	}
 
+	const handleMagnifyProduct = data => {
+		console.log(data);
+    setMagnifyProduct(true);
+    setCurrentData(data)
+    setCurrentImage({ src: data.productImages[0].image, id: data.productImages[0].id })
+  }
+
 	const handleImageToManify = product => setCurrentImage({ src: product.image, id: product.id});
 
+	const hideActionBtn = () => setShowProductActionBtns(false);
+
+	const displayActionBtn = index => setShowProductActionBtns(index);
+
+	const closeModal = data => {
+    setMagnifyProduct(false);
+    setCurrentFigure(1);
+    setCurrentImage({});
+    setCurrentData(null)
+	}
 
   const handleQtyAmout = event => {
     let figure = currentFigure;
@@ -79,8 +108,8 @@ export const GetOneProduct = () => {
 			<HeaderSection />
 			<NavigationPanel initialCatGrowState={false} />
 			<h4 className="mt-5 mb-5" style={{width: '90%', margin: '1px auto', fontFamily: 'Rubik sans-serif', fontWeight: 'bolder'}}>DMStore Product</h4>
+			{product && (
 			<div className="wrapers">
-				{product && (
 					<RC.MainWrapper>
 						<RC.ContentBody>
 							<RC.ProductMagnifiedImageCont>
@@ -166,7 +195,6 @@ export const GetOneProduct = () => {
 							</RC.ProductRightSide>
 						</RC.ContentBody>
 					</RC.MainWrapper>
-				)}
 				<RC.ProductReviewSecWrapper ref={navDiv}>
 					<NavTabs product={product}/>
 				</RC.ProductReviewSecWrapper>
@@ -174,8 +202,48 @@ export const GetOneProduct = () => {
 					<RC.RelatedProductHeading>Related Products</RC.RelatedProductHeading>
 					<RC.HorizontalRule />
 				</RC.RelatedProductsCont>
-				<DisplayProducts />
-			</div>
+				<RC.DisplayProductsContainer>
+					<Slider
+						arrows
+						slidesPerPage={5}
+						slidesPerScroll={2}
+						stopAutoPlayOnHover
+						offset={50}
+						itemWidth={350}>
+						{ (product && product.relatedProducts).map((data, index) => <Product
+							data={data}
+							key={index}
+							index={index}
+							ratings={product && product.ratings}
+							hideActionBtn={hideActionBtn}
+							wishBtnClicked={wishBtnClicked}
+							kartBtnClicked={kartBtnClicked}
+							Styles={{ mr: '5px', mb: '2px'}}
+							magnify={() => handleMagnifyProduct(data)}
+							showProductActionBtns={showProductActionBtns}
+							handleKartCreate={() => handleKartCreate(data)}
+							displayActionBtn={() => displayActionBtn(index)} 
+							handleWishListCreate={() => handleWishListCreate(data)}
+							/>)}
+					</Slider>
+      </RC.DisplayProductsContainer>
+			<Modal visible={magnifyProduct}>
+          <MagnifyProduct 
+            loading={processing}
+            closeModal={closeModal}
+            currentData={currentData}
+            currentImage={currentImage}
+            currentFigure={currentFigure}
+            wishBtnClicked={wishBtnClicked}
+            kartBtnClicked={kartBtnClicked}
+            handleQtyAmout={handleQtyAmout}
+            handleChangeQty={handleChangeQty}
+            handleImageToManify={handleImageToManify}
+            handleKartCreate={() => handleKartCreate(currentData)}
+            handleWishListCreate={() => handleWishListCreate(currentData)}
+          />
+        </Modal>
+			</div>)}
 			<div className="mt-5">
 				<Footer />
 			</div>

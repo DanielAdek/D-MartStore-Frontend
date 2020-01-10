@@ -7,7 +7,7 @@ import { NavigationPanel } from '../components/nav-panel';
 import { OfferSection, OfferSection2 } from '../compounds/OfferSection';
 import { DisplayProducts, DisplayProductHeading, DisplayFeaturedProducts } from '../compounds/DisplayProducts';
 import { Jumbotron } from '../components/jumbotron';
-import { Footer, FooterMinor } from '../components/footer';
+import { Footer } from '../components/footer';
 
 
 export const Landing = () => {
@@ -44,7 +44,6 @@ export const Landing = () => {
       <OfferSection2 />
       <DisplayFeaturedProducts />
       <Footer />
-      <FooterMinor />
     </Fragment>
   )
 }

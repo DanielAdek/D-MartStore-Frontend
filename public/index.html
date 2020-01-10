@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <link rel="icon" href="%PUBLIC_URL%/logo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   <meta name="description" content="Web site created using create-react-app" />
@@ -23,6 +23,30 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
   <title>DMS</title>
+  <style>
+    #info {
+      display: none;
+    }
+    @media (max-width: 1220px) {
+      #info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 200px auto;
+        text-align: center;
+        line-height: 34px;
+        color: #023d58;
+      }
+      #root {
+        display: none;
+      }
+      img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  </style>
   <!-- =========== Bootstrap ========== -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -40,6 +64,10 @@
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="info">
+    <img src="./logo.png" alt="logo"/> 
+    <p>DMS is under contruction for this device screen size. <br> Please use a bigger screen size to view site</p>
+  </div>
   <div id="root"></div>
   <!--
       This HTML file is a template.

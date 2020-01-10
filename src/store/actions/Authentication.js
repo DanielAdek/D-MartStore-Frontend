@@ -1,4 +1,3 @@
-import SweetAlert from 'sweetalert';
 import { Alias } from '../../importer';
 
 export const handleGenerateCode = () => async dispatch => {
@@ -7,7 +6,7 @@ export const handleGenerateCode = () => async dispatch => {
     const response = await Alias.pathToUtils('helpers').Promise('GET', `/users/generate/code`);
     await dispatch(Alias.pathToDispatchAbles('auth').generate_code(response.data.data.details.generatedCode));
     dispatch(Alias.pathToDispatchAbles('loading').finished());
-    SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
+    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
   } catch (error) {
     Alias.pathToUtils('helpers').handleError(error)
     dispatch(Alias.pathToDispatchAbles('loading').finished());
@@ -24,7 +23,7 @@ export const handleAuthenticate = (data, history) => async dispatch => {
     if (localStorage.getItem('token')) { localStorage.removeItem('token')};
     dispatch(Alias.pathToDispatchAbles('loading').finished());
     history.push('/');
-    SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
+    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
   } catch (error) {
     Alias.pathToUtils('helpers').handleError(error)
     dispatch(Alias.pathToDispatchAbles('loading').finished());
@@ -41,7 +40,7 @@ export const handleOnBoard = (data, history) => async dispatch => {
 		if (localStorage.getItem('token')) { localStorage.removeItem('token')};
     dispatch(Alias.pathToDispatchAbles('loading').finished());
     history.push('/');
-    SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
+    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
   } catch (error) {
     Alias.pathToUtils('helpers').handleError(error)
     dispatch(Alias.pathToDispatchAbles('loading').finished());

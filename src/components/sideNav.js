@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
-import * as Nav from '../assets/styles/nav-p';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
+import * as Nav from '../assets/styles/nav-p';
 
 export const SideBarNav = props => {
-	const [logout, setLogout] = useState(false);
-
+	// React Hooks
 	const history = useHistory();
-	const signOut = e => {
-		e.preventDefault();
-		localStorage.clear('token');
-		setLogout(true);
+	
+	const signOut = () => {
+		localStorage.clear();
 		history.push('/');
 	};
 

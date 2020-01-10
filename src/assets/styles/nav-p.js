@@ -129,6 +129,12 @@ export const PanelDropdownMenu = Style.div`
   color: red;
 `;
 
+export const PanelDropdownLink = Style.a`
+  &:after {
+    display: none;
+  }
+`;
+
 export const PanelDropdownDiver = Style.div``;
 
 export const PanelIndicatorCover = Style.div`
@@ -137,7 +143,25 @@ export const PanelIndicatorCover = Style.div`
   position: absolute;
   right: 50px;
   top: 13px;
-  width: 100px;
+  width: 180px;
+`;
+
+export const PanelRefreshContainer = Style.div`
+  border-radius: 20px;
+  box-shadow: 1px 2px 8px 2px;
+  background: orange;
+  cursor: pointer;
+`;
+
+export const PanelRefreshImage = Style.img`
+  width: 25px;
+  animation: ${props => props.animate && 'rotate 1s infinite linear'};
+`;
+
+export const PanelWKContainer = Style.div`
+  display: flex;
+  width: 38%;
+  justify-content: space-between;
 `;
 
 

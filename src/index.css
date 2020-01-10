@@ -92,7 +92,7 @@ input:checked ~ span::after {
 	border: 2.4px solid #f5f7f9;
 	padding: 14px;
 	justify-content: space-between;
-	width: 50%;
+	width: auto;
 	border-radius: 7px;
 }
 
@@ -100,6 +100,7 @@ input:checked ~ span::after {
 	cursor: pointer;
 	border-radius: 7px;
 	background: #f5f7f9;
+	margin-right: 12px;
 }
 
 .pagination-active {
@@ -121,14 +122,29 @@ input:checked ~ span::after {
 	outline: none;
 }
 
-button:hover, button:active,
-button:focus {
+.button:hover, button:active,
+.button:focus {
 	background:#3d464d;
 	color:#fff;
 	fill: #3d464d;
+}
+
+button:hover,
+button:active,
+button:focus {
 	outline: none;
 }
 
 .BrainhubCarousel {
 	background: ghostwhite;
+}
+
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

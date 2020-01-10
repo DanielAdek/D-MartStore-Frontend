@@ -250,6 +250,11 @@ export const MainWrapper = Style.div`
   box-shadow: 1px 1px 1px 2px #F5F7F9;
 `;
 
+export const DisplayProductsContainer = Style.div`
+  width: 90%;
+  margin: 1px auto;
+`;
+
 export const RelatedProductsCont = Style.div`
   display: flex;
   margin: 11.4px auto;

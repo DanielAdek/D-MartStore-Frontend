@@ -10,7 +10,6 @@ const JumbotronImages = props => {
   ));
 };
 
-
 const Indicators = props => {
   return props.data.map((img, i) => (
     <RC.JumbotronSliderLine key={i} data-target="#carouselExampleCaptions" data-slide-to={i} className={`${i === 0 ? 'active' : ''}`} />
@@ -21,10 +20,10 @@ export const Jumbotron = () => {
   return (
     <RC.JumbotronSection>
       <RC.clear>
-        <RC.MyPic src={require('../assets/images/Akdan.jpeg')}/>
+        <RC.MyPic src={require('../assets/images/Akdan.png')}/>
         <RC.AboutMe>
           <RC.MyName>Daniel Adek</RC.MyName>
-          <RC.MyProfession>Software Developer <br />(JavaScript)</RC.MyProfession>
+          <RC.MyProfession>Software Engineer <br />(JavaScript)</RC.MyProfession>
           <RC.MyProfession>(+234) 818 208 9681</RC.MyProfession>
         </RC.AboutMe>
       </RC.clear>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as Cf from '../assets/styles/contact-us';
 
 export const ContactUsForm = () => {
-	const [contactus, setContactus] = useState('');
+	const [contactus, setContactus] = useState({});
 	const handleChange = e => {
 		setContactus({ ...contactus, [e.target.name]: e.target.value });
 	};
@@ -16,15 +16,16 @@ export const ContactUsForm = () => {
 			<Cf.Header1>Contact Us</Cf.Header1>
 			<Cf.FormWrapper>
 				<Cf.Address>
-					<Cf.header2>Our Address</Cf.header2>
 					<Cf.Paragraph>
+					<Cf.BoldText>Our Address</Cf.BoldText>
+						<br />
 						25b Ameen street Abule-Oja yaba Lagos Nigeria.
 						<br /> Email: olorunwalawrence@gmail.com <br />
 						Phone Number: +2347015009775
 					</Cf.Paragraph>
 					<Cf.Paragraph>
 						<Cf.BoldText>Opening Hours</Cf.BoldText> <br />
-						Monday to Friday: 9am-5pm Saturday:
+						Monday to Friday: 9 AM - 5 PM Saturday:
 					</Cf.Paragraph>
 					<Cf.Paragraph>
 						<Cf.BoldText>Comment</Cf.BoldText>
@@ -34,7 +35,7 @@ export const ContactUsForm = () => {
 					</Cf.Paragraph>
 				</Cf.Address>
 				<Cf.formContainer>
-					<Cf.header2>Leave us a message</Cf.header2>
+					<Cf.header4>Leave us a message</Cf.header4>
 					<Cf.Form>
 						<Cf.Formrow className="form-row">
 							<Cf.formGroup className="form-group col-md-6">
@@ -43,7 +44,6 @@ export const ContactUsForm = () => {
 									type="text"
 									name="name"
 									onChange={handleChange}
-									placeholder="full name"
 									className="form-control"
 								/>
 							</Cf.formGroup>
@@ -53,7 +53,6 @@ export const ContactUsForm = () => {
 									type="email"
 									name="email"
 									onChange={handleChange}
-									placeholder="full name"
 									className="form-control"
 								/>
 							</Cf.formGroup>
@@ -65,7 +64,6 @@ export const ContactUsForm = () => {
 									type="text"
 									name="subject"
 									onChange={handleChange}
-									placeholder="Subject"
 									className="form-control"
 								/>
 							</Cf.formGroup>
@@ -76,10 +74,9 @@ export const ContactUsForm = () => {
 									onChange={handleChange}
 									type="text"
 									name="message"
-									placeholder="Message"
 								></Cf.TextArea>
 							</Cf.formGroup>
-							<Cf.Button onClick={handlesubmit}>Submit</Cf.Button>
+							<Cf.Button className="btn btn-md button" onClick={handlesubmit}>Submit</Cf.Button>
 						</Cf.Formrow>
 					</Cf.Form>
 				</Cf.formContainer>

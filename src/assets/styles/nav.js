@@ -1,29 +1,35 @@
 import Style from 'styled-components';
 
-export const TNavFlexBoard = Style.div`
+export const TNavWrapper = Style.div`
   background: #F5F7F9;
+  padding: 7px;
+`;
+
+export const TNavFlexBoard = Style.div`
   display: flex;
   justify-content: space-between;
-  padding: 7px;
   font-family: Rubik;
+  width: 90%;
+  margin: auto;
 `;
 
 export const TNavFlexCont = Style.div`
   display: flex;
-  width: 40%;
-  justify-content: space-around;
+  width: 60%;
 `;
 
 export const TNavFlexIconText = Style.div`
   display: flex;
-  justify-content: space-evenly;
   border-right: ${props => props.bRight ? '1px solid #d7d7d7' : 'none' };
-  width: 30%;
+  margin-right: 40px;
+  flex: 1;
 `;
 
 export const TNavListIcon = Style.img`
   width: 13px;
   height: 16px;
+  margin-right: 10px;
+  transform: translate(0px, 2px);
   cursor: ${props => props.pointer ? 'pointer' : 'default' };
 `;
 
@@ -36,8 +42,7 @@ export const LoginButton = Style.button`
   border: none;
   font-size: .92857em;
   background: transparent;
-  margin-right: 40px;
-  cursor: pointer;
+  padding: 0;
   font-family: Rubik;
   width: 10%;
   display: flex;

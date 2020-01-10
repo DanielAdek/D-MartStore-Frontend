@@ -1,13 +1,13 @@
-import SweetAlert from 'sweetalert';
+// import SweetAlert from 'sweetalert';
 import { Alias } from '../../importer';
 
 export const editProfile = data => async dispatch => {
 	try {
 		dispatch(Alias.pathToDispatchAbles('loading').processing());
 		const response = await Alias.pathToUtils('helpers').Promise('PUT', `/users/edit`, data);
-		dispatch(Alias.pathToDispatchAbles('editprofile').edit_profile(response.data.data.details));
+		await dispatch(Alias.pathToActions('Authentication').retrieveUserData());
 		dispatch(Alias.pathToDispatchAbles('loading').finished());
-		SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
+		Alias.pathToUtils('helpers').Alert.success(response.data.data.message);
 	} catch (error) {
 		Alias.pathToUtils('helpers').handleError(error);
 		dispatch(Alias.pathToDispatchAbles('loading').finished());

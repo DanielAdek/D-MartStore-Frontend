@@ -3,7 +3,7 @@ import TopNav from '../components/nav';
 import { HeaderSection } from '../compounds/Header';
 import { NavigationPanel } from '../components/nav-panel';
 import { MyAccount } from '../compounds/myAcount';
-import { Footer, FooterMinor } from '../components/footer';
+import { Footer } from '../components/footer';
 
 export const Dashboard = () => {
   return (
@@ -13,7 +13,6 @@ export const Dashboard = () => {
       <NavigationPanel initialStateGrow={false} />
       <MyAccount />
       <Footer />
-      <FooterMinor />
     </Fragment>
   )
 }

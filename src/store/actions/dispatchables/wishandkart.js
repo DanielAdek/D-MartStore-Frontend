@@ -19,9 +19,13 @@ export const del_wish = message => ({
 
 
 // KART SECTION
-export const add_kart = kart => ({
-  type: Types.ADD_TO_KART,
-  payload: kart
+export const add_kart = () => ({
+  type: Types.ADD_TO_KART
+});
+
+export const send_kart_to_checkout = karts => ({
+  type: Types.SEND_TO_CHECKOUT,
+  payload: karts
 });
 
 export const get_kartList = kartList => ({

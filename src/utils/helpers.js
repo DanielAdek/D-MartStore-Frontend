@@ -2,10 +2,11 @@ import Axios from 'axios';
 import toastr from 'toastr';
 import SweetAlert from 'sweetalert';
 
-const token = localStorage.getItem('x-auth-t');
 
 export const Promise = (method, path, data) => {
+  const token = localStorage.getItem('x-auth-t');
   const url = `http://localhost:8081/api/v1${path}`;
+  // const url = `https://daniel-martstore.herokuapp.com/api/v1${path}`;
   const headers = token ? { "Access-Control-Allow-Origin": "*", "Authorization" : token } : { "Access-Control-Allow-Origin": "*"};
   const object = (method.toUpperCase() === 'GET' || method.toUpperCase() === 'DELETE') ? { method: method.toUpperCase(), url, headers } : { method: method.toUpperCase(), url, headers, data };
   return Axios(object);
@@ -15,6 +16,10 @@ export const formatDate = dateObject => {
 	const [day, month, date, year] = new Date(dateObject).toDateString().split(' ');
 	console.log(day);
 	return `${date} ${month}, ${year}`;
+};
+
+export const removeDuplicateFromArray = array => {
+	return Array.from(new Set(array));
 };
 
 export const ImageToBase64 = (file, callback) => {
@@ -58,8 +63,6 @@ export const Alert = {
     toastr.options.closeButton = true
     toastr.options.timeOut = 7200
     toastr.options.preventDuplicates = true;
-    toastr.options.progressBar = true;
-    toastr.options.rtl = true;
     toastr.info(message)
   }
 }

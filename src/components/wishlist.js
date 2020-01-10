@@ -1,9 +1,9 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alias } from '../importer';
 import * as RC from '../assets/styles/wishlist';
 
-const { addToKart, retreiveWishLists, deleteWish } = Alias.pathToActions('WishAndKartCRUD');
+const { addToKart, deleteWish } = Alias.pathToActions('WishAndKartCRUD');
 const { DualRingLoadScreen, DualRingLoad } = Alias.pathToComponents('spiners');
 
 export const Whishlist = () => {
@@ -11,16 +11,10 @@ export const Whishlist = () => {
   const dispatch = useDispatch();
   const wishlists = useSelector(state => state.WishAndKartCRUD.wishLists);
   const processing = useSelector(state => state.Loading.loading);
-  const loading = useSelector(state => state.Loading.loadInComponent);
+  const loading = useSelector(state => state.Loading.kart);
 
   // React Hooks
   const [clickedBtn, setClickedBtn] = useState(null);
-
-  useEffect(() => {
-		if (!wishlists) {
-			dispatch(retreiveWishLists());
-		}
-  }, [dispatch, wishlists]);
 
   const handlKartCreate = (data, index) => {
     setClickedBtn(index);
@@ -29,7 +23,7 @@ export const Whishlist = () => {
     dispatch(addToKart({ kartData }));
   }
 
-  const handleDelWish = wish => dispatch(deleteWish(wish._id, retreiveWishLists));
+  const handleDelWish = wish => dispatch(deleteWish(wish._id));
 
 
   return (
@@ -49,13 +43,13 @@ export const Whishlist = () => {
         </RC.WhishListTableDataImage>
         <RC.WhishListTableDataItemName>
           <RC.WhishListTableDataProName>{data.productId.productName}</RC.WhishListTableDataProName>
-          <RC.WishListRRDiv>
+          {/* <RC.WishListRRDiv>
             <RC.StarSVG>
               <RC.ProductSVGPath d={RC.StarAttrArea}></RC.ProductSVGPath>
               <RC.ProductSVGPath d={RC.StarAttrPerimeter}></RC.ProductSVGPath>
             </RC.StarSVG>
             <RC.ProductInfoReview>{data.productId.productRating} Reviews</RC.ProductInfoReview>
-          </RC.WishListRRDiv>
+          </RC.WishListRRDiv> */}
         </RC.WhishListTableDataItemName>
         <RC.WhishListTableDataSS>
           <RC.WhishListTableDataSSText stock={data.productId.productStatus}>{data.productId.productStatus}</RC.WhishListTableDataSSText>

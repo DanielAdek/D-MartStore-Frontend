@@ -4,24 +4,24 @@ import * as ABt from '../assets/styles/about';
 export const Aboutus = () => {
 	const Card = [
 		{
-			img: require('../assets/images/Akdan.jpeg'),
+			img: require('../assets/images/Akdan.png'),
 			Name: 'Daniel Adekunle ',
-			proffession: 'SoftWare Engineer (MEAN Stack)',
+			proffession: 'SoftWare Engineer (MERN Stack)',
 		},
 		{
-			img: require('../assets/images/van.png'),
+			img: require('../assets/images/long.png'),
 			Name: 'Olorunwa lawrence',
-			proffession: 'Software Engineer (Front-End, Javascript)',
+			proffession: 'Software Engineer (ReactJs)',
 		},
 		{
-			img: require('../assets/images/van.png'),
+			img: require('../assets/images/red-head-phone.png'),
 			Name: 'Boluwatife Adekunle',
-			proffession: 'Software engineer (Nodejs)',
+			proffession: 'Software engineer (NodeJs)',
 		},
 	];
 	return (
 		<Fragment>
-			<ABt.BackGround></ABt.BackGround>
+			<ABt.BackGround />
 			<ABt.About>
 				<ABt.About_us_title>About US</ABt.About_us_title>
 				<ABt.Para>
@@ -40,14 +40,14 @@ export const Aboutus = () => {
 				<ABt.Para>Want to work in our friendly team? Contact us and we will consider your candidacy.</ABt.Para>
 
 				<ABt.CardWrapper>
-					{Card.map(data => (
-						<ABt.Card className="card">
+					{Card.map((data, i) => (
+						<ABt.Card className="card" key={i}>
 							<ABt.Image src={data.img} className="card-img-top" alt="" />
 
 							<ABt.CardBody className="card-body">
-								<ABt.Header5 className="card-title">Name:{data.Name}</ABt.Header5>
+								<ABt.Header5 className="card-title">{data.Name}</ABt.Header5>
 
-								<ABt.paragraph className="card-text">Proffession :{data.proffession}</ABt.paragraph>
+								<ABt.paragraph className="card-text">{data.proffession}</ABt.paragraph>
 							</ABt.CardBody>
 						</ABt.Card>
 					))}

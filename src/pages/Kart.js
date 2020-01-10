@@ -3,7 +3,7 @@ import TopNav from '../components/nav';
 import { HeaderSection } from '../compounds/Header';
 import { NavigationPanel } from '../components/nav-panel';
 import { KartList } from '../compounds/kart';
-import { Footer, FooterMinor } from '../components/footer';
+import { Footer } from '../components/footer';
 
 
 export const KartPage = () => {
@@ -14,7 +14,6 @@ export const KartPage = () => {
       <NavigationPanel initialCatGrowState={false}/>
       <KartList />
       <Footer />
-      <FooterMinor />
     </Fragment>
   )
 }

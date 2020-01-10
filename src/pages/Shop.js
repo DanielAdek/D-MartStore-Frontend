@@ -3,7 +3,7 @@ import TopNav from '../components/nav';
 import { HeaderSection } from '../compounds/Header';
 import { NavigationPanel } from '../components/nav-panel';
 import { Shop } from '../compounds/shop';
-import { Footer, FooterMinor } from '../components/footer';
+import { Footer } from '../components/footer';
 
 
 export const ShopPage = () => {
@@ -14,7 +14,6 @@ export const ShopPage = () => {
       <NavigationPanel initialCatGrowState={false}/>
       <Shop />
       <Footer />
-      <FooterMinor />
     </Fragment>
   )
 }

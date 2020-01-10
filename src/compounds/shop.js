@@ -17,21 +17,51 @@ export const Shop = () => {
 	// Redux Hooks
 	const dispatch = useDispatch();
 	const products = useSelector(state => state.ProductCRUD.products);
+	const reqFilter = useSelector(state => state.ProductCRUD.reqFilter);
 	const processing = useSelector(state => state.Loading.loading);
-	const loading = useSelector(state => state.Loading.loadInComponent);
 
 	// React Hooks
 	const [showProductActionBtns, setShowProductActionBtns] = useState(false);
+	const [filteredProduct, setFilteredProduct] = useState(null);
 	const [currentData, setCurrentData] = useState(ProductData[0]);
 	const [currentFigure, setCurrentFigure] = useState(1);
 	const [magnifyProduct, setMagnifyProduct] = useState(false);
 	const [currentImage, setCurrentImage] = useState({});
+	const [paginationPerPageValue, sePaginationPerPageValue] = useState(0);
 
 	useEffect(() => {
 		if (!products) {
 			dispatch(retreiveProducts());
 		}
 	}, [dispatch, products]);
+
+	useEffect(() => {
+		if (reqFilter) {
+			if (reqFilter.productBrand && !reqFilter.productPrices.modifield && !reqFilter.productColors.length) {
+				setFilteredProduct(reqFilter && products.products.filter(data => data.productBrand === reqFilter.productBrand))
+			}
+			if (!reqFilter.productBrand && reqFilter.productPrices.modifield && !reqFilter.productColors.length) {
+				setFilteredProduct(reqFilter && products.products.filter(data => data.productPrice >= reqFilter.productPrices.min && data.productPrice <= reqFilter.productPrices.max))
+			}
+			if (!reqFilter.productBrand && !reqFilter.productPrices.modifield && reqFilter.productColors.length) {
+				setFilteredProduct(reqFilter && products.products.filter(data => reqFilter.productColors.includes(data.productColor)))
+			}
+			if (reqFilter.productBrand && reqFilter.productPrices.modifield && !reqFilter.productColors.length) {
+				setFilteredProduct(reqFilter && products.products.filter(data => data.productBrand === reqFilter.productBrand && (data.productPrice >= reqFilter.productPrices.min && data.productPrice <= reqFilter.productPrices.max) ))
+			}
+			if (reqFilter.productBrand && !reqFilter.productPrices.modifield && reqFilter.productColors.length) {
+				setFilteredProduct(reqFilter && products.products.filter(data => data.productBrand === reqFilter.productBrand && reqFilter.productColors.includes(data.productColor)))
+			}
+			if (!reqFilter.productBrand && reqFilter.productPrices.modifield && reqFilter.productColors.length) {
+				setFilteredProduct(reqFilter && products.products.filter(data => (data.productPrice >= reqFilter.productPrices.min && data.productPrice <= reqFilter.productPrices.max) && reqFilter.productColors.includes(data.productColor) ))
+			}
+			if (reqFilter.productBrand && reqFilter.productPrices.modifield && reqFilter.productColors.length) {
+				setFilteredProduct(reqFilter && products.products.filter(data => data.productBrand === reqFilter.productBrand && (data.productPrice >= reqFilter.productPrices.min && data.productPrice <= reqFilter.productPrices.max) && reqFilter.productColors.includes(data.productColor) ))
+			}
+		} else {
+			setFilteredProduct(products && products.products);
+		}
+	}, [products, reqFilter]);
 
 	const displayActionBtn = index => setShowProductActionBtns(index);
 
@@ -50,7 +80,6 @@ export const Shop = () => {
     setCurrentFigure(1);
   }
 
-	// const handleStars = () => {}
 
 	const handleQtyAmout = event => {
 		let figure = currentFigure;
@@ -71,7 +100,7 @@ export const Shop = () => {
 	};
 
 	const handleKartCreate = product => {
-		const kartData = { productId: product._id, quantity: currentFigure, imageType: currentImage.id || 1};
+		const kartData = { productId: product._id, quantity: currentFigure || 1, imageType: currentImage.id || 1};
 		dispatch(addToKart({ kartData }));
 	}
 
@@ -81,20 +110,28 @@ export const Shop = () => {
 		dispatch(addToWishList(data));
 	}
 
+	const handlePageChange = page => sePaginationPerPageValue((page.selected) * 12);
+
+	const pageCount = (products && products.products.length <= 12) ? 1 : products && Math.ceil(products.products.length / 12);
+	const pageCountDev = Math.ceil(ProductData.length / 12);
+	const displayProductDev = ProductData.slice(paginationPerPageValue, (paginationPerPageValue + 12));
+	const displayProductProduction = filteredProduct && filteredProduct.slice(paginationPerPageValue, (paginationPerPageValue + 12));
+	
 	return (
 		<Fragment>
 			<RC.ShopContainer>
 			{ processing && <DualRingLoadScreen />}
 				<ShopFilter />
 				<RC.ShopMainSection>
-					{products && products.products.map((data, index) => (
+					{((filteredProduct && displayProductProduction) || displayProductDev).map((data, index) => (
 						<Product
 							key={index}
 							index={index}
 							data={data}
-							loading={loading}
+							width={'30%'}
 							hideActionBtn={hideActionBtn}
 							Styles={{ mr: '30px', mb: '20px' }}
+							ratings={products && products.ratings}
 							magnify={() => handleMagnifyProduct(data)}
 							showProductActionBtns={showProductActionBtns}
 							handleKartCreate={() => handleKartCreate(data)}
@@ -106,16 +143,17 @@ export const Shop = () => {
 			</RC.ShopContainer>
 			<RC.ShopPagination>
 				<Paginator
-					previousLabel={'<'}
-					nextLabel={'>'}
+					previousLabel={'previous'}
+					nextLabel={'next'}
 					breakLabel={'...'}
 					breakClassName={'break-me'}
 					marginPagesDisplayed={2}
 					pageRangeDisplayed={5}
+					onPageChange={handlePageChange}
 					containerClassName={'pagination'}
 					subContainerClassName={'pages pagination'}
 					activeClassName={'pagination-active'}
-					pageCount={ProductData.length}
+					pageCount={((pageCount || pageCountDev) || 1)}
 				/>
 			</RC.ShopPagination>
 			<Modal visible={magnifyProduct}>

@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Form } from 'form-my-simple-validation';
 import { Alias } from '../importer';
 import * as RC from '../assets/styles/myaccount';
 import FormSchema from '../utils/validationSchema';
 import { Spiner } from '../components/loader';
 import { Modal } from '../components/modal';
-import { Orders, LoremIpsum } from '../assets/map.v';
+import { LoremIpsum } from '../assets/map.v';
 import { ImageToBase64, generateCode, Alert } from '../utils/helpers';
 import { handleProductCreate } from '../store/actions/ProductCRUD';
 
 const { retreiveOrders } = Alias.pathToActions('Orders');
 const { editProfile } = Alias.pathToActions('EditProfile');
-const { retrieveUserData } = Alias.pathToActions('Authentication');
+// const { retrieveUserData } = Alias.pathToActions('Authentication');
 const { formatDate } = Alias.pathToUtils('helpers');
 
 const TableRows = orders => {
@@ -105,8 +106,7 @@ export const DashBoard = props => {
 	const user = useSelector(state => state.Authenticate.user);
 
 	useEffect(() => {
-    dispatch(retreiveOrders());
-    dispatch(retrieveUserData())
+    dispatch(retreiveOrders(true));
 	}, [dispatch]);
 
 	return (
@@ -118,7 +118,6 @@ export const DashBoard = props => {
 					</RC.DashboardAvatar>
 					<RC.DashboardUserName className="mt-3">{user && (user.username || 'Daniel Adek')}</RC.DashboardUserName>
 					<RC.DashboardUserEmail>{user && (user.email || 'maildaniel.me1@gmail.com')}</RC.DashboardUserEmail>
-					{/* <RC.DashboardEditButton className="btn btn-sm mt-3">Edit Profile</RC.DashboardEditButton> */}
 				</RC.DashboardCardBody>
 			</RC.DashboardCardContainer>
 			<RC.DashboardCardContainer>
@@ -249,28 +248,6 @@ export const EditProfile = () => {
 							name="userAddress"
 						/>
 					</RC.FormGroup>
-					{/* <RC.FormGroup className="form-group col-md-6">
-						<RC.FormInputLabel htmlFor="inputEmail4">Password</RC.FormInputLabel>
-						<RC.FormInput
-							onChange={handlechange}
-							type="password"
-							className="form-control"
-							id="inputEmail4"
-							line={true}
-							name="password"
-						/>
-					</RC.FormGroup>
-					<RC.FormGroup className="form-group col-md-6">
-						<RC.FormInputLabel htmlFor="inputEmail4">Confirm Password</RC.FormInputLabel>
-						<RC.FormInput
-							onChange={handlechange}
-							type="password"
-							className="form-control"
-							id="inputEmail4"
-							line={true}
-							name="confirm-password"
-						/>
-					</RC.FormGroup> */}
 					<RC.FormButton
 						onClick={handleUpdate}
 						type="button"
@@ -288,12 +265,12 @@ export const EditProfile = () => {
 
 export const OrderHistory = () => {
 	//Redux Hooks
-	// const dispatch = useDispatch();
-	// const ordersHistory = useSelector(state => state.Orders.orders);
-	// console.log(ordersHistory);
-	// useEffect(() => {
-	// 	dispatch(retreiveOrders());
-	// }, [dispatch]);
+	const dispatch = useDispatch();
+	const ordersHistory = useSelector(state => state.Orders.orders);
+
+	useEffect(() => {
+		dispatch(retreiveOrders());
+	}, [dispatch]);
 
 	return (
 		<RC.OrderHistoryContainer>
@@ -306,7 +283,7 @@ export const OrderHistory = () => {
 						<RC.OrderHistoryTableHeader>Status</RC.OrderHistoryTableHeader>
 						<RC.OrderHistoryTableHeader>Total</RC.OrderHistoryTableHeader>
 					</RC.OrderHistoryTableRow>
-					{OrderHistoryTableRows(Orders)}
+					{OrderHistoryTableRows(ordersHistory)}
 				</RC.OrderHistoryTbody>
 			</RC.OrderHistoryTable>
 		</RC.OrderHistoryContainer>
@@ -341,8 +318,9 @@ export const CreateProduct = () => {
 	const [choosenImages, setChoosenImages] = useState(labels);
 
 	// Redux Hooks
-	const processing = useSelector(state => state.loading);
 	const dispatch = useDispatch();
+	const history = useHistory();
+	const processing = useSelector(state => state.Loading.loading);
 
 	const handleInputChange = event => {
 		setProduct({ ...product, [event.target.name]: event.target.value });
@@ -388,6 +366,9 @@ export const CreateProduct = () => {
 	const handlePreview = event => {
 		event.preventDefault();
 
+		if (product.productPrice < 1 || product.productPrice > 5000) {
+			return Alert.info('Product price should not be less than 1 or greater than 5000');
+		}
 		const ValidationError = Form.validateFields('create_product', FormSchema, product);
 		if (ValidationError.error) {
 			console.log(ValidationError);
@@ -403,7 +384,7 @@ export const CreateProduct = () => {
 	const handleCreateProduct = event => {
 		event.preventDefault();
 		closeModal();
-		dispatch(handleProductCreate(product));
+		dispatch(handleProductCreate(product, history));
 	};
 
 	const closeModal = () => setPreview(false);
@@ -439,6 +420,8 @@ export const CreateProduct = () => {
 						<RC.FormInputLabel htmlFor="inputEmail4">Product Price</RC.FormInputLabel>
 						<RC.FormInput
 							type="number"
+							min={1}
+							max={5000}
 							name="productPrice"
 							className="form-control"
 							id="inputEmail4"
@@ -531,33 +514,33 @@ export const CreateProduct = () => {
 						onChange={event => handleImageChange(event, 2)}
 						type="file"
 						className="custom-file-input"
-						id="customFile"
+						id="customFile1"
 					/>
-					<RC.FormInputLabel className="custom-file-label" htmlFor="customFile">
+					<RC.FormInputLabel className="custom-file-label" htmlFor="customFile1">
 						{choosenImages[1]}
 					</RC.FormInputLabel>
 				</RC.FormGroup>
-				<RC.FormGroup className="custom-file mb-3">
+				<RC.FormGroup className="custom-file mb-1">
 					<RC.FormInput
 						name="image"
 						onChange={event => handleImageChange(event, 3)}
 						type="file"
 						className="custom-file-input"
-						id="customFile"
+						id="customFile2"
 					/>
-					<RC.FormInputLabel className="custom-file-label" htmlFor="customFile">
+					<RC.FormInputLabel className="custom-file-label" htmlFor="customFile2">
 						{choosenImages[2]}
 					</RC.FormInputLabel>
 				</RC.FormGroup>
-				<RC.FormGroup className="custom-file mb-3">
+				<RC.FormGroup className="custom-file mb-2">
 					<RC.FormInput
 						name="image"
 						onChange={event => handleImageChange(event, 4)}
 						type="file"
 						className="custom-file-input"
-						id="customFile"
+						id="customFile3"
 					/>
-					<RC.FormInputLabel className="custom-file-label" htmlFor="customFile">
+					<RC.FormInputLabel className="custom-file-label" htmlFor="customFile3">
 						{choosenImages[3]}
 					</RC.FormInputLabel>
 				</RC.FormGroup>
@@ -567,9 +550,9 @@ export const CreateProduct = () => {
 						onChange={event => handleImageChange(event, 5)}
 						type="file"
 						className="custom-file-input"
-						id="customFile"
+						id="customFile4"
 					/>
-					<RC.FormInputLabel className="custom-file-label" htmlFor="customFile">
+					<RC.FormInputLabel className="custom-file-label" htmlFor="customFile4">
 						{choosenImages[4]}
 					</RC.FormInputLabel>
 				</RC.FormGroup>

@@ -1,22 +1,27 @@
 import Style from 'styled-components';
 
 export const ShopFilterSection = Style.div`
-  border: .1px solid #f0f0f0;
-  height: 810px;
-  max-height: 810px;
+  height: 790px;
+  max-height: 788px;
 `;
 
 export const ShopFilterOptionBoxes = Style.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  border-bottom: 0.1rem solid #f0f0f0;
   font-size: 20px
   font-weight: 500;
+  border: .1px solid #f0f0f0;
 `;
 
 export const ShopFilterOptionHeadings = Style.h4`
   font-size: 1.2rem;
+  margin-bottom: 1rem;
+`;
+
+export const ShopBrandContainer = Style.div`
+  max-height: 200px;
+  overflow-y: auto;
 `;
 
 export const ShopFilterByBrandsCover = Style.label`
@@ -25,7 +30,6 @@ export const ShopFilterByBrandsCover = Style.label`
   display: flex;
   margin: 8px 0;
   flex-direction: column;
-  height: 150px;
   overflow-y: auto;
 `;
 
@@ -42,6 +46,7 @@ export const ShopFilterByBrandRadioText = Style.span`
   font-size: 1.1rem;
   margin-left: 10px;
   font-family: Roboto,"sans-serif";
+  text-transform: capitalize;
 `;
 
 export const ShopFilterByPriceCover = Style.div`
@@ -118,6 +123,7 @@ export const ShopFilterButtonSection = Style.div`
   padding-top: 24px;
   padding-bottom: 16px;
   display: flex;
+  max-height: 100px;
 `;
 
 export const ShopFilterButton = Style.button`
@@ -125,5 +131,5 @@ export const ShopFilterButton = Style.button`
   color: #3d464d;
   cursor: pointer
   margin-right: 10px;
-  width: 30%;
+  width: 100%;
 `;

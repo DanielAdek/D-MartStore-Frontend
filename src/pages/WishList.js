@@ -3,7 +3,7 @@ import TopNav from '../components/nav';
 import { HeaderSection } from '../compounds/Header';
 import { NavigationPanel } from '../components/nav-panel';
 import { WishList } from '../compounds/wishlist';
-import { Footer, FooterMinor } from '../components/footer';
+import { Footer } from '../components/footer';
 
 
 export const WishListPage = () => {
@@ -14,7 +14,6 @@ export const WishListPage = () => {
       <NavigationPanel initialCatGrowState={false}/>
       <WishList />
       <Footer />
-      <FooterMinor />
     </Fragment>
   )
 }

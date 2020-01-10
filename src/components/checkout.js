@@ -1,68 +1,79 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SweetAlert from 'sweetalert';
+import { Form } from 'form-my-simple-validation';
 import TopNav from './nav';
 import { HeaderSection } from '../compounds/Header';
 import { NavigationPanel } from '../components/nav-panel';
 import { Alias } from '../importer';
 import * as Ch from '../assets/styles/checkout';
 import { Footer } from './footer';
-// import { KartsData } from '../../src/assets/Kart';
 
+const { Alert } = Alias.pathToUtils('helpers');
+const { createOrder } = Alias.pathToActions('Orders');
+const formSchema = Alias.pathToUtils('validationSchema').default;
 const { EllipsisLoadScreen } = Alias.pathToComponents('spiners');
-const { retrieveUserData } = Alias.pathToActions('Authentication');
+// const { retrieveUserData } = Alias.pathToActions('Authentication');
 const { retreiveKartList } = Alias.pathToActions('WishAndKartCRUD');
+
 const payOpts = [
 	{
 		id: 0,
 		label: 'Direct bank Transfer',
-		value: 'bt',
+		value: 'bank transfer',
 		desc:
 			'Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.',
 	},
 	{
 		id: 1,
 		label: 'Cash on delivery',
-		value: 'cod',
+		value: 'cash on delivery',
 		desc: 'Pay with cash upon delivery.',
 	},
 	{
 		id: 2,
 		label: 'Paypal',
-		value: 'card',
+		value: 'card payment',
 		desc: 'Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.',
 	},
 	{
 		id: 3,
 		label: 'Cash Payment',
-		value: 'cp',
+		value: 'cash payment',
 		desc: 'Please send a check to Store Name, Store Street, Store Town, Store State County, Store Postcode.',
 	},
 ];
-const token = localStorage.getItem('x-auth-t');
 
 const subTotal = prices =>
-	prices && prices.reduce((accumulatedPrice, current) => (accumulatedPrice += current.cummulativePrice), 0);
+	prices && prices.reduce((accumulatedPrice, current) => (accumulatedPrice += current.cummulativePrice * current.quantity), 0);
 
 export const Checkout = () => {
+	const initialState = {
+		recipientDeliveryAdr: '',
+		recipientName: '',
+		recipientPhoneNumber: '',
+		recipientEmail: '',
+		recipientOrderNote: '',
+		orderPaymentOption: ''
+	}
 	// Redux Hooks
 	const dispatch = useDispatch();
 	const user = useSelector(state => state.Authenticate.user);
-	const kartList = useSelector(state => state.WishAndKartCRUD.karts);
+	const kartList = useSelector(state => state.WishAndKartCRUD.kart);
+	const kartListData = useSelector(state => state.WishAndKartCRUD.karts);
 	const processing = useSelector(state => state.Loading.loading);
 
 	// React Hooks
 	const [selectedOption, setSelectedOption] = useState(null);
-	const [recipient, setRecipient] = useState({});
+	const [recipient, setRecipient] = useState(initialState);
+
+	const token = localStorage.getItem('x-auth-t');
 
 	useEffect(() => {
-		if (!user && token) {
-			dispatch(retrieveUserData());
-		}
-		if (!kartList) {
+		if (!kartList && !kartListData) {
 			dispatch(retreiveKartList());
 		}
-	}, [dispatch, kartList, user]);
+	}, [dispatch, kartListData, kartList]);
 
 	const handleChange = e => {
 		setRecipient({ ...recipient, [e.target.name]: e.target.value });
@@ -70,7 +81,7 @@ export const Checkout = () => {
 
 	const handleUseMyDetail = event => {
 		if (!token && event.target.value === 'true') {
-			return SweetAlert('Login', "Sorry, we couldn't find your details!", 'info');
+			return SweetAlert('We couldn\'t find your details!', "Please Login!", 'info');
 		}
 		if (event.target.value === 'true') {
 			return setRecipient({
@@ -78,20 +89,24 @@ export const Checkout = () => {
 				recipientName: user.username,
 				recipientPhoneNumber: user.phoneNumber,
 				recipientEmail: user.email,
+				orderPaymentOption: recipient.orderPaymentOption,
+				recipientOrderNote: recipient.recipientOrderNote
 			});
 		}
-		setRecipient({
-			recipientDeliveryAdr: '',
-			recipientName: '',
-			recipientPhoneNumber: '',
-			recipientEmail: '',
-		});
+		setRecipient(initialState);
 	};
 
-	const handleSubmit = e => {
-		e.preventDefault();
-		const data = { ...recipient, productId: kartList && kartList.map(dat => ({ _id: dat._id })) };
-		console.log(data);
+	const handleSubmit = () => {
+		const data = {
+			...recipient,
+			productId: kartList && kartList.map(dat => ({ _id: dat._id })),
+			sumTotalOrdersPrice: subTotal(kartList) && (subTotal(kartList)).toFixed(2)
+	 };
+		const validationResult = Form.validateFields('create_order', formSchema, data)
+		if (validationResult.error) {
+			return Alert.info(validationResult.error.message);
+		}
+		dispatch(createOrder(data));
 	};
 
 	const handlePaymentSelected = data => {
@@ -219,8 +234,7 @@ export const Checkout = () => {
 							</Ch.HeaderContainer>
 							<hr />
 							<Ch.OrderTableContainer>
-								{kartList &&
-									kartList.map((data, i) => (
+								{kartList && (kartList || kartListData).map((data, i) => (
 										<Ch.OrderedWrapper key={i}>
 											<Ch.OrderProduct>
 												<Ch.OrderedItemImg
@@ -240,7 +254,7 @@ export const Checkout = () => {
 							<Ch.OrderTableContainer>
 								<Ch.HeaderContainer className="mb-3">
 									<Ch.TableHead>Subtotal</Ch.TableHead>
-									<Ch.orderTotal>${subTotal(kartList)}</Ch.orderTotal>
+									<Ch.orderTotal>${subTotal((kartList || kartListData)) ? (subTotal((kartList || kartListData))).toFixed(2) : 0.00}</Ch.orderTotal>
 								</Ch.HeaderContainer>
 								<Ch.HeaderContainer className="mb-3">
 									<Ch.TableHead>Shipping</Ch.TableHead>
@@ -253,7 +267,7 @@ export const Checkout = () => {
 								<Ch.HeaderContainer>
 									<Ch.OrderedTotal>Total</Ch.OrderedTotal>
 									<Ch.OrderedTotal>
-										${subTotal(kartList) ? subTotal(kartList) - 5 : '0.00'}
+										${subTotal((kartList || kartListData)) ? (subTotal((kartList || kartListData)) + 5).toFixed(2) : '0.00'}
 									</Ch.OrderedTotal>
 								</Ch.HeaderContainer>
 							</Ch.OrderTableContainer>

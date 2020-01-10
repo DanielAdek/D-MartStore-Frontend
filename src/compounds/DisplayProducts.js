@@ -1,31 +1,35 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import Slider from '@brainhubeu/react-carousel'
-import '@brainhubeu/react-carousel/lib/style.css';
 import { Alias } from '../importer';
-import { Product } from '../components/product';
-import { FeaturedProducts } from '../components/featuredPro';
-import { Modal } from '../components/modal';
-import { MagnifyProduct } from '../components/magnifyProduct';
 
-const { retreiveProducts } = Alias.pathToActions('ProductCRUD');
 const RC = Alias.pathToSyles('displayProducts');
-const { RingLoadScreen } = Alias.pathToComponents('spiners');
-const { addToWishList, addToKart } = Alias.pathToActions('WishAndKartCRUD');
+const { Modal } = Alias.pathToComponents('modal');
+const { Slider } = Alias.pathToComponents('slider');
 const { ProductData } = Alias.pathToAssets('map.v');
+const { Product } = Alias.pathToComponents('product');
+const { retreiveProducts } = Alias.pathToActions('ProductCRUD');
+const { RingLoadScreen } = Alias.pathToComponents('spiners');
+const { FeaturedProducts } = Alias.pathToComponents('featuredPro');
+const { MagnifyProduct } = Alias.pathToComponents('magnifyProduct');
+const { addToWishList, addToKart } = Alias.pathToActions('WishAndKartCRUD');
 const token = localStorage.getItem('token');
 
 export const DisplayProductHeading = () => {
+  const handleShowAll = searchWord => {
+    //  localStorage.setItem('searchWord', searchWord);
+    alert('Coming Soon...');
+  }
+  
   return (
     <RC.DisplayHeadingContainer>
       <RC.DisplayHeadingTitle>Most Popular Products</RC.DisplayHeadingTitle>
       <RC.DisplaySubNavContainer>
         <RC.DisplayHorizontalLine />
-        <RC.DisplaySubNav>All</RC.DisplaySubNav>
-        <RC.DisplaySubNav>Mobile</RC.DisplaySubNav>
-        <RC.DisplaySubNav>Clothing</RC.DisplaySubNav>
-        <RC.DisplaySubNav>Shoes</RC.DisplaySubNav>
+        <RC.DisplaySubNav onClick={() => handleShowAll('shop')}>All</RC.DisplaySubNav>
+        <RC.DisplaySubNav onClick={() => handleShowAll('mobile')}>Mobile</RC.DisplaySubNav>
+        <RC.DisplaySubNav onClick={() => handleShowAll('fashion')}>Clothing</RC.DisplaySubNav>
+        <RC.DisplaySubNav onClick={() => handleShowAll('camera')}>Camera</RC.DisplaySubNav>
       </RC.DisplaySubNavContainer>
     </RC.DisplayHeadingContainer>
   );
@@ -41,16 +45,30 @@ export const DisplayProducts = () => {
   
   // React Hooks
   const [showProductActionBtns, setShowProductActionBtns] = useState(false);
+  // const [filteredProduct, setFilteredProduct] = useState(null);
   const [currentData, setCurrentData] = useState(null);
   const [currentFigure, setCurrentFigure] = useState(1);
   const [magnifyProduct, setMagnifyProduct] = useState(false);
   const [currentImage, setCurrentImage] = useState({});
 
+
+  // const searchIndex = localStorage.getItem('mostPopularFilter');
+  
   useEffect(() => {
 		if (!products) {
 			dispatch(retreiveProducts());
 		}
   }, [dispatch, products]);
+
+  // useEffect(() => {
+	// 	if (searchIndex !== 'shop') {
+	// 		setFilteredProduct(
+	// 			products && products.products.filter(data => data.productCategory === searchIndex)
+	// 		)
+	// 	} else {
+	// 		setFilteredProduct(products && products.products);
+	// 	}
+	// }, [products, searchIndex]);
   
   const hideActionBtn = () => setShowProductActionBtns(false);
 
@@ -68,8 +86,6 @@ export const DisplayProducts = () => {
     setCurrentImage({});
     setCurrentData(null)
   }
-
-  // const handleStars = () => {}
 
   const handleQtyAmout = event => {
     let figure = currentFigure;
@@ -102,21 +118,12 @@ export const DisplayProducts = () => {
       { processing && <RingLoadScreen text="Loading.." />}
       <RC.DisplayProductsContainer>
         <Slider
-          arrows
-          slidesPerPage={5}
-          slidesPerScroll={2}
-          infinite
-          animationSpeed={1500}
-          autoPlay={3000}
-          stopAutoPlayOnHover
-          offset={50}
-          itemWidth={350}
-          clickToChange
-          centered>
+          infinit={products ? (products && products.products.length > 3) : ProductData.length > 3}>
           { ((products && products.products) || ProductData).map((data, index) => <Product
             key={index}
             index={index} 
             data={data}
+            ratings={products && products.ratings}
             wishBtnClicked={wishBtnClicked}
             kartBtnClicked={kartBtnClicked}
             Styles={{ mr: '5px', mb: '2px'}}
@@ -155,11 +162,14 @@ export const DisplayFeaturedProducts = () => {
 
   // React Hook
   const products = useSelector(state => state.ProductCRUD.products);
-  const FeaturedPro = [(products && products.products[0]), (products && products.products[1]), (products && products.products[2]), (products && products.products[3]), (products && products.products[0]), (products && products.products[1])]
+  const FeaturedPro = [(products && products.products[0]), (products && products.products[1]), (products && products.products[2]), (products && products.products[3]), (products && products.products[4]), (products && products.products[5])];
+  const dummyData = [ProductData[0], ProductData[1], ProductData[2], ProductData[3], ProductData[4], ProductData[5]];
+
   const handleShowAll = data => {
-    localStorage.setItem('category', data.productCategory);
+    localStorage.setItem('searchWord', data.productCategory);
     history.push('/shop');
   }
+  
   return (
     <RC.Wrapper>
         <RC.SectionHeadingCont>
@@ -167,7 +177,7 @@ export const DisplayFeaturedProducts = () => {
           <RC.HorizontalRule />
         </RC.SectionHeadingCont>
       <RC.CardsContainer>
-        {products && FeaturedPro.map((data, i) => (
+        {(products && products.length > 5 ? FeaturedPro : dummyData).map((data, i) => (
           <FeaturedProducts key={i} clicked={() => handleShowAll(data)} data={data} />
         ))}
       </RC.CardsContainer>

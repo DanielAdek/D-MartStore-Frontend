@@ -11,6 +11,8 @@ export const MagnifyProduct = props => {
 	// Redux Hooks
 	const history = useHistory();
 	const products = useSelector(state => state.ProductCRUD.products);
+	const processAddKart = useSelector(state => state.Loading.kart);
+	const processAddWishlist = useSelector(state => state.Loading.wishlist);
 
 	const handelProductSelected = productId => {
 		localStorage.setItem('productSelected', productId);
@@ -18,7 +20,7 @@ export const MagnifyProduct = props => {
 	}
 
 	const findRatingByProductId = productId => 
-		products && products.ratings.filter(data => data.productId._id === productId)
+		products && products.ratings.filter(data => data.productId === productId);
 
 	return (
 		<Fragment>
@@ -42,9 +44,12 @@ export const MagnifyProduct = props => {
 								{greyStars(calculateFrequency(findRatingByProductId(props.currentData._id)))}
 							</RC.ProductInfoRating>
 							<RC.ProductInfoReview onClick={() => handelProductSelected(props.currentData._id)}>
-							{findRatingByProductId(props.currentData._id).length === 1 ? 
-							`${findRatingByProductId(props.currentData._id).length} Review` : 
-							`${findRatingByProductId(props.currentData._id).length} Reviews`}
+							{(findRatingByProductId(props.currentData._id) 
+								&& findRatingByProductId(props.currentData._id).length)=== 1 ? 
+							`${(findRatingByProductId(props.currentData._id) 
+								&& findRatingByProductId(props.currentData._id).length)} Review` : 
+							`${(findRatingByProductId(props.currentData._id) 
+								&& findRatingByProductId(props.currentData._id).length)} Reviews`}
 							</RC.ProductInfoReview>
 						</RC.ProductRR>
 						<RC.ProductDetails>{props.currentData.productDescription}</RC.ProductDetails>
@@ -76,8 +81,8 @@ export const MagnifyProduct = props => {
 								</RC.ProductQtyInputDiv>
 							</RC.ProductQtySection>
 							<RC.ProductActionButtonSec>
-								<RC.ProductActionButton onClick={props.handleKartCreate} className="btn" bgColor="#ffd333" hClr="#9b9b9b">{props.loading ? <DualRingLoad /> : 'Add Cart' }</RC.ProductActionButton>
-								<RC.ProductActionButton onClick={props.handleWishListCreate} className="btn" bgColor="blue" clr="#f3f3f3" hClr="#dbd8d8">{props.loading ? <DualRingLoad /> : 'WishList'}</RC.ProductActionButton>
+								<RC.ProductActionButton onClick={props.handleKartCreate} className="btn" bgColor="#ffd333" hClr="#9b9b9b">{processAddKart ? <DualRingLoad /> : 'Add Cart' }</RC.ProductActionButton>
+								<RC.ProductActionButton onClick={props.handleWishListCreate} className="btn" bgColor="blue" clr="#f3f3f3" hClr="#dbd8d8">{processAddWishlist ? <DualRingLoad /> : 'WishList'}</RC.ProductActionButton>
 							</RC.ProductActionButtonSec>
 						</RC.ProductActionsSection>
 					</RC.ProductRightSide>

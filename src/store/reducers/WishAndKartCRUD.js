@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
         ...state,
         message: action.payload
       };
-    case Types.ADD_TO_KART:
+    case Types.SEND_TO_CHECKOUT:
       return {
         ...state,
         kart: action.payload

@@ -16,15 +16,15 @@ export const DisplayHeadingTitle = Style.div`
 export const DisplayHorizontalLine = Style.div`
   height: 2px;
   background: rgb(235, 235, 235);
-  width: 65%;
+  width: 69%;
 `;
 
 export const DisplaySubNavContainer = Style.div`
   display: flex;
   justify-content: space-between;
-  width: 75%;
+  width: 81%;
   align-items: center;
-  margin-left: 15px;
+  margin-left: 25px;
 `;
 
 export const DisplaySubNav = Style.div`

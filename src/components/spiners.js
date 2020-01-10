@@ -6,7 +6,7 @@ export const DualRingLoadScreen = ({ text }) => (
   <Spiner text={text} fullScreen={true} type="dual-ring" size={150}/>
 );
 export const DualRingLoad = () => (
-  <Spiner pos="relative" type="dual-ring" t="-5px" l="16px" mh="35px" size={30}/>
+  <Spiner pos="relative" type="dual-ring" t="-5px" l="-10px" mh="35px" size={30}/>
 );
 export const RingLoadScreen = ({ text }) => (
   <Spiner text={text} fullScreen={true} type="ring" size={150}/>
