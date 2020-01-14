@@ -293,7 +293,7 @@ export const OrderHistory = () => {
 export const CreateProduct = () => {
 	const productData = {
 		productName: '',
-		productPrice: '',
+		productPrice: 1,
 		productDescription: '',
 		productBrand: '',
 		productCategory: '',
@@ -388,7 +388,7 @@ export const CreateProduct = () => {
 	};
 
 	const closeModal = () => setPreview(false);
-
+	console.log(product.productPrice)
 	return (
 		<RC.CreateProductContainer>
 			{processing && <Spiner type="dual-ring" size={150} />}

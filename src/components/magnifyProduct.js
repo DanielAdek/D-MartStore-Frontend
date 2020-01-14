@@ -20,7 +20,7 @@ export const MagnifyProduct = props => {
 	}
 
 	const findRatingByProductId = productId => 
-		products && products.ratings.filter(data => data.productId === productId);
+		((products && products.ratings )|| []).filter(data => data.productId === productId);
 
 	return (
 		<Fragment>

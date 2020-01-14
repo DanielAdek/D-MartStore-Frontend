@@ -23,9 +23,9 @@ export const ShopFilter = () => {
 
   useEffect(() => {
     const prices = filterProduct && filterProduct.products.map(data => data.productPrice);
-    const minPrice = filterProduct && Math.min(...prices);
-    const maxPrice = filterProduct && Math.max(...prices);
-    setPrices({ min: minPrice === Infinity ? 0 : minPrice, max: maxPrice === Infinity ? 0 : maxPrice} || { min: 1, max: 2000 });
+    const minPrice = (filterProduct && Math.min(...prices)) === Infinity ? 0 : (filterProduct && Math.min(...prices));
+    const maxPrice = (filterProduct && Math.max(...prices)) === Infinity ? 0 : (filterProduct && Math.max(...prices));
+    setPrices({ min: minPrice, max: maxPrice} || { min: 1, max: 2000 });
   }, [filterProduct])
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export const ShopFilter = () => {
         {/* Price Range Section */}
         <RC.ShopFilterOptionBoxes>
           <RC.ShopFilterOptionHeadings>By Price</RC.ShopFilterOptionHeadings>
-          { filterProduct && 
+          { (filterProduct && filterProduct.length) &&
             <RC.ShopFilterByPriceCover>
               <InputRange
                   minValue={100}
