@@ -163,7 +163,7 @@ export const EditProfile = () => {
   
   const handleImageChange = event => {
 		const { target } = event;
-
+		console.log(target.files);
 		ImageToBase64(event.target.files[0], base64 => {
 
 			// Set states for labels
