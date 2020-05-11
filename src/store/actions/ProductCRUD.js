@@ -4,7 +4,7 @@ import { Alias } from '../../importer';
 export const handleProductCreate = (data, history) => async dispatch => {
   try {
     dispatch(Alias.pathToDispatchAbles('loading').processing());
-    const response = await Alias.pathToUtils('helpers').Promise('POST', '/product/create', data);
+    const response = await Alias.pathToUtils('helpers').Promise('POST', '/product/create', data, "multipart");
     dispatch(Alias.pathToDispatchAbles('product').create_product(response));
     dispatch(Alias.pathToDispatchAbles('loading').finished());
     history.push('/shop')
@@ -21,7 +21,6 @@ export const retreiveProducts = () => async dispatch => {
     const response = await Alias.pathToUtils('helpers').Promise('GET', '/product/all');
     dispatch(Alias.pathToDispatchAbles('product').get_products(response.data.data.details));
     dispatch(Alias.pathToDispatchAbles('loading').finished());
-    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
   } catch (error) {
     Alias.pathToUtils('helpers').handleError(error)
     dispatch(Alias.pathToDispatchAbles('loading').finished());
@@ -34,7 +33,18 @@ export const retreiveProductsByFilter = data => async dispatch => {
     const response = await Alias.pathToUtils('helpers').Promise('get', `/product/filter?productCategory=${data}`);
     dispatch(Alias.pathToDispatchAbles('product').get_products(response.data.data.details));
     dispatch(Alias.pathToDispatchAbles('loading').finished());
-    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
+  } catch (error) {
+    Alias.pathToUtils('helpers').handleError(error)
+    dispatch(Alias.pathToDispatchAbles('loading').finished());
+  }
+};
+
+export const retreiveProductsBySearch = data => async dispatch => {
+  try {
+    dispatch(Alias.pathToDispatchAbles('loading').processing());
+    const response = await Alias.pathToUtils('helpers').Promise('get', `/product/search?q=${data}`);
+    dispatch(Alias.pathToDispatchAbles('product').get_products(response.data.data.details));
+    dispatch(Alias.pathToDispatchAbles('loading').finished());
   } catch (error) {
     Alias.pathToUtils('helpers').handleError(error)
     dispatch(Alias.pathToDispatchAbles('loading').finished());
@@ -63,7 +73,6 @@ export const retreiveProduct = productId => async dispatch => {
     const response = await Alias.pathToUtils('helpers').Promise('get', `/product/${productId}`);
     dispatch(Alias.pathToDispatchAbles('product').get_one_product(response.data.data.details));
     dispatch(Alias.pathToDispatchAbles('loading').finished());
-    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
   } catch (error) {
     Alias.pathToUtils('helpers').handleError(error)
     dispatch(Alias.pathToDispatchAbles('loading').finished());

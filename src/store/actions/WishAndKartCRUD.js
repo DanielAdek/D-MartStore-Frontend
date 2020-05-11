@@ -1,4 +1,3 @@
-// import SweetAlert from 'sweetalert';
 import { Alias } from '../../importer';
 
 const { Alert } = Alias.pathToUtils('helpers');
@@ -13,7 +12,6 @@ export const retreiveWishLists = token => async dispatch => {
     const response = await Alias.pathToUtils('helpers').Promise('GET', url);
     dispatch(Alias.pathToDispatchAbles('wishandkart').get_wishLists(response.data.data.details.foundRecentWishLists));
     dispatch(Alias.pathToDispatchAbles('loading').finished());
-    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
   } catch (error) {
     Alias.pathToUtils('helpers').handleError(error)
     dispatch(Alias.pathToDispatchAbles('loading').finished());
@@ -59,7 +57,6 @@ export const retreiveKartList = () => async dispatch => {
     const response = await Alias.pathToUtils('helpers').Promise('GET', url);
     dispatch(Alias.pathToDispatchAbles('wishandkart').get_kartList(response.data.data.details.foundRecentKarts));
     dispatch(Alias.pathToDispatchAbles('loading').finished());
-    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
   } catch (error) {
     Alias.pathToUtils('helpers').handleError(error)
     dispatch(Alias.pathToDispatchAbles('loading').finished());
@@ -79,7 +76,6 @@ export const addToKart = data => async dispatch => {
     dispatch(retreiveKartList())
     dispatch(Alias.pathToDispatchAbles('loading').finished());
     Alert.success(response.data.data.message);
-    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
   } catch (error) {
     dispatch(Alias.pathToDispatchAbles('loading').finished());
     Alias.pathToUtils('helpers').handleError(error)
@@ -102,7 +98,6 @@ export const deleteKart = kartId => async dispatch => {
     dispatch(retreiveKartList())
     dispatch(Alias.pathToDispatchAbles('loading').finished());
     Alert.success(response.data.data.message);
-    // SweetAlert(response.data.data.details.operationStatus, response.data.data.message, 'success');
   } catch (error) {
     dispatch(Alias.pathToDispatchAbles('loading').finished());
     Alias.pathToUtils('helpers').handleError(error)

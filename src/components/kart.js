@@ -9,7 +9,7 @@ export const Karts = props => {
         props.currentData &&
         <RC.KartTableRow>
           <RC.KartTableDataImage>
-            <RC.KartTableDataImageTag src={props.data.productId.productImages[props.data.imageType - 1].image}/>
+            <RC.KartTableDataImageTag src={props.data.productId && props.data.productId.productImages[props.data.imageType - 1] && props.data.productId.productImages[props.data.imageType - 1].image}/>
           </RC.KartTableDataImage>
           <RC.KartTableDataItemName>
             <RC.KartTableDataProName>{props.data.productId.productName}</RC.KartTableDataProName>

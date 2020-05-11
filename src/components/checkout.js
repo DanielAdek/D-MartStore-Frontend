@@ -114,6 +114,8 @@ export const Checkout = () => {
 		setRecipient({ ...recipient, orderPaymentOption: data.value });
 	};
 
+	const userAuth = localStorage.getItem('x-auth-t');
+
 	return (
 		<Fragment>
 			<TopNav />
@@ -122,7 +124,7 @@ export const Checkout = () => {
 			{processing && <EllipsisLoadScreen />}
 			<Ch.CheckoutContainer>
 				<Ch.CheckoutHeader>Checkout</Ch.CheckoutHeader>
-				<Ch.FillMyInformation>
+				{(user && userAuth) && <Ch.FillMyInformation>
 					Use My Details?
 					<Ch.RadioButton className="form-check form-check-inline">
 						<Ch.RadioInput
@@ -148,7 +150,7 @@ export const Checkout = () => {
 							No
 						</Ch.Radiolabel>
 					</Ch.RadioButton>
-				</Ch.FillMyInformation>
+				</Ch.FillMyInformation>}
 				<Ch.BillingContainer>
 					<Ch.BilingDetails>
 						<Ch.EditProfileContainer>
@@ -238,7 +240,7 @@ export const Checkout = () => {
 										<Ch.OrderedWrapper key={i}>
 											<Ch.OrderProduct>
 												<Ch.OrderedItemImg
-													src={data.productId.productImages[data.imageType - 1].image}
+													src={data.productId && data.productId.productImages[data.imageType - 1] && data.productId.productImages[data.imageType - 1].image}
 												/>
 												<Ch.OrderProductName>
 													{data.quantity === 1

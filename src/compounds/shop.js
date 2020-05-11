@@ -72,14 +72,13 @@ export const Shop = () => {
   const handleMagnifyProduct = data => {
     setMagnifyProduct(true);
     setCurrentData(data)
-    setCurrentImage({ src: data.productImages[0].image, id: data.productImages[0].id })
+    setCurrentImage({ src: data.productImages[0] && data.productImages[0].image, id: data.productImages[0] && data.productImages[0].id })
   }
   
   const closeModal = () => {
     setMagnifyProduct(false);
     setCurrentFigure(1);
   }
-
 
 	const handleQtyAmout = event => {
 		let figure = currentFigure;
@@ -95,9 +94,8 @@ export const Shop = () => {
 		setCurrentFigure(figure);
 	};
 
-	const handleChangeQty = event => {
-		setCurrentFigure(event.target.value <= 1 ? 1 : parseInt(event.target.value, 10));
-	};
+	const handleChangeQty = event => setCurrentFigure(event.target.value <= 1 ? 1 : parseInt(event.target.value, 10));
+
 
 	const handleKartCreate = product => {
 		const kartData = { productId: product._id, quantity: currentFigure || 1, imageType: currentImage.id || 1};
@@ -116,7 +114,7 @@ export const Shop = () => {
 	const pageCountDev = Math.ceil(ProductData.length / 12);
 	const displayProductDev = ProductData.slice(paginationPerPageValue, (paginationPerPageValue + 12));
 	const displayProductProduction = filteredProduct && filteredProduct.slice(paginationPerPageValue, (paginationPerPageValue + 12));
-	
+
 	return (
 		<Fragment>
 			<RC.ShopContainer>
@@ -131,7 +129,6 @@ export const Shop = () => {
 							width={'30%'}
 							hideActionBtn={hideActionBtn}
 							Styles={{ mr: '30px', mb: '20px' }}
-							ratings={products && products.ratings}
 							magnify={() => handleMagnifyProduct(data)}
 							showProductActionBtns={showProductActionBtns}
 							handleKartCreate={() => handleKartCreate(data)}

@@ -3,13 +3,15 @@ import toastr from 'toastr';
 import SweetAlert from 'sweetalert';
 
 
-export const Promise = (method, path, data) => {
+export const Promise = (method, path, data, contentType) => {
   const token = localStorage.getItem('x-auth-t');
-  const url = `http://localhost:8082/api/v1${path}`; // localhost
+  // const url = `http://localhost:8082/api/v1${path}`; // localhost
   // const url = `http://ec2-34-242-208-37.eu-west-1.compute.amazonaws.com:9091/api/v1${path}`; // aws public ip
-  // const url = `https://dms.dacoding.com/api/v1${path}`; // custom domain
-  const headers = token ? { "Access-Control-Allow-Origin": "*", "Authorization" : token } : { "Access-Control-Allow-Origin": "*"};
-  const object = (method.toUpperCase() === 'GET' || method.toUpperCase() === 'DELETE') ? { method: method.toUpperCase(), url, headers } : { method: method.toUpperCase(), url, headers, data };
+  const url = `https://dms.dacoding.com/api/v1${path}`; // custom domain
+  const formDataRequestHeader = { "Access-Control-Allow-Origin": "*", "Authorization" : token, "Content-Type": "multipart/form-data", "Accept": "*/*" };
+  const applicationJSONHeader = { "Access-Control-Allow-Origin": "*", "Authorization" : token, "Content-Type": "application/json"}
+  const headers = token && contentType === "multipart" ? formDataRequestHeader : token ? applicationJSONHeader : { "Access-Control-Allow-Origin": "*", "Content-Type": "application/json" };
+  const object = (method.toUpperCase() === 'GET' || method.toUpperCase() === 'DELETE') ? { method: method.toUpperCase(), url, headers } : { method: method.toUpperCase(), url, data, headers };
   return Axios(object);
 }
 
@@ -34,6 +36,13 @@ export const ImageToBase64 = (file, callback) => {
   reader.onerror = function (error) {
       console.log('Error: ', error);
   };
+}
+
+export const truncate = (str, num) => {
+  if (str.length <= num) {
+    return str
+  }
+  return str.slice(0, num) + '...'
 }
 
 export const generateCode = (charLen) => {

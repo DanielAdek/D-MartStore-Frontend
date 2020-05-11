@@ -15,7 +15,6 @@ export const WishList = () => {
 
   // React Hooks
   const handlKartCreate = () => {
-    console.log({ kartData: wishlists });
     dispatch(addToKart({ kartData: wishlists }));
   }
 

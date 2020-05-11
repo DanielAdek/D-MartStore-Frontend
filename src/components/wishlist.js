@@ -39,7 +39,7 @@ export const Whishlist = () => {
     { wishlists && wishlists.map((data, index) => (
       <RC.WhishListTableRow key={index}>
         <RC.WhishListTableDataImage>
-          <RC.WhishListTableDataImageTag src={data.productId.productImages[data.imageType - 1].image}/>
+          <RC.WhishListTableDataImageTag src={data.productId && data.productId.productImages[data.imageType - 1] && data.productId.productImages[data.imageType - 1].image}/>
         </RC.WhishListTableDataImage>
         <RC.WhishListTableDataItemName>
           <RC.WhishListTableDataProName>{data.productId.productName}</RC.WhishListTableDataProName>

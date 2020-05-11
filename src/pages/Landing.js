@@ -21,7 +21,6 @@ export const Landing = () => {
   // React Hooks
   useEffect(() => {
     if (!token && !unRegisteredCustomerToken) {
-      console.log('Will generate token');
       dispatch(handleGenerateCode());
     }
   }, [dispatch, token, unRegisteredCustomerToken]);

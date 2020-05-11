@@ -378,7 +378,7 @@ export const ProductActionButtonSec = Style.div`
   margin-top: 20px;
 `;
 
-export const ProductActionButton = Style.div`
+export const ProductActionButton = Style.button`
   background: ${props => props.bgColor}
   width: 100px;
   color: ${props => props.clr};

@@ -17,12 +17,9 @@ export const Product = props => {
 		localStorage.setItem('productSelected', productId);
 		history.push('/getoneproduct');
   }
-
-  const findRatingByProductId = productId => 
-		props.ratings && props.ratings.filter(data => data.productId === productId);
   
   const targetedProduct = props.index === props.showProductActionBtns;
- 
+
   return (
     <Fragment>
       { props.data && 
@@ -35,22 +32,22 @@ export const Product = props => {
         </RC.ProductMagnifyIcon>
         <RC.ProductBadge bColor={props.data.productTag}>{props.data.productTag}</RC.ProductBadge>
         <RC.ProductImageCont>
-          <RC.ProductImage src={props.data.productImages[0].image}/>
+          <RC.ProductImage src={props.data.productImages[0] && props.data.productImages[0].image}/>
         </RC.ProductImageCont>
         <RC.ProductInfoCont>
           <RC.ProductInfoTitle  onClick={() => handelProductSelected(props.data._id)}>{props.data.productName}</RC.ProductInfoTitle>
           <RC.ProductInfoRRCont>
             <RC.ProductInfoRating>
-              {yellowStars(calculateFrequency(findRatingByProductId(props.data._id)))}
-              {greyStars(calculateFrequency(findRatingByProductId(props.data._id)))}
+              {yellowStars(calculateFrequency(props.data.ratings))}
+              {greyStars(calculateFrequency(props.data.ratings))}
             </RC.ProductInfoRating>
             <RC.ProductInfoReview  onClick={() => handelProductSelected(props.data._id)}>
-            {(findRatingByProductId(props.data._id) 
-              && findRatingByProductId(props.data._id).length)=== 1 ? 
-            `${(findRatingByProductId(props.data._id) 
-              && findRatingByProductId(props.data._id).length)} Review` : 
-            `${(findRatingByProductId(props.data._id) 
-              && findRatingByProductId(props.data._id).length)} Reviews`}
+            {(props.data.reviews 
+              && props.data.reviews.length) <= 1 ? 
+            `${(props.data.reviews
+              && props.data.reviews.length)} Review` : 
+            `${(props.data.reviews 
+              && props.data.reviews.length)} Reviews`}
             </RC.ProductInfoReview>
           </RC.ProductInfoRRCont>
           <RC.ProductInfoPrice>${props.data.productPrice}</RC.ProductInfoPrice>

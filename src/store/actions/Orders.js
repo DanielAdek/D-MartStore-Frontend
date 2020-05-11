@@ -21,7 +21,6 @@ export const retreiveOrders = recent => async dispatch => {
 		const url = recent ? `/order/customer?recent=${recent}` : '/order/customer';
 		const response = await Alias.pathToUtils('helpers').Promise('get', url);
 		await dispatch(Alias.pathToDispatchAbles('orders').get_orders(response.data.data.details.foundOrders));
-		// Alias.pathToUtils('helpers').Alert.success(response.data.data.message);
 		dispatch(Alias.pathToDispatchAbles('loading').finished());
 	} catch (error) {
 		Alias.pathToUtils('helpers').handleError(error);

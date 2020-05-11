@@ -6,7 +6,7 @@ const { ReviewersData } = Alias.pathToAssets('UserData');
 const { formatDate } = Alias.pathToUtils('helpers');
 const Rview = Alias.pathToSyles('review');
 
-export const Reviews = props => {
+export const Reviews = ({ product }) => {
 	const [userReview, setUserReview] = useState(null);
 
 	useEffect(() => {
@@ -16,8 +16,9 @@ export const Reviews = props => {
 	return (
 		<Fragment>
 			<Rview.ReviewTitle>Customers Review</Rview.ReviewTitle>
-			{props.product &&
-				(props.product.reviews || userReview).map((data, index) => (
+			<div style={{maxHeight: '500px', overflowY: 'auto'}}>
+			{product &&
+				((product && product.product && product.product.reviews) || userReview).map((data, index) => (
 					<Rview.ReviewContainer key={index}>
 						<Rview.imageContainer>
 							<Rview.UserImage src={data.avatar} />
@@ -30,6 +31,7 @@ export const Reviews = props => {
 						</Rview.UserReviewcontent>
 					</Rview.ReviewContainer>
 				))}
+			</div>
 			<ReviewForm />
 		</Fragment>
 	);

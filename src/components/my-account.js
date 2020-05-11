@@ -5,16 +5,14 @@ import { Form } from 'form-my-simple-validation';
 import { Alias } from '../importer';
 import * as RC from '../assets/styles/myaccount';
 import FormSchema from '../utils/validationSchema';
-import { Spiner } from '../components/loader';
-import { Modal } from '../components/modal';
-import { LoremIpsum } from '../assets/map.v';
-import { ImageToBase64, generateCode, Alert } from '../utils/helpers';
-import { handleProductCreate } from '../store/actions/ProductCRUD';
 
+const { LoremIpsum } = Alias.pathToAssets('map.v');
+const { Modal } = Alias.pathToComponents('modal');
 const { retreiveOrders } = Alias.pathToActions('Orders');
 const { editProfile } = Alias.pathToActions('EditProfile');
-// const { retrieveUserData } = Alias.pathToActions('Authentication');
-const { formatDate } = Alias.pathToUtils('helpers');
+const { DualRingLoadScreen } = Alias.pathToComponents('spiners');
+const { handleProductCreate } = Alias.pathToActions('ProductCRUD');
+const { formatDate, truncate, ImageToBase64, generateCode, Alert } = Alias.pathToUtils('helpers');
 
 const TableRows = orders => {
 	return (
@@ -88,9 +86,9 @@ const PreviewProduct = props => {
 						props.product.productImages.map((dat, i) => (
 							<RC.ProductImages
 								key={i}
-								onClick={() => props.handleImageToManify(dat)}
-								src={dat.image}
-								alt="product-image"
+								onClick={props.handleImageToManify.bind(this, dat)}
+								src={dat.uri}
+								alt="product image"
 							/>
 						))}
 				</RC.ProductImagesContainer>
@@ -99,7 +97,7 @@ const PreviewProduct = props => {
 	);
 };
 
-export const DashBoard = props => {
+export const DashBoard = () => {
 	//Redux Hooks
 	const dispatch = useDispatch();
 	const orders = useSelector(state => state.Orders.orders);
@@ -151,11 +149,11 @@ export const DashBoard = props => {
 
 export const EditProfile = () => {
   //React Hooks
-  const [userProfile, setUserProfile] = useState({});
-  const [choosenImages, setChoosenImages] = useState('Upload Profile');
+  const [userProfile, setUserProfile] = useState({ uploadLabel:'choose file...' });
 
 	//Redux Hooks
 	const dispatch = useDispatch();
+	const processing = useSelector(state => state.Loading.loading);
 
 	const handlechange = e => {
 		setUserProfile({ ...userProfile, [e.target.name]: e.target.value });
@@ -163,29 +161,37 @@ export const EditProfile = () => {
   
   const handleImageChange = event => {
 		const { target } = event;
-		console.log(target.files);
-		ImageToBase64(event.target.files[0], base64 => {
+		let uri = null;
 
-			// Set states for labels
-			setChoosenImages(target.files[0].name);
+		ImageToBase64(target.files[0], base64 => {
+			uri = base64;
 
 			// Set states for uploaded files
-			setUserProfile({ ...userProfile, [target.name]: base64 });
+			setUserProfile({ ...userProfile, [target.name]: target.files[0], uploadLabel: target.files[0].name, avatarBase64: uri });
 		});
+		setUserProfile({ ...userProfile, [target.name]: target.files[0], uploadLabel: target.files[0].name, avatarBase64: uri });
 	};
 
 
 	const handleUpdate = () => {
-    dispatch(editProfile(userProfile));
-    setUserProfile({});
+		const { username, email, phoneNumber, userAddress, avatar } = userProfile;
+		const formData = new FormData();
+		formData.append('avatar', avatar);
+		formData.append('username', username);
+		formData.append('email', email);
+		formData.append('phoneNumber', phoneNumber);
+		formData.append('userAddress', userAddress);
+    dispatch(editProfile(formData));
+    // setUserProfile({});
   }
 
 
 	return (
 		<RC.EditProfileContainer>
+			{processing && <DualRingLoadScreen />}
 			<RC.EditProfileHeading>Edit Profile</RC.EditProfileHeading>
-      <RC.EditProfilePicture>{ userProfile.avatar ?
-        <RC.EditProfileImage src={userProfile.avatar} alt="Uploaded Profile" /> : 'Upload Picture' }
+      <RC.EditProfilePicture>{ userProfile.avatarBase64 ?
+        <RC.EditProfileImage src={userProfile.avatarBase64} alt="Uploaded Profile" /> : 'Upload Picture' }
       </RC.EditProfilePicture>
       <RC.FormGroup 
         className="custom-file mb-3"
@@ -194,12 +200,13 @@ export const EditProfile = () => {
         <RC.FormInput
           type="file"
           name="avatar"
-          id="customFile"
+					id="customFile"
+					accept="image/*"
           onChange={handleImageChange}
           className="custom-file-input"
         />
         <RC.FormInputLabel className="custom-file-label" htmlFor="customFile">
-          {choosenImages}
+          {truncate(userProfile.uploadLabel, 14)}
         </RC.FormInputLabel>
 				</RC.FormGroup>
 			<RC.Form className="mt-5">
@@ -307,8 +314,6 @@ export const CreateProduct = () => {
 		'Upload product image',
 		'Upload secondary image',
 		'Upload secondary image2',
-		'Upload secondary image3',
-		'Upload secondary image4',
 	];
 
 	// React Hooks
@@ -326,21 +331,26 @@ export const CreateProduct = () => {
 		setProduct({ ...product, [event.target.name]: event.target.value });
 	};
 
-	const handleImageToManify = data => setCurrentImage({ src: data.image, id: data.id });
+	const handleImageToManify = data => setCurrentImage({ src: data.uri, id: data.id });
 
 	const handleImageChange = (event, id) => {
 		const { target } = event;
+
+		// ensure image is not too large
+		if(target.files[0].size > 1300000){
+			return Alert.error("Image too large");
+	 	};
 
 		// Copies from state
 		const productImages = product.productImages.slice();
 		const initialLabels = choosenImages.slice();
 
 		let result = null;
-		ImageToBase64(event.target.files[0], base64 => {
+		ImageToBase64(target.files[0], base64 => {
 			result = base64;
 
 			// Set states for labels
-			initialLabels.forEach((data, index) => {
+			initialLabels.forEach((_, index) => {
 				if (index === id - 1) {
 					initialLabels.splice(index, 1, target.files[0].name);
 				}
@@ -351,15 +361,15 @@ export const CreateProduct = () => {
 			if (productImages.length) {
 				const filtered = productImages.filter(data => data.id === id);
 				if (filtered.length) {
-					filtered[0].image = result;
+					filtered[0].image = target.files;
 				} else {
-					productImages.push({ [target.name]: result, id });
+					productImages.push({ [target.name]: target.files[0], id, uri: result });
 				}
 			} else {
-				productImages.push({ [target.name]: result, id });
+				productImages.push({ [target.name]: target.files[0], id, uri: result });
 			}
 			setProduct({ ...product, productImages });
-			setCurrentImage({ src: productImages[0] ? productImages[0].image : result, id });
+			setCurrentImage({ src: result, id });
 		});
 	};
 
@@ -371,7 +381,6 @@ export const CreateProduct = () => {
 		}
 		const ValidationError = Form.validateFields('create_product', FormSchema, product);
 		if (ValidationError.error) {
-			console.log(ValidationError);
 			return Alert.info(ValidationError.error.message);
 		}
 		if (product.productImages[0] && product.productImages[0].image) {
@@ -380,18 +389,37 @@ export const CreateProduct = () => {
 		}
 		Alert.info('Please Upload First Image');
 	};
-
+	
 	const handleCreateProduct = event => {
 		event.preventDefault();
 		closeModal();
-		dispatch(handleProductCreate(product, history));
+		const {
+			productBrand, productCaptionHeading,
+			productTag, productCategory, productCode,
+			productColor, productDescription, productImages,
+			productName, productPrice
+		} = product;
+		const formData = new FormData();
+		formData.append("productName", productName);
+		formData.append("productPrice", productPrice);
+		formData.append("productDescription", productDescription);
+		formData.append("productBrand", productBrand);
+		formData.append("productCategory", productCategory);
+		formData.append("productCaptionHeading", productCaptionHeading);
+		formData.append("productColor", productColor);
+		formData.append("productTag", productTag);
+		formData.append("productCode", productCode);
+		for(let i=0; i < productImages.length; i++) {
+			formData.append("productImages", productImages[i].image);
+		}
+		dispatch(handleProductCreate(formData, history));
 	};
 
 	const closeModal = () => setPreview(false);
-	console.log(product.productPrice)
+
 	return (
 		<RC.CreateProductContainer>
-			{processing && <Spiner type="dual-ring" size={150} />}
+			{processing && <DualRingLoadScreen />}
 			<RC.CreateProductTitle>Create Product</RC.CreateProductTitle>
 			<RC.Form>
 				<RC.FormGrid className="form-row">
@@ -463,8 +491,7 @@ export const CreateProduct = () => {
 						<RC.Select
 							name="productTag"
 							className="custom-select custom-select-md"
-							onChange={handleInputChange}
-						>
+							onChange={handleInputChange}>
 							<RC.SelectOption selected>Choose...</RC.SelectOption>
 							<RC.SelectOption value="None">None</RC.SelectOption>
 							<RC.SelectOption value="Hot">Hot</RC.SelectOption>
@@ -503,6 +530,7 @@ export const CreateProduct = () => {
 						type="file"
 						className="custom-file-input"
 						id="customFile"
+						accept="image/*"
 					/>
 					<RC.FormInputLabel className="custom-file-label" htmlFor="customFile">
 						{choosenImages[0]}
@@ -511,6 +539,7 @@ export const CreateProduct = () => {
 				<RC.FormGroup className="custom-file mb-3">
 					<RC.FormInput
 						name="image"
+						accept="image/*"
 						onChange={event => handleImageChange(event, 2)}
 						type="file"
 						className="custom-file-input"
@@ -523,6 +552,7 @@ export const CreateProduct = () => {
 				<RC.FormGroup className="custom-file mb-1">
 					<RC.FormInput
 						name="image"
+						accept="image/*"
 						onChange={event => handleImageChange(event, 3)}
 						type="file"
 						className="custom-file-input"
@@ -530,30 +560,6 @@ export const CreateProduct = () => {
 					/>
 					<RC.FormInputLabel className="custom-file-label" htmlFor="customFile2">
 						{choosenImages[2]}
-					</RC.FormInputLabel>
-				</RC.FormGroup>
-				<RC.FormGroup className="custom-file mb-2">
-					<RC.FormInput
-						name="image"
-						onChange={event => handleImageChange(event, 4)}
-						type="file"
-						className="custom-file-input"
-						id="customFile3"
-					/>
-					<RC.FormInputLabel className="custom-file-label" htmlFor="customFile3">
-						{choosenImages[3]}
-					</RC.FormInputLabel>
-				</RC.FormGroup>
-				<RC.FormGroup className="custom-file mb-3">
-					<RC.FormInput
-						name="image"
-						onChange={event => handleImageChange(event, 5)}
-						type="file"
-						className="custom-file-input"
-						id="customFile4"
-					/>
-					<RC.FormInputLabel className="custom-file-label" htmlFor="customFile4">
-						{choosenImages[4]}
 					</RC.FormInputLabel>
 				</RC.FormGroup>
 				<RC.FormButton onClick={handlePreview} type="button" color="#fff" className="btn btn-secondary">

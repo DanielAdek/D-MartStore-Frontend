@@ -2,15 +2,11 @@ import React, { useState } from 'react';
 import * as Cf from '../assets/styles/contact-us';
 
 export const ContactUsForm = () => {
-	const [contactus, setContactus] = useState({});
-	const handleChange = e => {
-		setContactus({ ...contactus, [e.target.name]: e.target.value });
-	};
 
-	const handlesubmit = e => {
-		e.preventDefault();
-		console.log(contactus);
-	};
+	const [contactus, setContactus] = useState({});
+
+	const handleChange = e => setContactus({ ...contactus, [e.target.name]: e.target.value });
+
 	return (
 		<Cf.ContactFormContainer>
 			<Cf.Header1>Contact Us</Cf.Header1>
@@ -18,14 +14,17 @@ export const ContactUsForm = () => {
 				<Cf.Address>
 					<Cf.Paragraph>
 					<Cf.BoldText>Our Address</Cf.BoldText>
+						<br /><br />
+							25b Ameen street Abule-Oja yaba Lagos Nigeria.
 						<br />
-						25b Ameen street Abule-Oja yaba Lagos Nigeria.
-						<br /> Email: olorunwalawrence@gmail.com <br />
-						Phone Number: +2347015009775
+							Email: olorunwalawrence@gmail.com 
+						<br />
+						Phone Number: +2348182089681
 					</Cf.Paragraph>
 					<Cf.Paragraph>
-						<Cf.BoldText>Opening Hours</Cf.BoldText> <br />
-						Monday to Friday: 9 AM - 5 PM Saturday:
+						<Cf.BoldText>Opening Hours</Cf.BoldText>
+						<br />
+						Monday - Friday: 9am - 5pm
 					</Cf.Paragraph>
 					<Cf.Paragraph>
 						<Cf.BoldText>Comment</Cf.BoldText>
@@ -76,7 +75,7 @@ export const ContactUsForm = () => {
 									name="message"
 								></Cf.TextArea>
 							</Cf.formGroup>
-							<Cf.Button className="btn btn-md button" onClick={handlesubmit}>Submit</Cf.Button>
+							<Cf.Button type="button" className="btn btn-md button" onClick={() => alert('Hi 👋, you can contact us via email: daniel.adek.k@gmail.com')}>Submit</Cf.Button>
 						</Cf.Formrow>
 					</Cf.Form>
 				</Cf.formContainer>

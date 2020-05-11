@@ -57,7 +57,6 @@ export const GetOneProduct = () => {
 	}
 
 	const handleMagnifyProduct = data => {
-		console.log(data);
     setMagnifyProduct(true);
     setCurrentData(data)
     setCurrentImage({ src: data.productImages[0].image, id: data.productImages[0].id })
@@ -107,13 +106,13 @@ export const GetOneProduct = () => {
 			<TopNav />
 			<HeaderSection />
 			<NavigationPanel initialCatGrowState={false} />
-			<h4 className="mt-5 mb-5" style={{width: '90%', margin: '1px auto', fontFamily: 'Rubik sans-serif', fontWeight: 'bolder'}}>DMStore Product</h4>
+			<h4 className="mt-5 mb-5" style={{width: '90%', margin: '1px auto', fontFamily: 'Rubik sans-serif', fontWeight: 'bolder'}}>DMS Product</h4>
 			{product && (
 			<div className="wrapers">
 					<RC.MainWrapper>
 						<RC.ContentBody>
 							<RC.ProductMagnifiedImageCont>
-								<RC.ProductMagnifiedImage src={currentImage.src || (product && product.product.productImages[0].image)} alt="product" />
+								<RC.ProductMagnifiedImage src={currentImage.src || (product && product.product && product.product.productImages[0] && product.product.productImages[0].image)} alt="product" />
 							</RC.ProductMagnifiedImageCont>
 						</RC.ContentBody>
 
@@ -122,11 +121,11 @@ export const GetOneProduct = () => {
 								<RC.ProductHeading>{product.product.productName}</RC.ProductHeading>
 								<RC.ProductRR>
 									<RC.ProductInfoRating>
-										{yellowStars(calculateFrequency(product.ratings))}
-										{greyStars(calculateFrequency(product.ratings))}
+										{yellowStars(calculateFrequency(product.product && product.product.ratings))}
+										{greyStars(calculateFrequency(product.product && product.product.ratings))}
 									</RC.ProductInfoRating>
 									<RC.ProductInfoReview onClick={handleGoToReview}>
-										{product.reviews.length === 1 ? `${product.reviews.length} Review` : `${product.reviews.length} Reviews`}
+										{product.product.reviews.length <= 1 ? `${product.product.reviews.length} Review` : `${product.product.reviews.length} Reviews`}
 									</RC.ProductInfoReview>
 								</RC.ProductRR>
 								<RC.ProductDetails>{product.product.productDescription}</RC.ProductDetails>
@@ -148,7 +147,7 @@ export const GetOneProduct = () => {
 								</RC.ProductStatus>
 								<RC.ProductPrice>${currentFigure * product.product.productPrice}</RC.ProductPrice>
 									<RC.ProductImagesContainer>
-									{product.product.productImages.map((dat, i) => (
+									{product.product && product.product.productImages && product.product.productImages.map((dat, i) => (
 										<RC.ProductImages
 											key={i}
 											onClick={() => handleImageToManify(dat)}
@@ -214,7 +213,7 @@ export const GetOneProduct = () => {
 							data={data}
 							key={index}
 							index={index}
-							ratings={product && product.ratings}
+							ratings={product && product.product && product.product.ratings}
 							hideActionBtn={hideActionBtn}
 							wishBtnClicked={wishBtnClicked}
 							kartBtnClicked={kartBtnClicked}
@@ -222,7 +221,7 @@ export const GetOneProduct = () => {
 							magnify={() => handleMagnifyProduct(data)}
 							showProductActionBtns={showProductActionBtns}
 							handleKartCreate={() => handleKartCreate(data)}
-							displayActionBtn={() => displayActionBtn(index)} 
+							displayActionBtn={() => displayActionBtn(index)}
 							handleWishListCreate={() => handleWishListCreate(data)}
 							/>)}
 					</Slider>

@@ -6,7 +6,7 @@ import { Alias } from '../importer';
 const Nav = Alias.pathToSyles('nav-p');
 
 const { retrieveUserData } = Alias.pathToActions('Authentication');
-const { retreiveProducts, retreiveProductsByFilter, resetProductsByFilter } = Alias.pathToActions('ProductCRUD');
+const { retreiveProducts, resetProductsByFilter, retreiveProductsBySearch } = Alias.pathToActions('ProductCRUD');
 const { retreiveKartList, retreiveWishLists } = Alias.pathToActions('WishAndKartCRUD');
 
 export const NavigationPanel = props => {
@@ -39,7 +39,7 @@ export const NavigationPanel = props => {
 
 	const handleShowAll = searchWord => {
 		setCatArrClicked(false);
-		dispatch(retreiveProductsByFilter(searchWord));
+		dispatch(retreiveProductsBySearch(searchWord));
 		history.push('/shop');
 	}
 
@@ -75,7 +75,7 @@ export const NavigationPanel = props => {
 							<Nav.PanelCatListItem onClick={() => handleShowAll('camera')}>Camera</Nav.PanelCatListItem>
 							<Nav.PanelCatListItem onClick={() => handleShowAll('gamepad')}>Gamepad</Nav.PanelCatListItem>
 							<Nav.PanelCatListItem onClick={() => handleShowAll('mobile')}>Mobile</Nav.PanelCatListItem>
-							<Nav.PanelCatListItem onClick={() => handleShowAll('shop')}>Shop</Nav.PanelCatListItem>
+							<Nav.PanelCatListItem onClick={() => handleShowAll('')}>Shop</Nav.PanelCatListItem>
 							<Nav.PanelCatListItem onClick={() => handleShowAll('headphone')}>HeadPhone</Nav.PanelCatListItem>
 						</Nav.PanelCatListContainer>
 					</Nav.PanelCatCover>

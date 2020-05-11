@@ -10,7 +10,6 @@ const { yellowStars, greyStars, calculateFrequency } = Alias.pathToComponents('s
 export const MagnifyProduct = props => {
 	// Redux Hooks
 	const history = useHistory();
-	const products = useSelector(state => state.ProductCRUD.products);
 	const processAddKart = useSelector(state => state.Loading.kart);
 	const processAddWishlist = useSelector(state => state.Loading.wishlist);
 
@@ -18,9 +17,6 @@ export const MagnifyProduct = props => {
 		localStorage.setItem('productSelected', productId);
 		history.push('/getoneproduct');
 	}
-
-	const findRatingByProductId = productId => 
-		((products && products.ratings )|| []).filter(data => data.productId === productId);
 
 	return (
 		<Fragment>
@@ -40,16 +36,16 @@ export const MagnifyProduct = props => {
 						<RC.ProductCaptionHeading>{props.currentData.productCaptionHeading}</RC.ProductCaptionHeading>
 						<RC.ProductRR>
 							<RC.ProductInfoRating>
-								{yellowStars(calculateFrequency(findRatingByProductId(props.currentData._id)))}
-								{greyStars(calculateFrequency(findRatingByProductId(props.currentData._id)))}
+								{yellowStars(calculateFrequency(props.currentData.ratings && props.currentData.ratings))}
+								{greyStars(calculateFrequency(props.currentData.ratings && props.currentData.ratings))}
 							</RC.ProductInfoRating>
 							<RC.ProductInfoReview onClick={() => handelProductSelected(props.currentData._id)}>
-							{(findRatingByProductId(props.currentData._id) 
-								&& findRatingByProductId(props.currentData._id).length)=== 1 ? 
-							`${(findRatingByProductId(props.currentData._id) 
-								&& findRatingByProductId(props.currentData._id).length)} Review` : 
-							`${(findRatingByProductId(props.currentData._id) 
-								&& findRatingByProductId(props.currentData._id).length)} Reviews`}
+							{(props.currentData.reviews 
+								&& props.currentData.reviews.length) <= 1 ? 
+							`${(props.currentData.reviews 
+								&& props.currentData.reviews.length)} Review` : 
+							`${(props.currentData.reviews 
+								&& props.currentData.reviews.length)} Reviews`}
 							</RC.ProductInfoReview>
 						</RC.ProductRR>
 						<RC.ProductDetails>{props.currentData.productDescription}</RC.ProductDetails>

@@ -7,7 +7,7 @@ import { Alias } from '../importer';
 const RC = Alias.pathToSyles('shopfilter')
 const { Colors } = Alias.pathToAssets('map.v');
 const { removeDuplicateFromArray } = Alias.pathToUtils('helpers');
-const { requestProductsByFilter } = Alias.pathToActions('ProductCRUD');
+const { requestProductsByFilter, resetProductsByFilter } = Alias.pathToActions('ProductCRUD');
 
 export const ShopFilter = () => {
   // Redux Hooks
@@ -35,15 +35,15 @@ export const ShopFilter = () => {
     setProductColors(filterProduct && removeDuplicateFromArray(productsColors));
   }, [filterProduct])
 
-  const handleBrandChange = data => setQueryData({ ...queryData, productBrand: data });
+  const handleBrandChange = (event, data) =>
+    setQueryData({ ...queryData, productBrand: data });
 
   const handleColorsPicked = event => {
     // copy state
     const newColors = colors.slice();
-
     // find matching value
     const foundColor = colors.filter(data => data === event.target.value).length < 1;
-
+    
     if (foundColor) {
       // if not matching values then push
       newColors.push(event.target.value)
@@ -64,9 +64,17 @@ export const ShopFilter = () => {
     dispatch(requestProductsByFilter(qData));
   }
 
-  // const handleReset = () => {
-  //   dispatch(resetProductsByFilter());
-  // }
+  const handleReset = () => {
+    const prices = filterProduct && filterProduct.products.map(data => data.productPrice);
+    const minPrice = (filterProduct && Math.min(...prices)) === Infinity ? 0 : (filterProduct && Math.min(...prices));
+    const maxPrice = (filterProduct && Math.max(...prices)) === Infinity ? 0 : (filterProduct && Math.max(...prices));
+    const productsBrands = filterProduct && filterProduct.products.map(data => data.productBrand);
+    const productsColors = filterProduct && filterProduct.products.map(data => data.productColor);
+    setPrices({ min: minPrice, max: maxPrice} || { min: 1, max: 2000 });
+    setProductBrands(filterProduct && removeDuplicateFromArray(productsBrands));
+    setProductColors(filterProduct && removeDuplicateFromArray(productsColors));
+    dispatch(resetProductsByFilter());
+  }
 
   return (
       <RC.ShopFilterSection>
@@ -78,7 +86,7 @@ export const ShopFilter = () => {
           {productBrands && productBrands.map((data, i) => 
           <RC.ShopFilterByBrandsCover>
             <RC.ShopFilterByBrandRadioCover key={i}>
-              <RC.ShopFilterByBrandRadio type="radio" name="brand" onChange={() => handleBrandChange(data)}/>
+              <RC.ShopFilterByBrandRadio type="radio" name="brand" onChange={event => handleBrandChange(event, data)}/>
               <RC.ShopFilterByBrandRadioText>{data}</RC.ShopFilterByBrandRadioText>
             </RC.ShopFilterByBrandRadioCover>
           </RC.ShopFilterByBrandsCover>)}
@@ -87,7 +95,7 @@ export const ShopFilter = () => {
         {/* Price Range Section */}
         <RC.ShopFilterOptionBoxes>
           <RC.ShopFilterOptionHeadings>By Price</RC.ShopFilterOptionHeadings>
-          { (filterProduct && filterProduct.length) &&
+          { (filterProduct && filterProduct.products.length > 0) &&
             <RC.ShopFilterByPriceCover>
               <InputRange
                   minValue={100}
@@ -119,7 +127,7 @@ export const ShopFilter = () => {
           <RC.ShopFilterOptionHeadings>Search</RC.ShopFilterOptionHeadings>
           <RC.ShopFilterButtonSection>
             <RC.ShopFilterButton onClick={handleFilter} className="btn btn-lg" bclr="#ffd333">Filter</RC.ShopFilterButton>
-            {/* <RC.ShopFilterButton onClick={handleReset} className="btn" bclr="#f0f0f0">Reset</RC.ShopFilterButton> */}
+            <RC.ShopFilterButton onClick={handleReset} className="btn" bclr="#f0f0f0">Reset</RC.ShopFilterButton>
           </RC.ShopFilterButtonSection>
         </RC.ShopFilterOptionBoxes>
         {/* *************** */}

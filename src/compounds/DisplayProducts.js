@@ -8,7 +8,7 @@ const { Modal } = Alias.pathToComponents('modal');
 const { Slider } = Alias.pathToComponents('slider');
 const { ProductData } = Alias.pathToAssets('map.v');
 const { Product } = Alias.pathToComponents('product');
-const { retreiveProducts } = Alias.pathToActions('ProductCRUD');
+const { retreiveProducts, retreiveProductsBySearch } = Alias.pathToActions('ProductCRUD');
 const { RingLoadScreen } = Alias.pathToComponents('spiners');
 const { FeaturedProducts } = Alias.pathToComponents('featuredPro');
 const { MagnifyProduct } = Alias.pathToComponents('magnifyProduct');
@@ -16,9 +16,14 @@ const { addToWishList, addToKart } = Alias.pathToActions('WishAndKartCRUD');
 const token = localStorage.getItem('token');
 
 export const DisplayProductHeading = () => {
+  	// Redux Hooks
+  const dispatch = useDispatch();
+
   const handleShowAll = searchWord => {
-    //  localStorage.setItem('searchWord', searchWord);
-    alert('Coming Soon...');
+    if (searchWord === 'shop') {
+      dispatch(retreiveProducts())
+    }
+    dispatch(retreiveProductsBySearch(searchWord));
   }
   
   return (
@@ -123,7 +128,6 @@ export const DisplayProducts = () => {
             key={index}
             index={index} 
             data={data}
-            ratings={products && products.ratings}
             wishBtnClicked={wishBtnClicked}
             kartBtnClicked={kartBtnClicked}
             Styles={{ mr: '5px', mb: '2px'}}
@@ -159,6 +163,7 @@ export const DisplayProducts = () => {
 export const DisplayFeaturedProducts = () => {
   // Redux Hook
   const history = useHistory();
+  const dispatch = useDispatch();
 
   // React Hook
   const products = useSelector(state => state.ProductCRUD.products);
@@ -166,10 +171,10 @@ export const DisplayFeaturedProducts = () => {
   const dummyData = [ProductData[0], ProductData[1], ProductData[2], ProductData[3], ProductData[4], ProductData[5]];
 
   const handleShowAll = data => {
-    localStorage.setItem('searchWord', data.productCategory);
+    dispatch(retreiveProductsBySearch(data.productCategory));
     history.push('/shop');
   }
-  
+
   return (
     <RC.Wrapper>
         <RC.SectionHeadingCont>
@@ -177,7 +182,7 @@ export const DisplayFeaturedProducts = () => {
           <RC.HorizontalRule />
         </RC.SectionHeadingCont>
       <RC.CardsContainer>
-        {(products && products.length > 5 ? FeaturedPro : dummyData).map((data, i) => (
+        {((products && products.products && products.products.length > 5) ? FeaturedPro : dummyData).map((data, i) => (
           <FeaturedProducts key={i} clicked={() => handleShowAll(data)} data={data} />
         ))}
       </RC.CardsContainer>

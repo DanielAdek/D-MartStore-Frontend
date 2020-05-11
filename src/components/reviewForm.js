@@ -30,12 +30,12 @@ export const ReviewForm = () => {
 				<RF.FormRow className="form-row">
 					<RF.FormGroup className="form-group col-md-4">
 						<RF.Label htmlFor="InoutRating">Rating</RF.Label>
-						<RF.Select className="form-control" name="rating" onChange={handleChange}>
-							<RF.Option defaultValue="Choose Rating"> Choose Rating</RF.Option>
-							<RF.Option value="5">5 Star</RF.Option>
-							<RF.Option value="4">4 Star</RF.Option>
-							<RF.Option value="3">3 Star</RF.Option>
-							<RF.Option value="2">2 Star</RF.Option>
+						<RF.Select className="form-control" name="rating" value={userReview.rating} onChange={handleChange}>
+							<RF.Option defaultValue="Choose Rating"> Choose Rating..</RF.Option>
+							<RF.Option value="5">5 Stars</RF.Option>
+							<RF.Option value="4">4 Stars</RF.Option>
+							<RF.Option value="3">3 Stars</RF.Option>
+							<RF.Option value="2">2 Stars</RF.Option>
 							<RF.Option value="1">1 Star</RF.Option>
 						</RF.Select>
 					</RF.FormGroup>
@@ -45,6 +45,7 @@ export const ReviewForm = () => {
 						<RF.Input
 							type="email"
 							name="email"
+							value={userReview.email}
 							onChange={handleChange}
 							className="form-control"
 							placeholder="Email"
@@ -56,6 +57,7 @@ export const ReviewForm = () => {
 						<RF.Input
 							type="text"
 							name="username"
+							value={userReview.username}
 							onChange={handleChange}
 							className="form-control"
 							placeholder="Your Name"
@@ -67,8 +69,9 @@ export const ReviewForm = () => {
 							className="form-control"
 							rows="5"
 							name="review"
+							value={userReview.review}
 							onChange={handleChange}
-							placeholder=" your Reviews"
+							placeholder="Your Reviews"
 						></RF.TextArea>
 					</RF.FormGroup>
 				</RF.FormRow>
