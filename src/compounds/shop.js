@@ -127,6 +127,7 @@ export const Shop = () => {
 							index={index}
 							data={data}
 							width={'30%'}
+							mediaWidth={'29%'}
 							hideActionBtn={hideActionBtn}
 							Styles={{ mr: '30px', mb: '20px' }}
 							magnify={() => handleMagnifyProduct(data)}

@@ -23,7 +23,7 @@ export const Product = props => {
   return (
     <Fragment>
       { props.data && 
-      <RC.ProductCardContainer width={props.width} mr={props.Styles.mr} mb={props.Styles.mb} onMouseEnter={props.displayActionBtn} onMouseLeave={props.hideActionBtn}>
+      <RC.ProductCardContainer width={props.width} mediaWidth={props.mediaWidth} mr={props.Styles.mr} mb={props.Styles.mb} onMouseEnter={props.displayActionBtn} onMouseLeave={props.hideActionBtn}>
         <RC.ProductMagnifyIcon onClick={props.magnify}>
           <RC.ProductMagnifySVG>
             <RC.ProductSVGTitle>Magnify</RC.ProductSVGTitle>

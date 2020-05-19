@@ -14,6 +14,10 @@ export const ProductCardContainer = Style.div`
   &:hover {
     border: 1px solid #ffd333;
   }
+
+  @media(max-width: 80rem) {
+    width: ${props => props.mediaWidth || props.width};
+  }
 `;
 
 export const ProductImageCont = Style.div`
